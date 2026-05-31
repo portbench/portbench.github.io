@@ -50,7 +50,7 @@
             <b>Dataset</b>
           </a>
           <hr class="navbar-divider">
-          <a class="navbar-item" href="#explorer">PortBench Explorer</a>
+          <a class="navbar-item" href="#explorer">Dataset &amp; Evaluation Browser</a>
           <a class="navbar-item" href="#details">Evaluation Details</a>
           <a class="navbar-item" href="#results">Results &amp; Insights</a>
         </div>
@@ -199,7 +199,7 @@
 <!-- ==================== PORTBENCH EXPLORER BANNER ==================== -->
 <section class="hero is-light is-small section-banner">
   <div class="hero-body has-text-centered">
-    <h1 class="title is-1" id="explorer">PortBench Explorer</h1>
+    <h1 class="title is-1" id="explorer">Dataset &amp; Evaluation Browser</h1>
   </div>
 </section>
 
@@ -1187,20 +1187,65 @@ Default propagation weight  λ = 0.1
 <section class="section">
   <div class="container">
 
+    <!-- Key Findings Summary Cards -->
+    <div class="columns is-centered" style="margin-bottom:0;">
+      <div class="column is-full has-text-centered content">
+        <h2 class="title is-3" style="margin-bottom:1.5rem;">Key Findings</h2>
+        <div class="columns is-centered" style="margin:0 0 2.5rem;">
+          <div class="column is-one-third">
+            <div class="insight-card i1" style="height:100%;">
+              <div class="insight-icon">📉</div>
+              <div class="insight-headline">LLMs Fail to Beat Equal-Weight</div>
+              <div class="insight-body">
+                Across 30 model–profile combinations,
+                <span class="insight-stat">27 / 30</span> underperform a naive 1/N equal-weight baseline on Sharpe ratio.
+                High-quality market interpretation does <em>not</em> guarantee better portfolios.
+                Only Qwen3.6-Plus (Balanced) simultaneously beats Equal-Weight and passes all stress gates.
+              </div>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <div class="insight-card i2" style="height:100%;">
+              <div class="insight-icon">⚠️</div>
+              <div class="insight-headline">Stress Rankings Diverge from Normal-Period</div>
+              <div class="insight-body">
+                Normal-period CEPS rankings do <em>not</em> predict stress survival.
+                <span class="insight-stat">6 / 10</span> LLMs fail the Conservative stress gate — all during the 2022 Crypto Collapse.
+                Compliant allocations still produce double-digit drawdowns via cross-asset contagion.
+                Normal-period benchmarks systematically overestimate robustness.
+              </div>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <div class="insight-card i3" style="height:100%;">
+              <div class="insight-icon">🔀</div>
+              <div class="insight-headline">QA Performance ≠ Pipeline Competence</div>
+              <div class="insight-body">
+                Spearman rank correlation between QA accuracy and pipeline CEPS is
+                <span class="insight-stat">ρ = −0.32</span>.
+                GLM-5.1 ranks 7th in QA yet 1st in CEPS; Kimi-K2.6 ranks last in QA yet 3rd in CEPS.
+                QA measures isolated recall; CEPS measures sustained reasoning across five causally dependent stages.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Pipeline Performance: All Three Profiles -->
     <div class="columns is-centered m-6">
       <div class="column is-full has-text-centered content">
         <h2 class="title is-3">Pipeline Performance: All Three Profiles</h2>
-        <div class="content has-text-justified">
-          <p>
-            <span style="display:inline-block;background:#b91c1c;color:#fff;border-radius:4px;padding:3px 12px;font-weight:700;font-size:0.82rem;letter-spacing:0.5px;">🔑 Key Finding</span>
+        <div class="kf-callout kf-blue">
+          <div class="kf-label">🔑 Key Finding</div>
+          <div class="kf-text">
             Across 30 model–profile combinations (10 LLMs × 3 profiles),
             <b>27 of 30 underperform a naive 1/N equal-weight allocation</b> on Sharpe ratio.
             This holds <em>despite</em> strong S1–S3 pipeline scores, since high-quality market
             interpretation and signal generation do not guarantee portfolios that outperform a
             rule-based baseline. Only Qwen3.6-Plus (Balanced) simultaneously beats Equal-Weight
             and passes all stress gates.
-          </p>
+          </div>
         </div>
       </div>
     </div>
@@ -1298,17 +1343,17 @@ Default propagation weight  λ = 0.1
     <div class="columns is-centered m-6">
       <div class="column is-full has-text-centered content">
         <h2 class="title is-3">Stress Regime Results</h2>
-        <div class="content has-text-justified">
-          <p>
-            <span style="display:inline-block;background:#b91c1c;color:#fff;border-radius:4px;padding:3px 12px;font-weight:700;font-size:0.82rem;letter-spacing:0.5px;">🔑 Key Finding</span>
+        <div class="kf-callout kf-red">
+          <div class="kf-label">🔑 Key Finding</div>
+          <div class="kf-text">
             <b>Normal-period CEPS rankings do not predict stress survival.</b>
             Models with strong normal-period CEPS rankings can collapse under historical stress, and
             the correlation between normal and stress-period scores is weak.
             Ranking models by calm-market performance alone is insufficient and potentially
             misleading for real-world deployment. Benchmarks that evaluate only under i.i.d. market
             conditions systematically overestimate model robustness.
-          </p>
-          <p>
+          </div>
+          <div class="kf-text" style="margin-top:0.6rem;">
             More troubling still, <b>6 of 10 LLMs fail the Conservative stress gate</b>,
             all during the 2022 Crypto Collapse. These models satisfy every allocation constraint
             (equity/crypto caps, bond/cash floors, drawdown/VaR limits) yet still suffer double-digit
@@ -1317,7 +1362,7 @@ Default propagation weight  λ = 0.1
             <b>Checking procedural boxes does not guarantee outcome-level safety.</b>
             Stress-regime evaluation is not optional, as it is the only layer that reveals which
             models are genuinely safe.
-          </p>
+          </div>
         </div>
         <p class="has-text-justified">
           The stress gate is defined as follows: a model passes for a given profile if its
@@ -1398,9 +1443,9 @@ Default propagation weight  λ = 0.1
     <div class="columns is-centered m-6">
       <div class="column is-full has-text-centered content">
         <h2 class="title is-3">QA–Pipeline Rank Dissociation</h2>
-        <div class="content has-text-justified">
-          <p>
-            <span style="display:inline-block;background:#b91c1c;color:#fff;border-radius:4px;padding:3px 12px;font-weight:700;font-size:0.82rem;letter-spacing:0.5px;">🔑 Key Finding</span>
+        <div class="kf-callout kf-orange">
+          <div class="kf-label">🔑 Key Finding</div>
+          <div class="kf-text">
             <b>QA performance does not imply pipeline competence.</b>
             The Spearman rank correlation between QA accuracy and pipeline CEPS is <b>ρ = −0.32</b>.
             GLM-5.1 ranks 7th in QA yet 1st in CEPS; Kimi-K2.6 ranks last in QA yet 3rd in CEPS.
@@ -1409,7 +1454,7 @@ Default propagation weight  λ = 0.1
             QA measures isolated factual recall; CEPS measures sustained reasoning across five causally
             dependent stages. The dissociation is driven by S4 execution fidelity: models that ace
             formula-driven tasks (T4/T5) often collapse when translating signals into actual orders.
-          </p>
+          </div>
         </div>
         <div class="table-wrapper" style="max-height:none;">
           <table>
