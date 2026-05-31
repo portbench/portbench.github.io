@@ -40,16 +40,19 @@
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link">More Resources</a>
         <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://arxiv.org/abs/2605.27887" target="_blank">
+            <b>arXiv</b>
+          </a>
           <a class="navbar-item" href="https://github.com/AgenticFinLab/portbench" target="_blank">
-            <b>GitHub Code</b>
+            <b>Code</b>
           </a>
           <a class="navbar-item" href="https://huggingface.co/collections/AgenticFinLab/portbench" target="_blank">
-            <b>HuggingFace Dataset</b>
+            <b>Dataset</b>
           </a>
           <hr class="navbar-divider">
           <a class="navbar-item" href="#explorer">PortBench Explorer</a>
           <a class="navbar-item" href="#details">Evaluation Details</a>
-          <a class="navbar-item" href="#leaderboard">Leaderboard</a>
+          <a class="navbar-item" href="#results">Results &amp; Insights</a>
         </div>
       </div>
     </div>
@@ -117,18 +120,6 @@
                   <span>Code</span>
                 </a>
               </span>
-              <span class="link-block">
-                <a href="#leaderboard" class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon"><i class="fa-solid fa-trophy"></i></span>
-                  <span>Leaderboard</span>
-                </a>
-              </span>
-              <span class="link-block">
-                <a href="#explorer" class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon"><i class="fa-solid fa-database"></i></span>
-                  <span>Explorer</span>
-                </a>
-              </span>
             </div>
           </div>
         </div>
@@ -142,11 +133,11 @@
   <div class="container is-max-desktop has-text-centered">
     <img src="./static/images/intro_overview.png" alt="PortBench overview" style="width:100%;">
     <p style="margin-top:1rem;">
-      Overview of <b>PortBench</b>, organized as four modules:
-      (1) <b>Market Base Dataset</b> : 183 instruments across six asset classes, 2015-2025;
-      (2) <b>Dual Evaluation Layer</b> : 6,269 correlation-based QA pairs and five-stage dynamic pipeline;
-      (3) <b>Robustness Evaluation</b> : joint CEPS under normal and three stress regimes;
-      (4) <b>Investor Task Profiles</b> : three risk profiles testing strategy adaptation.
+      Overview of <b>PortBench</b>. We first collect the <b>Market Base Dataset</b>
+      (183 instruments × 6 asset classes, 2015–2025), then build a
+      <b>dual-layer evaluation framework</b> on top:
+      a static QA layer (6,269 correlation-based pairs) and a dynamic five-stage pipeline,
+      jointly assessed under three risk profiles and three historical stress regimes.
     </p>
   </div>
 </section>
@@ -174,6 +165,18 @@
             exploit inter-class hedging and avoid intra-class concentration, and <b>CEPS</b>, which quantifies
             how reasoning errors compound across pipeline stages. We further assess strategy robustness and
             investor alignment under <b>three historical stress regimes and three risk profiles</b>.
+          </p>
+          <p>
+            Critically, every component of PortBench is <b>objective, traceable, and scalable</b>.
+            The framework rests on a single auditable source: <b>the Market Base Dataset</b>.
+            <b>QA pairs</b> are auto-generated via rule-based templates <b>without human annotation</b>,
+            enabling seamless extension to new periods and assets.
+            Crucially, pipeline ground truths are <b>validated strictly against realized future returns</b>
+            that are <b>withheld from LLM prompts</b> (ensuring point-in-time safety).
+            Thus, every S1–S5 score traces back to <b>observed market outcomes</b>,
+            free from human judgment, oracle leakage, or hidden assumptions.
+            This guarantees fair, reproducible comparisons and allows the benchmark to
+            <b>scale without manual re-annotation</b>.
           </p>
           <p>
             Evaluating ten frontier LLMs, we find that despite strong performance on static financial QA,
@@ -207,14 +210,9 @@
       <div class="column is-full content">
         <!-- General intro -->
         <p class="has-text-justified" style="margin-bottom:2rem;">
-          PortBench is built upon the <b>Market Base Dataset</b>, a 10-year collection of 183 instruments
-          across six heterogeneous asset classes (2015&ndash;2025).
-          On top of this foundation, we construct a <b>dual-layer evaluation framework</b>:
-          a <em>static</em> <b>QA Dataset</b> of 6,269 correlation-aware question&ndash;answer pairs
-          generated automatically from the historical data,
-          and a <em>dynamic</em> <b>Five-Stage Pipeline Evaluation</b> that reconstructs
-          a live <code>MarketSnapshot</code> at each rebalance date and evaluates the LLM across S1&ndash;S5.
-          Explore each layer below.
+          The sections below let you interactively explore each layer of the PortBench framework.
+          Start with the raw <b>Market Base Dataset</b>, then dive into the two evaluation layers
+          that run on top of it.
         </p>
 
         <!-- ================================================================ -->
@@ -238,6 +236,20 @@
             tickers within the same class</em>, directly motivating the two-layer correlation scoring design.
           </p>
         </div>
+
+        <!-- Interactive Market Snapshot -->
+        <h3 class="title is-4" style="margin-top:2rem;">Interactive Market Snapshot</h3>
+        <p class="has-text-justified" style="margin-bottom:1rem; font-size:0.9rem;">
+          183 instruments across 6 asset classes, daily data 2015&ndash;2025.
+          Each monthly snapshot includes macro indicators, per-asset price summaries, and cross-class correlations.
+          Select a date to see the full snapshot.
+        </p>
+        <div class="explorer-controls">
+          <label><b>Date:</b></label>
+          <select id="market-date-picker" class="explorer-select"></select>
+        </div>
+        <div id="market-snapshot-display"><div class="explorer-loading">Loading market data&hellip;</div></div>
+
         <!-- Three-panel: ticker counts + correlation structure, side by side -->
         <div style="display:flex; gap:1.2rem; margin:1.5rem 0; align-items:center;">
           <div style="flex:1; min-width:0;">
@@ -304,30 +316,13 @@
           })();
         </script>
 
-        <!-- Interactive Market Snapshot -->
-        <h3 class="title is-4" style="margin-top:2rem;">Interactive Market Snapshot</h3>
-        <p class="has-text-justified" style="margin-bottom:1rem; font-size:0.9rem;">
-          183 instruments across 6 asset classes, daily data 2015&ndash;2025.
-          Each monthly snapshot includes macro indicators, per-asset price summaries, and cross-class correlations.
-          Select a date to see the full snapshot.
-        </p>
-        <div class="explorer-controls">
-          <label><b>Date:</b></label>
-          <select id="market-date-picker" class="explorer-select"></select>
-        </div>
-        <div id="market-snapshot-display"><div class="explorer-loading">Loading market data&hellip;</div></div>
-
         <!-- ================================================================ -->
         <!-- SUBSECTION 2: EVALUATION FRAMEWORK -->
         <!-- ================================================================ -->
         <h2 class="title is-3" style="margin-top:2.5rem;">Evaluation Framework</h2>
         <p class="has-text-justified" style="margin-bottom:1.2rem;">
-          On top of the Market Base Dataset, we construct a <b>dual-layer evaluation framework</b>:
-          a <em>static</em> <b>QA Dataset</b> of 6,269 correlation-aware question&ndash;answer pairs
-          generated automatically from the historical data,
-          and a <em>dynamic</em> <b>Five-Stage Pipeline Evaluation</b> that reconstructs
-          a live <code>MarketSnapshot</code> at each rebalance date and evaluates the LLM across S1&ndash;S5.
-          Explore each layer below.
+          The evaluation framework has two complementary layers.
+          Switch between the tabs below to explore the <b>QA Dataset</b> and the <b>Pipeline Evaluation</b> in detail.
         </p>
 
         <!-- Tab nav (QA + Pipeline only) -->
@@ -470,7 +465,7 @@
 
     var html = '<div class="showcase-frame">';
     html += '<div class="showcase-frame-header">';
-    html += '<span>MarketSnapshot <span class="meta">(monthly rebalance input)</span></span>';
+    html += '<span>Monthly Data Snapshot <span class="meta">(from Market Base Dataset)</span></span>';
     html += '<span class="meta">' + esc(date) + ' &nbsp;|&nbsp; Balanced Profile</span>';
     html += '</div><div class="showcase-frame-body">';
 
@@ -765,17 +760,21 @@
     html += '<span class="meta">' + esc(date) + ' &nbsp;|&nbsp; Balanced Profile &nbsp;|&nbsp; ' + esc(scenDisplay) + '</span>';
     html += '</div><div class="showcase-frame-body">';
 
-    /* Macro */
+    /* Macro — all 12 indicators */
     html += '<div class="showcase-inner si-peri">';
     html += '<div class="showcase-inner-header">Macroeconomic Indicators &nbsp;';
     html += '<span style="font-weight:400;font-size:0.72rem;">Regime: <b style="' + regimeStyle(snap.market_regime) + '">' + esc(snap.market_regime || "N/A") + '</b> &nbsp;|&nbsp; NAV: <b>$' + fmtN(snap.portfolio_value) + '</b></span></div>';
     html += '<div class="showcase-inner-body"><div class="macro-grid">';
     var macroRows = [
       ["Fed Funds", macro.fed_funds_rate, "%", 2],
-      ["VIX", macro.vix, "", 2],
+      ["CPI YoY", macro.cpi_yoy, "", 1],
       ["Unemployment", macro.unemployment, "%", 1],
+      ["GDP Growth QoQ", macro.gdp_growth_qoq, "", 1],
+      ["VIX", macro.vix, "", 2],
       ["10Y-2Y Spread", macro.t10y2y_spread, "", 2],
+      ["10Y-3M Spread", macro.t10y3m_spread, "", 2],
       ["10Y Breakeven", macro.breakeven_10y, "%", 2],
+      ["IG OAS", macro.ig_oas, "", 2],
       ["HY OAS", macro.hy_oas, "", 2],
       ["TED Spread", macro.ted_spread, "", 2],
       ["Mortgage 30Y", macro.mortgage_30y, "%", 2],
@@ -786,22 +785,54 @@
     });
     html += '</div></div></div>';
 
-    /* Trailing returns */
+    /* Current Portfolio Weights */
+    var weights = snap.current_weights || {};
+    var wKeys = Object.keys(weights);
+    if (wKeys.length) {
+      html += '<div class="showcase-inner si-blue">';
+      html += '<div class="showcase-inner-header">Current Portfolio Weights &nbsp;<span style="font-weight:400;font-size:0.72rem;">(' + wKeys.length + ' active positions)</span></div>';
+      html += '<div class="showcase-inner-body">';
+      html += '<div style="display:flex;flex-wrap:wrap;gap:6px;max-height:240px;overflow-y:auto;">';
+      var sortedW = wKeys.sort(function(a,b){ return (weights[b]||0) - (weights[a]||0); });
+      sortedW.forEach(function(t) {
+        var w = weights[t];
+        var bg = w > 0.05 ? "#dbeafe" : w > 0.02 ? "#eff6ff" : "#f9fafb";
+        var border = w > 0.05 ? "#93c5fd" : w > 0.02 ? "#bfdbfe" : "#e5e7eb";
+        html += '<span style="font-size:0.74rem;background:' + bg + ';padding:2px 7px;border-radius:3px;border:1px solid ' + border + ';">';
+        html += '<b>' + esc(t) + '</b> <span style="color:#6b7280">' + pct(w,1) + '</span></span>';
+      });
+      html += '</div></div></div>';
+    }
+
+    /* Trailing returns — sorted by magnitude, color-coded by direction */
     var tr = snap.trailing_returns || {};
     var trKeys = Object.keys(tr);
     if (trKeys.length) {
-      html += '<div class="showcase-inner si-blue">';
-      html += '<div class="showcase-inner-header">60-Day Trailing Returns (representative assets)</div>';
+      html += '<div class="showcase-inner si-cream">';
+      html += '<div class="showcase-inner-header">60-Day Trailing Returns &nbsp;<span style="font-weight:400;font-size:0.72rem;">(' + trKeys.length + ' instruments)</span></div>';
       html += '<div class="showcase-inner-body">';
-      html += '<div style="display:flex;flex-wrap:wrap;gap:8px;">';
-      trKeys.forEach(function(t) {
+      html += '<div style="display:flex;flex-wrap:wrap;gap:6px;max-height:280px;overflow-y:auto;">';
+      var sortedTR = trKeys.sort(function(a,b){ return Math.abs(tr[b]||0) - Math.abs(tr[a]||0); });
+      sortedTR.forEach(function(t) {
         var v = tr[t];
-        var c = v >= 0 ? "#15803d" : "#b91c1c";
+        var c = v >= 0 ? "#166534" : "#991b1b";
+        var bg = v >= 0 ? "#f0fdf4" : "#fef2f2";
+        var border = v >= 0 ? "#bbf7d0" : "#fecaca";
         var sign = v >= 0 ? "+" : "";
-        html += '<span style="font-size:0.78rem;background:#f3f4f6;padding:2px 7px;border-radius:3px;">';
+        html += '<span style="font-size:0.74rem;background:' + bg + ';padding:2px 7px;border-radius:3px;border:1px solid ' + border + ';">';
         html += '<b>' + esc(t) + '</b> <span style="color:' + c + '">' + sign + pct(v,1) + '</span></span>';
       });
       html += '</div></div></div>';
+    }
+
+    /* News text preview */
+    var newsText = snap.news_text_preview || '';
+    if (newsText) {
+      html += '<div class="showcase-inner si-lav">';
+      html += '<div class="showcase-inner-header">News Context &nbsp;<span style="font-weight:400;font-size:0.72rem;">(truncated)</span></div>';
+      html += '<div class="showcase-inner-body">';
+      html += '<div style="font-size:0.78rem;color:#555;max-height:80px;overflow-y:auto;line-height:1.5;">' + esc(newsText) + '</div>';
+      html += '</div></div>';
     }
 
     html += '</div></div>'; /* close snap frame */
@@ -1053,46 +1084,84 @@ Default propagation weight  λ = 0.1
     <div class="columns is-centered m-6">
       <div class="column is-full has-text-centered content">
         <h2 class="title is-3">Investor Profiles &amp; Stress Regimes</h2>
-        <div class="columns is-multiline is-centered" style="margin:1rem 0 1.5rem;">
+        <p class="has-text-justified" style="margin-bottom:1.5rem;">
+          CEPS is evaluated under <b>three investor risk profiles</b> with escalating risk tolerance,
+          and back-tested across <b>three historical stress regimes</b> to assess robustness
+          when market conditions deteriorate sharply.
+        </p>
+
+        <!-- Profile cards -->
+        <div class="columns is-centered" style="margin:1.5rem 0;">
           <div class="column is-one-third">
             <div class="profile-card conservative">
-              <p style="font-size:1.05rem; font-weight:700;">Conservative</p>
-              <p style="font-size:0.85rem; margin-top:0.5rem;">Max Equity+Crypto: <b>40%</b></p>
-              <p style="font-size:0.85rem;">Min Bond+Cash: <b>40%</b></p>
-              <p style="font-size:0.85rem;">Max Drawdown: <b>10%</b></p>
-              <p style="font-size:0.85rem;">Daily VaR: <b>−1.0%</b></p>
+              <div class="profile-icon">🛡️</div>
+              <div class="profile-name">Conservative</div>
+              <div class="profile-constraints">
+                <div class="pc-item"><span class="pc-label">Equity + Crypto</span><span class="pc-value" style="color:#23d160;">≤ 40%</span></div>
+                <div class="pc-item"><span class="pc-label">Bond + Cash</span><span class="pc-value" style="color:#23d160;">≥ 40%</span></div>
+                <div class="pc-item"><span class="pc-label">Max Drawdown</span><span class="pc-value">≤ 10%</span></div>
+                <div class="pc-item"><span class="pc-label">Daily VaR (95%)</span><span class="pc-value">≤ −1.0%</span></div>
+              </div>
             </div>
           </div>
           <div class="column is-one-third">
             <div class="profile-card balanced">
-              <p style="font-size:1.05rem; font-weight:700;">Balanced</p>
-              <p style="font-size:0.85rem; margin-top:0.5rem;">Max Equity+Crypto: <b>65%</b></p>
-              <p style="font-size:0.85rem;">Min Bond+Cash: <b>20%</b></p>
-              <p style="font-size:0.85rem;">Max Drawdown: <b>20%</b></p>
-              <p style="font-size:0.85rem;">Daily VaR: <b>−2.0%</b></p>
+              <div class="profile-icon">⚖️</div>
+              <div class="profile-name">Balanced</div>
+              <div class="profile-constraints">
+                <div class="pc-item"><span class="pc-label">Equity + Crypto</span><span class="pc-value" style="color:#3273dc;">≤ 65%</span></div>
+                <div class="pc-item"><span class="pc-label">Bond + Cash</span><span class="pc-value" style="color:#3273dc;">≥ 20%</span></div>
+                <div class="pc-item"><span class="pc-label">Max Drawdown</span><span class="pc-value">≤ 20%</span></div>
+                <div class="pc-item"><span class="pc-label">Daily VaR (95%)</span><span class="pc-value">≤ −2.0%</span></div>
+              </div>
             </div>
           </div>
           <div class="column is-one-third">
             <div class="profile-card aggressive">
-              <p style="font-size:1.05rem; font-weight:700;">Aggressive</p>
-              <p style="font-size:0.85rem; margin-top:0.5rem;">Max Equity+Crypto: <b>90%</b></p>
-              <p style="font-size:0.85rem;">Min Bond+Cash: <b>5%</b></p>
-              <p style="font-size:0.85rem;">Max Drawdown: <b>35%</b></p>
-              <p style="font-size:0.85rem;">Daily VaR: <b>−4.0%</b></p>
+              <div class="profile-icon">🚀</div>
+              <div class="profile-name">Aggressive</div>
+              <div class="profile-constraints">
+                <div class="pc-item"><span class="pc-label">Equity + Crypto</span><span class="pc-value" style="color:#ff3860;">≤ 90%</span></div>
+                <div class="pc-item"><span class="pc-label">Bond + Cash</span><span class="pc-value" style="color:#ff3860;">≥ 5%</span></div>
+                <div class="pc-item"><span class="pc-label">Max Drawdown</span><span class="pc-value">≤ 35%</span></div>
+                <div class="pc-item"><span class="pc-label">Daily VaR (95%)</span><span class="pc-value">≤ −4.0%</span></div>
+              </div>
             </div>
           </div>
         </div>
+
+        <!-- Stress regime cards -->
+        <p class="has-text-justified" style="margin-bottom:0.8rem;">
+          Each profile is tested under <b>three historical stress regimes</b>:
+        </p>
+        <div class="columns is-centered" style="margin:0.8rem 0 1.5rem;">
+          <div class="column is-one-third">
+            <div class="stress-card china">
+              <span class="crisis-badge cb-china">2015</span>
+              <div class="stress-name">China Shock</div>
+              <div class="stress-date">Aug 2015 – Feb 2016</div>
+              <div class="stress-type">liquidity-driven</div>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <div class="stress-card covid">
+              <span class="crisis-badge cb-covid">2020</span>
+              <div class="stress-name">COVID Crash</div>
+              <div class="stress-date">Feb 2020 – May 2020</div>
+              <div class="stress-type">pandemic-driven</div>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <div class="stress-card crypto">
+              <span class="crisis-badge cb-crypto">2022</span>
+              <div class="stress-name">Crypto Collapse</div>
+              <div class="stress-date">May 2022 – Dec 2022</div>
+              <div class="stress-type">monetary-tightening-driven</div>
+            </div>
+          </div>
+        </div>
+
         <div class="content has-text-justified" style="max-width:760px; margin:0 auto;">
-          <p>
-            <span class="crisis-badge">2015 China Shock</span> Aug 2015 – Feb 2016 · <em>liquidity-driven</em>
-          </p>
-          <p>
-            <span class="crisis-badge">2020 COVID Crash</span> Feb 2020 – May 2020 · <em>pandemic-driven</em>
-          </p>
-          <p>
-            <span class="crisis-badge">2022 Crypto Collapse</span> May 2022 – Dec 2022 · <em>monetary-tightening-driven</em>
-          </p>
-          <br>
           <p style="font-size:0.9rem; color:#555;">
             A model passes the <b>stress gate</b> for a given profile if its maximum drawdown across all three
             regimes stays within the profile's tolerance.
@@ -1101,12 +1170,6 @@ Default propagation weight  λ = 0.1
             (<em>compliance trap</em>: every process constraint satisfied, outcome safety violated).
           </p>
         </div>
-        <div style="margin-bottom:1.5rem;"><img src="./static/images/exp_stress_drawdown.png" style="width:65%; display:block; margin:0 auto; border-radius:6px;">
-            <p class="fig-caption">Max drawdown across three stress regimes (worst case, all profiles). Six of ten LLMs fail Conservative.</p>
-        </div>
-        <div style="margin-bottom:1.5rem;"><img src="./static/images/analysis_normal_vs_stress.png" style="width:65%; display:block; margin:0 auto; border-radius:6px;">
-            <p class="fig-caption">Normal-period vs. stress-period CEPS (2022, Conservative). High normal scores do not predict stress survival.</p>
-        </div>
       </div>
     </div>
 
@@ -1114,9 +1177,9 @@ Default propagation weight  λ = 0.1
 </section>
 
 <!-- ==================== RESULTS BANNER ==================== -->
-<section class="hero is-light is-small section-banner">
+<section class="hero is-light is-small section-banner" id="results">
   <div class="hero-body has-text-centered">
-    <h1 class="title is-1">Experiment Results</h1>
+    <h1 class="title is-1">Results &amp; Insights</h1>
   </div>
 </section>
 
@@ -1124,145 +1187,20 @@ Default propagation weight  λ = 0.1
 <section class="section">
   <div class="container">
 
-    <!-- Leaderboard (balanced) -->
+    <!-- Pipeline Performance: All Three Profiles -->
     <div class="columns is-centered m-6">
       <div class="column is-full has-text-centered content">
-        <h2 class="title is-3" id="leaderboard">Leaderboard: Balanced Profile, Normal Period (2024)</h2>
+        <h2 class="title is-3">Pipeline Performance: All Three Profiles</h2>
         <div class="content has-text-justified">
           <p>
-            Monthly rebalancing, Jan–Dec 2024. Models ranked by CEPS<sub>bal</sub>.
-            Classical baselines do not pass through the LLM pipeline and are evaluated on financial outcomes only.
+            <span style="display:inline-block;background:#b91c1c;color:#fff;border-radius:4px;padding:3px 12px;font-weight:700;font-size:0.82rem;letter-spacing:0.5px;">🔑 Key Finding</span>
+            Across 30 model–profile combinations (10 LLMs × 3 profiles),
+            <b>27 of 30 underperform a naive 1/N equal-weight allocation</b> on Sharpe ratio.
+            This holds <em>despite</em> strong S1–S3 pipeline scores, since high-quality market
+            interpretation and signal generation do not guarantee portfolios that outperform a
+            rule-based baseline. Only Qwen3.6-Plus (Balanced) simultaneously beats Equal-Weight
+            and passes all stress gates.
           </p>
-        </div>
-        <div class="model-labels-container">
-          <span class="model-label" style="background:rgba(50,115,220,0.15);">LLM</span>
-          <span class="model-label" style="background:rgba(200,200,200,0.3); font-style:italic;">Classical Baseline</span>
-        </div>
-        <div class="leaderboard-container">
-          <div class="table-wrapper">
-            <table>
-              <thead>
-                <tr>
-                  <th class="main-header" rowspan="2">Rank</th>
-                  <th class="main-header" rowspan="2">Model</th>
-                  <th class="main-header" colspan="5">Pipeline Scores</th>
-                  <th class="main-header" rowspan="2">CEPS<sub>bal</sub></th>
-                  <th class="main-header" colspan="3">Financial Outcomes</th>
-                  <th class="main-header" rowspan="2">Stress Gate</th>
-                </tr>
-                <tr>
-                  <th>S1 Market</th><th>S2 Signal</th><th>S3 Weights</th><th>S4 Execution</th><th>S5 Risk Mon.</th>
-                  <th>Sharpe</th><th>Ret%</th><th>MaxDD%</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td><td style="text-align:left;">GLM-5.1</td>
-                  <td>.774</td><td>.427</td><td>.751</td><td>.161</td><td><b>.695</b></td>
-                  <td><b>.470</b></td><td>0.560</td><td>11.00</td><td>−7.81</td>
-                  <td class="fail-cell">✗</td>
-                </tr>
-                <tr>
-                  <td>2</td><td style="text-align:left;">DeepSeek-V4-Flash</td>
-                  <td>.763</td><td>.414</td><td>.761</td><td><b>.214</b></td><td>.618</td>
-                  <td>.463</td><td>0.651</td><td>10.64</td><td>−5.13</td>
-                  <td class="fail-cell">✗</td>
-                </tr>
-                <tr>
-                  <td>3</td><td style="text-align:left;">Kimi-K2.6</td>
-                  <td>.784</td><td>.444</td><td>.764</td><td>.208</td><td>.456</td>
-                  <td>.434</td><td>0.488</td><td>10.30</td><td>−9.13</td>
-                  <td class="fail-cell">✗</td>
-                </tr>
-                <tr class="row-best">
-                  <td>4</td><td style="text-align:left;">Qwen3.6-Plus ★</td>
-                  <td>.789</td><td>.519</td><td>.761</td><td>.151</td><td>.370</td>
-                  <td>.426</td><td><b>0.823</b></td><td><b>14.72</b></td><td>−6.84</td>
-                  <td class="pass-cell">✓</td>
-                </tr>
-                <tr>
-                  <td>5</td><td style="text-align:left;">Qwen3.6-35B-A3B</td>
-                  <td>.770</td><td>.461</td><td>.758</td><td>.111</td><td>.517</td>
-                  <td>.424</td><td>0.586</td><td>10.73</td><td>−6.74</td>
-                  <td class="pass-cell">✓</td>
-                </tr>
-                <tr>
-                  <td>6</td><td style="text-align:left;">Doubao-Seed-2.0-Pro</td>
-                  <td>.784</td><td>.448</td><td>.744</td><td>.134</td><td>.395</td>
-                  <td>.405</td><td>0.613</td><td>10.31</td><td>−5.04</td>
-                  <td class="fail-cell">✗</td>
-                </tr>
-                <tr>
-                  <td>7</td><td style="text-align:left;">Hunyuan3-Preview</td>
-                  <td><b>.793</b></td><td><b>.543</b></td><td><b>.764</b></td><td>.032</td><td>.305</td>
-                  <td>.389</td><td>0.669</td><td>12.42</td><td>−6.67</td>
-                  <td class="fail-cell">✗</td>
-                </tr>
-                <tr>
-                  <td>8</td><td style="text-align:left;">Qwen3.7-Max</td>
-                  <td>.777</td><td>.432</td><td>.758</td><td>.123</td><td>.330</td>
-                  <td>.384</td><td>0.467</td><td>9.35</td><td>−7.43</td>
-                  <td class="pass-cell">✓</td>
-                </tr>
-                <tr>
-                  <td>9</td><td style="text-align:left;">DeepSeek-V4-Pro</td>
-                  <td>.765</td><td>.405</td><td>.749</td><td>.123</td><td>.283</td>
-                  <td>.365</td><td>0.321</td><td>6.95</td><td>−5.18</td>
-                  <td class="fail-cell">✗</td>
-                </tr>
-                <tr>
-                  <td>10</td><td style="text-align:left;">Doubao-Seed-2.0-Lite</td>
-                  <td>.772</td><td>.366</td><td>.755</td><td>.053</td><td>.392</td>
-                  <td>.357</td><td>0.692</td><td>11.43</td><td>−5.65</td>
-                  <td class="pass-cell">✓</td>
-                </tr>
-                <tr class="row-baseline">
-                  <td colspan="2" style="text-align:left;">Equal-Weight (EqW)</td>
-                  <td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td>
-                  <td>0.740</td><td>12.13</td><td>−5.09</td><td>N/A</td>
-                </tr>
-                <tr class="row-baseline">
-                  <td colspan="2" style="text-align:left;">60/40</td>
-                  <td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td>
-                  <td>0.651</td><td>10.17</td><td>−4.27</td><td>N/A</td>
-                </tr>
-                <tr class="row-baseline">
-                  <td colspan="2" style="text-align:left;">Risk Parity</td>
-                  <td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td>
-                  <td>0.111</td><td>4.56</td><td>−2.02</td><td>N/A</td>
-                </tr>
-                <tr class="row-baseline">
-                  <td colspan="2" style="text-align:left;">Cov. Risk Parity</td>
-                  <td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td>
-                  <td>−0.147</td><td>3.71</td><td>−2.02</td><td>N/A</td>
-                </tr>
-                <tr class="row-baseline">
-                  <td colspan="2" style="text-align:left;">Min-Variance</td>
-                  <td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td>
-                  <td>−0.601</td><td>2.45</td><td>−2.02</td><td>N/A</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <p style="font-size:0.8rem; color:#888; margin-top:0.5rem; text-align:left;">
-            ★ Qwen3.6-Plus (Balanced) is the <em>only</em> model that simultaneously passes all stress gates
-            and beats Equal-Weight on Sharpe (0.823 vs 0.740).
-            Hunyuan3-Preview leads S1 and S2 yet scores near zero on S4 (0.032).
-            <b>90% of model–profile combinations fail to beat Equal-Weight.</b>
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Financial outcomes figures -->
-    <div class="columns is-centered m-6">
-      <div class="column is-full has-text-centered content">
-        <h2 class="title is-3">Financial Outcomes: Balanced Profile</h2>
-        <div style="margin-bottom:1.5rem;"><img src="./static/images/exp_metrics_balanced.png" alt="Risk-adjusted metrics, balanced" style="width:100%; border-radius:6px;">
-            <p class="fig-caption">Risk-adjusted return metrics (Sharpe, total return, max drawdown, CEPS) under the Balanced profile.</p>
-        </div>
-        <div style="margin-bottom:1.5rem;"><img src="./static/images/exp_nav_balanced.png" alt="NAV trajectory, balanced" style="width:100%; border-radius:6px;">
-            <p class="fig-caption">Portfolio NAV trajectories (2024). Shaded band = range across all LLMs; dashed lines = classical baselines.</p>
         </div>
       </div>
     </div>
@@ -1270,10 +1208,9 @@ Default propagation weight  λ = 0.1
     <!-- Complete pipeline table all profiles -->
     <div class="columns is-centered m-6">
       <div class="column is-full has-text-centered content">
-        <h2 class="title is-3">Complete Pipeline Results: All Three Profiles</h2>
         <p class="has-text-justified">
-          Per-stage scores, CEPS, and financial outcomes for all ten LLMs and five classical baselines
-          across Conservative / Balanced / Aggressive profiles (normal period, 2024).
+          The table below reports per-stage scores, CEPS, and financial outcomes for all ten LLMs
+          and five classical baselines across Conservative / Balanced / Aggressive profiles (normal period, 2024).
           <b>Bold</b> = column best within each profile.
         </p>
         <div class="model-labels-container">
@@ -1345,52 +1282,62 @@ Default propagation weight  λ = 0.1
       </div>
     </div>
 
-    <!-- QA–Pipeline dissociation -->
+    <!-- Financial outcomes figures -->
     <div class="columns is-centered m-6">
       <div class="column is-full has-text-centered content">
-        <h2 class="title is-3">QA–Pipeline Rank Dissociation</h2>
+        <div style="margin-bottom:1.2rem;"><img src="./static/images/exp_metrics_balanced.png" alt="Risk-adjusted metrics, balanced" style="width:75%; display:block; margin:0 auto; border-radius:6px;">
+            <p class="fig-caption">Risk-adjusted return metrics (Sharpe, total return, max drawdown, CEPS) under the Balanced profile.</p>
+        </div>
+        <div style="margin-bottom:1.2rem;"><img src="./static/images/exp_nav_balanced.png" alt="NAV trajectory, balanced" style="width:75%; display:block; margin:0 auto; border-radius:6px;">
+            <p class="fig-caption">Portfolio NAV trajectories (2024). Shaded band = range across all LLMs; dashed lines = classical baselines.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stress regime results -->
+    <div class="columns is-centered m-6">
+      <div class="column is-full has-text-centered content">
+        <h2 class="title is-3">Stress Regime Results</h2>
         <div class="content has-text-justified">
           <p>
-            The Spearman rank correlation between QA accuracy and pipeline CEPS is <b>ρ = −0.32</b>.
-            GLM-5.1 ranks 7th in QA yet 1st in CEPS; Kimi-K2.6 ranks last in QA yet 3rd in CEPS.
-            Doubao-Seed-2.0-Lite ranks 4th in QA but last in CEPS; answers static questions correctly yet
-            cannot translate that knowledge into executable portfolio decisions.
-            QA measures isolated factual recall; CEPS measures sustained reasoning across five causally
-            dependent stages.
+            <span style="display:inline-block;background:#b91c1c;color:#fff;border-radius:4px;padding:3px 12px;font-weight:700;font-size:0.82rem;letter-spacing:0.5px;">🔑 Key Finding</span>
+            <b>Normal-period CEPS rankings do not predict stress survival.</b>
+            Models with strong normal-period CEPS rankings can collapse under historical stress, and
+            the correlation between normal and stress-period scores is weak.
+            Ranking models by calm-market performance alone is insufficient and potentially
+            misleading for real-world deployment. Benchmarks that evaluate only under i.i.d. market
+            conditions systematically overestimate model robustness.
+          </p>
+          <p>
+            More troubling still, <b>6 of 10 LLMs fail the Conservative stress gate</b>,
+            all during the 2022 Crypto Collapse. These models satisfy every allocation constraint
+            (equity/crypto caps, bond/cash floors, drawdown/VaR limits) yet still suffer double-digit
+            drawdowns. Small, compliant crypto exposures amplify into portfolio-level losses because
+            the models fail to anticipate cross-asset contagion.
+            <b>Checking procedural boxes does not guarantee outcome-level safety.</b>
+            Stress-regime evaluation is not optional, as it is the only layer that reveals which
+            models are genuinely safe.
           </p>
         </div>
-        <div class="table-wrapper" style="max-height:none;">
-          <table>
-            <thead>
-              <tr>
-                <th class="main-header">Model</th>
-                <th class="main-header">QA Mean</th>
-                <th class="main-header">QA Rank</th>
-                <th class="main-header">CEPS<sub>bal</sub></th>
-                <th class="main-header">CEPS Rank</th>
-                <th class="main-header">ΔRank</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td style="text-align:left;">DeepSeek-V4-Flash</td><td>.819</td><td>1</td><td>.463</td><td>2</td><td>−1</td></tr>
-              <tr><td style="text-align:left;">Qwen3.7-Max</td><td>.819</td><td>2</td><td>.384</td><td>8</td><td>−6</td></tr>
-              <tr><td style="text-align:left;">DeepSeek-V4-Pro</td><td>.818</td><td>3</td><td>.365</td><td>9</td><td>−6</td></tr>
-              <tr><td style="text-align:left;">Doubao-Seed-2.0-Lite</td><td>.804</td><td>4</td><td>.357</td><td>10</td><td>−6</td></tr>
-              <tr><td style="text-align:left;">Doubao-Seed-2.0-Pro</td><td>.787</td><td>5</td><td>.405</td><td>6</td><td>−1</td></tr>
-              <tr><td style="text-align:left;">Qwen3.6-Plus</td><td>.783</td><td>6</td><td>.426</td><td>4</td><td>+2</td></tr>
-              <tr style="font-weight:700; background:#fffbeb;"><td style="text-align:left;">GLM-5.1</td><td>.757</td><td>7</td><td>.470</td><td>1</td><td><b>+6</b></td></tr>
-              <tr><td style="text-align:left;">Qwen3.6-35B-A3B</td><td>.684</td><td>8</td><td>.424</td><td>5</td><td>+3</td></tr>
-              <tr><td style="text-align:left;">Hunyuan3-Preview</td><td>.624</td><td>9</td><td>.389</td><td>7</td><td>+2</td></tr>
-              <tr style="font-weight:700; background:#fffbeb;"><td style="text-align:left;">Kimi-K2.6</td><td>.511</td><td>10</td><td>.434</td><td>3</td><td><b>+7</b></td></tr>
-            </tbody>
-          </table>
+        <p class="has-text-justified">
+          The stress gate is defined as follows: a model passes for a given profile if its
+          maximum drawdown across all three historical stress regimes stays within the profile's tolerance.
+          The images below show aggregate stress performance across all models and profiles.
+        </p>
+        <div style="display:flex; gap:1.5rem; margin:1.5rem 0;">
+          <div style="flex:1; min-width:0;">
+            <img src="./static/images/exp_stress_drawdown.png" style="width:100%; height:340px; object-fit:contain; border-radius:6px; background:#fafafa;">
+            <p class="fig-caption">Max drawdown across three stress regimes (worst case, all profiles). Six of ten LLMs fail Conservative.</p>
+          </div>
+          <div style="flex:1; min-width:0;">
+            <img src="./static/images/analysis_normal_vs_stress.png" style="width:100%; height:340px; object-fit:contain; border-radius:6px; background:#fafafa;">
+            <p class="fig-caption">Normal-period vs. stress-period CEPS (2022, Conservative). High normal scores do not predict stress survival.</p>
+          </div>
         </div>
-        <div style="margin-bottom:1.5rem;"><img src="./static/images/analysis_s2_s4_quadrant.png" style="width:65%; display:block; margin:0 auto; border-radius:6px;">
-            <p class="fig-caption">S2 (signal) vs. S4 (execution). Hunyuan3-Preview leads S2 yet collapses in S4: strong signals, no execution.</p>
-        </div>
-        <div style="margin-bottom:1.5rem;"><img src="./static/images/analysis_profile_adaptation.png" style="width:65%; display:block; margin:0 auto; border-radius:6px;">
-            <p class="fig-caption">Profile Alignment Score (PAS) per model. GLM-5.1 applies a nearly identical allocation regardless of risk profile (σ = 0.014).</p>
-        </div>
+        <p style="font-size:0.88rem; color:#555; text-align:left;">
+          <b>Takeaway:</b> Stress-regime evaluation is the only layer that reveals which models are
+          genuinely safe for deployment; normal-period benchmarks alone systematically overestimate robustness.
+        </p>
       </div>
     </div>
 
@@ -1398,6 +1345,11 @@ Default propagation weight  λ = 0.1
     <div class="columns is-centered m-6">
       <div class="column is-full has-text-centered content">
         <h2 class="title is-3">Static QA Evaluation Results</h2>
+        <p class="has-text-justified">
+          The rank dissociation above raises a natural question: where do different models excel or struggle
+          within the QA layer itself? The table below breaks down per-template accuracy, revealing
+          sharp divergence between formula-driven tasks (T4, T5) and judgment-driven ones (T1, T2, T6, T7).
+        </p>
         <p class="has-text-justified">
           Per-template accuracy (full &amp; restricted covariance conditions), formula vs. judgment averages,
           and accuracy by market regime. <b>Bold</b> = column best. Pink rows = Mean &lt; 0.65.
@@ -1440,6 +1392,62 @@ Default propagation weight  λ = 0.1
           7 of 10 models perform <em>better</em> without it, confirming format matching rather than genuine numerical reasoning.
         </p>
         </div>
+    </div>
+    
+    <!-- QA–Pipeline dissociation -->
+    <div class="columns is-centered m-6">
+      <div class="column is-full has-text-centered content">
+        <h2 class="title is-3">QA–Pipeline Rank Dissociation</h2>
+        <div class="content has-text-justified">
+          <p>
+            <span style="display:inline-block;background:#b91c1c;color:#fff;border-radius:4px;padding:3px 12px;font-weight:700;font-size:0.82rem;letter-spacing:0.5px;">🔑 Key Finding</span>
+            <b>QA performance does not imply pipeline competence.</b>
+            The Spearman rank correlation between QA accuracy and pipeline CEPS is <b>ρ = −0.32</b>.
+            GLM-5.1 ranks 7th in QA yet 1st in CEPS; Kimi-K2.6 ranks last in QA yet 3rd in CEPS.
+            Doubao-Seed-2.0-Lite ranks 4th in QA but last in CEPS, answering static questions correctly
+            yet failing to translate that knowledge into executable portfolio decisions.
+            QA measures isolated factual recall; CEPS measures sustained reasoning across five causally
+            dependent stages. The dissociation is driven by S4 execution fidelity: models that ace
+            formula-driven tasks (T4/T5) often collapse when translating signals into actual orders.
+          </p>
+        </div>
+        <div class="table-wrapper" style="max-height:none;">
+          <table>
+            <thead>
+              <tr>
+                <th class="main-header">Model</th>
+                <th class="main-header">QA Mean</th>
+                <th class="main-header">QA Rank</th>
+                <th class="main-header">CEPS<sub>bal</sub></th>
+                <th class="main-header">CEPS Rank</th>
+                <th class="main-header">ΔRank</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td style="text-align:left;">DeepSeek-V4-Flash</td><td>.819</td><td>1</td><td>.463</td><td>2</td><td>−1</td></tr>
+              <tr><td style="text-align:left;">Qwen3.7-Max</td><td>.819</td><td>2</td><td>.384</td><td>8</td><td>−6</td></tr>
+              <tr><td style="text-align:left;">DeepSeek-V4-Pro</td><td>.818</td><td>3</td><td>.365</td><td>9</td><td>−6</td></tr>
+              <tr><td style="text-align:left;">Doubao-Seed-2.0-Lite</td><td>.804</td><td>4</td><td>.357</td><td>10</td><td>−6</td></tr>
+              <tr><td style="text-align:left;">Doubao-Seed-2.0-Pro</td><td>.787</td><td>5</td><td>.405</td><td>6</td><td>−1</td></tr>
+              <tr><td style="text-align:left;">Qwen3.6-Plus</td><td>.783</td><td>6</td><td>.426</td><td>4</td><td>+2</td></tr>
+              <tr style="font-weight:700; background:#fffbeb;"><td style="text-align:left;">GLM-5.1</td><td>.757</td><td>7</td><td>.470</td><td>1</td><td><b>+6</b></td></tr>
+              <tr><td style="text-align:left;">Qwen3.6-35B-A3B</td><td>.684</td><td>8</td><td>.424</td><td>5</td><td>+3</td></tr>
+              <tr><td style="text-align:left;">Hunyuan3-Preview</td><td>.624</td><td>9</td><td>.389</td><td>7</td><td>+2</td></tr>
+              <tr style="font-weight:700; background:#fffbeb;"><td style="text-align:left;">Kimi-K2.6</td><td>.511</td><td>10</td><td>.434</td><td>3</td><td><b>+7</b></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="display:flex; gap:1.5rem; margin:1.5rem 0;">
+          <div style="flex:1; min-width:0;">
+            <img src="./static/images/analysis_s2_s4_quadrant.png" style="width:100%; height:340px; object-fit:contain; border-radius:6px; background:#fafafa;">
+            <p class="fig-caption">S2 (signal) vs. S4 (execution). Hunyuan3-Preview leads S2 yet collapses in S4: strong signals, no execution.</p>
+          </div>
+          <div style="flex:1; min-width:0;">
+            <img src="./static/images/analysis_profile_adaptation.png" style="width:100%; height:340px; object-fit:contain; border-radius:6px; background:#fafafa;">
+            <p class="fig-caption">Profile Alignment Score (PAS) per model. GLM-5.1 applies a nearly identical allocation regardless of risk profile (σ = 0.014).</p>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>

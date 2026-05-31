@@ -173,26 +173,58 @@ th {
 /* ── Profile cards ── */
 .profile-card {
   background: #f8f9fa;
-  border-radius: 8px;
-  padding: 1rem;
+  border-radius: 10px;
+  padding: 1.35rem 1rem;
   text-align: center;
   border-top: 4px solid;
   height: 100%;
+  transition: box-shadow 0.2s;
 }
-.profile-card.conservative { border-color: #23d160; }
-.profile-card.balanced     { border-color: #3273dc; }
-.profile-card.aggressive   { border-color: #ff3860; }
+.profile-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+.profile-card.conservative { border-color: #23d160; background: linear-gradient(180deg, #f0fdf4 0%, #f8f9fa 40%); }
+.profile-card.balanced     { border-color: #3273dc; background: linear-gradient(180deg, #eff6ff 0%, #f8f9fa 40%); }
+.profile-card.aggressive   { border-color: #ff3860; background: linear-gradient(180deg, #fff1f2 0%, #f8f9fa 40%); }
+.profile-card .profile-icon { font-size: 1.6rem; margin-bottom: 0.3rem; }
+.profile-card .profile-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.6rem; }
+.profile-card .profile-constraints { text-align: left; display: inline-block; }
+.profile-card .profile-constraints .pc-item {
+  font-size: 0.82rem;
+  padding: 3px 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 1.2rem;
+}
+.profile-card .profile-constraints .pc-label { color: #666; }
+.profile-card .profile-constraints .pc-value { font-weight: 700; }
 
 /* ── Crisis badge ── */
 .crisis-badge {
   display: inline-block;
-  background: #ff3860;
   color: white;
   border-radius: 4px;
   padding: 2px 8px;
   font-size: 0.8rem;
   margin-right: 4px;
 }
+.crisis-badge.cb-china   { background: #e07b39; }
+.crisis-badge.cb-covid   { background: #b91c1c; }
+.crisis-badge.cb-crypto  { background: #9333ea; }
+
+/* ── Stress regime cards ── */
+.stress-card {
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 0.9rem 1rem;
+  text-align: center;
+  border-left: 4px solid;
+  height: 100%;
+}
+.stress-card.china  { border-color: #e07b39; }
+.stress-card.covid  { border-color: #b91c1c; }
+.stress-card.crypto { border-color: #9333ea; }
+.stress-card .stress-name { font-weight: 700; font-size: 0.92rem; }
+.stress-card .stress-date { font-size: 0.78rem; color: #888; margin-top: 0.2rem; }
+.stress-card .stress-type { font-size: 0.78rem; color: #666; font-style: italic; margin-top: 0.2rem; }
 
 /* ── Key numbers ── */
 .result-number { font-size: 2rem; font-weight: 700; color: #3273dc; }
@@ -450,4 +482,45 @@ th {
   padding: 2rem;
   color: #888;
   font-style: italic;
+}
+
+/* ── Key Insights cards ── */
+.insight-card {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.25rem 1.25rem 1.25rem 1.25rem;
+  border-left: 4px solid #3273dc;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.insight-card.i1 { border-left-color: #3273dc; }
+.insight-card.i2 { border-left-color: #ff3860; }
+.insight-card.i3 { border-left-color: #f0a030; }
+.insight-card.i4 { border-left-color: #23d160; }
+.insight-card .insight-icon {
+  font-size: 1.4rem;
+  margin-bottom: 0.4rem;
+}
+.insight-card .insight-headline {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  color: #1a1a2e;
+}
+.insight-card .insight-body {
+  font-size: 0.82rem;
+  color: #555;
+  line-height: 1.55;
+  flex: 1;
+}
+.insight-card .insight-stat {
+  display: inline-block;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  padding: 1px 8px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  margin-right: 4px;
 }

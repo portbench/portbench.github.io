@@ -131,22 +131,52 @@ for provider_dir in glob.glob(os.path.join(EXPERIMENTS_ROOT, "*")):
                 except:
                     continue
 
-                # Extract lightweight snapshot
+                # Extract comprehensive snapshot
                 macro = snap.get("macro_data", {})
                 trailing = snap.get("trailing_returns", {})
 
-                # Keep only 20 representative tickers for the snapshot
-                SHOW_TICKERS = ["SPY","QQQ","XLE","XLF","TLT","IEF","HYG","GLD","USO",
-                               "BTC-USD","ETH-USD","VNQ","BIL","SGOV","IWM","LQD","SLV","SOL-USD"]
-                trailing_small = {k: round(float(v), 4) for k, v in trailing.items()
-                                   if k in SHOW_TICKERS and v is not None}
+                # Keep all non-zero trailing returns (limit to top 60 by abs value)
+                trailing_clean = {}
+                for k, v in trailing.items():
+                    if v is not None:
+                        try:
+                            fv = round(float(v), 4)
+                            if abs(fv) > 0.0001:
+                                trailing_clean[k] = fv
+                        except Exception:
+                            pass
+                if len(trailing_clean) > 60:
+                    top_t = sorted(trailing_clean.items(), key=lambda x: abs(x[1]), reverse=True)[:60]
+                    trailing_clean = dict(top_t)
+
+                # Current weights: keep non-zero, limit to top 50
+                weights_raw = snap.get("current_weights", {})
+                weights_clean = {}
+                for k, v in weights_raw.items():
+                    if v is not None:
+                        try:
+                            fv = round(float(v), 4)
+                            if fv > 0.0001:
+                                weights_clean[k] = fv
+                        except Exception:
+                            pass
+                if len(weights_clean) > 50:
+                    top_w = sorted(weights_clean.items(), key=lambda x: x[1], reverse=True)[:50]
+                    weights_clean = dict(top_w)
+
+                # News text preview (truncated)
+                news_raw = snap.get("news_text_preview", "")
+                news_clean = str(news_raw)[:300] if news_raw else ""
 
                 date_data[date_str] = {
                     "snapshot": {
                         "macro_data": {k: safe_float(v) for k, v in macro.items()},
                         "market_regime": snap.get("market_regime", ""),
                         "portfolio_value": safe_float(snap.get("portfolio_value")),
-                        "trailing_returns": trailing_small,
+                        "trailing_returns": trailing_clean,
+                        "current_weights": weights_clean,
+                        "assets": snap.get("assets", []),
+                        "news_text_preview": news_clean,
                     },
                     "episode": None,
                 }
