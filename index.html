@@ -7,7 +7,7 @@
   <meta name="keywords" content="PortBench, LLM, benchmark, portfolio management, finance, CEPS, correlation, multi-asset">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
@@ -15,16 +15,14 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <script src="./static/js/bulma-carousel.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
-  <script src="./static/js/index.js"></script>
-  <script src="./static/data/market_dataset.js"></script>
-  <script src="./static/data/qa_samples.js"></script>
-  <script src="./static/data/pipeline/index.js"></script>
+  <script defer src="./static/js/bulma-carousel.min.js"></script>
+  <script defer src="./static/js/bulma-slider.min.js"></script>
+  <script defer src="./static/js/index.js"></script>
 </head>
 <body>
+<div class="scroll-progress" aria-hidden="true"></div>
 
 <!-- ==================== NAVBAR ==================== -->
 <nav class="navbar" role="navigation" aria-label="main navigation">
@@ -60,7 +58,7 @@
 </nav>
 
 <!-- ==================== HERO ==================== -->
-<section class="hero">
+<section class="hero pub-hero">
   <div class="hero-body">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
@@ -160,6 +158,26 @@
   </div>
 </section>
 
+<!-- ==================== KEY FINDINGS STRIP ==================== -->
+<section class="findings-strip">
+  <div class="container">
+    <div class="findings-strip-items">
+      <div class="finding-item">
+        <span class="finding-stat">27/30</span>
+        <span class="finding-label">LLM–profile combinations underperform a naive equal-weight allocation on Sharpe ratio</span>
+      </div>
+      <div class="finding-item">
+        <span class="finding-stat">6/10</span>
+        <span class="finding-label">LLMs fail the Conservative stress gate, all during the 2022 Crypto Collapse</span>
+      </div>
+      <div class="finding-item">
+        <span class="finding-stat">ρ = −0.32</span>
+        <span class="finding-label">Spearman rank correlation between static QA accuracy and pipeline CEPS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ==================== INTRODUCTION ==================== -->
 <section class="section">
   <div class="container" style="margin-bottom:2vh;">
@@ -201,7 +219,7 @@
             <b>90% of model-profile combinations fail to outperform a basic equal-weight allocation</b>,
             and models that satisfy every procedural constraint still suffer catastrophic drawdowns under stress.
           </p>
-          <img src="./static/images/method_framework.png" alt="Evaluation framework" style="width:100%; margin-top:1rem; border-radius:6px;">
+          <img loading="lazy" src="./static/images/method_framework.png" alt="Evaluation framework" style="width:100%; margin-top:1rem; border-radius:6px;">
           <p class="fig-caption" style="margin-top:0.5rem;">
             Evaluation framework. Static QA layer (Top): seven task templates generated automatically from
             historical data. Dynamic five-stage pipeline (Bottom): executed sequentially at every rebalance
@@ -215,11 +233,11 @@
 
 
 <!-- ==================== PORTBENCH EXPLORER BANNER ==================== -->
-<section class="hero is-light is-small section-banner">
-  <div class="hero-body has-text-centered">
-    <h1 class="title is-1" id="explorer">Interactive Browser</h1>
+<div class="section-divider">
+  <div class="container">
+    <h2 class="section-divider-title" id="explorer">Interactive Browser</h2>
   </div>
-</section>
+</div>
 
 <!-- ==================== PORTBENCH EXPLORER ==================== -->
 <section class="section">
@@ -263,23 +281,23 @@
           Select a date to see the full snapshot.
         </p>
         <div class="explorer-controls">
-          <label><b>Date:</b></label>
+          <label for="market-date-picker"><b>Date:</b></label>
           <select id="market-date-picker" class="explorer-select"></select>
         </div>
         <div id="market-snapshot-display"><div class="explorer-loading">Loading market data&hellip;</div></div>
 
         <!-- Three-panel: ticker counts + correlation structure, side by side -->
-        <div style="display:flex; gap:1.2rem; margin:1.5rem 0; align-items:center;">
-          <div style="flex:1; min-width:0;">
-            <img src="./static/images/data_asset_tickers.png" alt="Instrument count by asset class" style="width:100%; border-radius:6px;">
+        <div style="display:flex; flex-wrap:wrap; gap:1.2rem; margin:1.5rem 0; align-items:flex-start;">
+          <div style="flex:1; min-width:220px;">
+            <img loading="lazy" src="./static/images/data_asset_tickers.png" alt="Instrument count by asset class" style="width:100%; border-radius:6px;">
             <p class="fig-caption">Number of unique tickers/series per asset class.</p>
           </div>
-          <div style="flex:1; min-width:0;">
-            <img src="./static/images/data_corr_heatmap.png" alt="Correlation matrix" style="width:100%; border-radius:6px;">
+          <div style="flex:1; min-width:220px;">
+            <img loading="lazy" src="./static/images/data_corr_heatmap.png" alt="Correlation matrix" style="width:100%; border-radius:6px;">
             <p class="fig-caption">Pairwise Pearson correlation matrix (daily returns, 2015&ndash;2022).</p>
           </div>
-          <div style="flex:1; min-width:0;">
-            <img src="./static/images/data_corr_interclass.png" alt="Inter-class correlation" style="width:100%; border-radius:6px;">
+          <div style="flex:1; min-width:220px;">
+            <img loading="lazy" src="./static/images/data_corr_interclass.png" alt="Inter-class correlation" style="width:100%; border-radius:6px;">
             <p class="fig-caption">Mean pairwise correlation: each class vs. all others.</p>
           </div>
         </div>
@@ -290,34 +308,34 @@
         <div class="simple-carousel" id="asset-carousel">
           <div class="slides">
             <div class="slide active">
-              <img src="./static/images/dataset_overview_equities.png" alt="Equities">
+              <img loading="lazy" src="./static/images/dataset_overview_equities.png" alt="Equities">
               <p class="fig-caption">Equities (126 tickers: broad-market, sector, factor ETFs)</p>
             </div>
             <div class="slide">
-              <img src="./static/images/dataset_overview_bonds.png" alt="Bonds">
+              <img loading="lazy" src="./static/images/dataset_overview_bonds.png" alt="Bonds">
               <p class="fig-caption">Bonds (15 series: full yield curve, TIPS, credit)</p>
             </div>
             <div class="slide">
-              <img src="./static/images/dataset_overview_commodities.png" alt="Commodities">
+              <img loading="lazy" src="./static/images/dataset_overview_commodities.png" alt="Commodities">
               <p class="fig-caption">Commodities (16 tickers: energy, metals, agriculture)</p>
             </div>
             <div class="slide">
-              <img src="./static/images/dataset_overview_cryptocurrency.png" alt="Cryptocurrency">
+              <img loading="lazy" src="./static/images/dataset_overview_cryptocurrency.png" alt="Cryptocurrency">
               <p class="fig-caption">Cryptocurrency (12 tickers: major and mid-cap digital assets)</p>
             </div>
             <div class="slide">
-              <img src="./static/images/dataset_overview_real_estate.png" alt="Real Estate">
+              <img loading="lazy" src="./static/images/dataset_overview_real_estate.png" alt="Real Estate">
               <p class="fig-caption">Real Estate (10 series: REITs and housing indices)</p>
             </div>
             <div class="slide">
-              <img src="./static/images/dataset_overview_cash.png" alt="Cash">
+              <img loading="lazy" src="./static/images/dataset_overview_cash.png" alt="Cash">
               <p class="fig-caption">Cash Equivalents (4 series: money market, ultra-short duration)</p>
             </div>
           </div>
           <div class="carousel-controls">
-            <button class="carousel-btn" onclick="assetCarousel(-1)">&#8249;</button>
+            <button class="carousel-btn" aria-label="Previous slide" onclick="assetCarousel(-1)">&#8249;</button>
             <span class="carousel-counter" id="asset-counter">1 / 6</span>
-            <button class="carousel-btn" onclick="assetCarousel(1)">&#8250;</button>
+            <button class="carousel-btn" aria-label="Next slide" onclick="assetCarousel(1)">&#8250;</button>
           </div>
         </div>
         <script>
@@ -345,14 +363,18 @@
 
         <!-- Tab nav (QA + Pipeline only) -->
         <div class="tabs is-centered is-boxed" id="eval-tabs">
-          <ul>
-            <li class="is-active" data-tab="qa"><a>&#x2753; QA Dataset (T1&ndash;T7)</a></li>
-            <li data-tab="pipeline"><a>&#x2699;&#xFE0F; Pipeline Evaluation</a></li>
+          <ul role="tablist" aria-label="Evaluation framework layers">
+            <li class="is-active" data-tab="qa" role="presentation">
+              <a id="tab-btn-qa" role="tab" aria-selected="true" aria-controls="tab-qa" tabindex="0">&#x2753; QA Dataset (T1&ndash;T7)</a>
+            </li>
+            <li data-tab="pipeline" role="presentation">
+              <a id="tab-btn-pipeline" role="tab" aria-selected="false" aria-controls="tab-pipeline" tabindex="-1">&#x2699;&#xFE0F; Pipeline Evaluation</a>
+            </li>
           </ul>
         </div>
 
         <!-- ── Tab 1: QA Dataset ────────────────────────────────── -->
-        <div id="tab-qa" class="explorer-panel">
+        <div id="tab-qa" class="explorer-panel" role="tabpanel" aria-labelledby="tab-btn-qa" tabindex="0">
           <p class="has-text-justified" style="margin-bottom:1rem; font-size:0.9rem;">
             6,269 correlation-aware QA pairs across 7 task templates (T1&ndash;T7),
             spanning complexity levels 1&ndash;4 and three market regimes.
@@ -371,27 +393,30 @@
         </div>
 
         <!-- ── Tab 2: Pipeline Evaluation ──────────────────────── -->
-        <div id="tab-pipeline" class="explorer-panel" style="display:none;">
+        <div id="tab-pipeline" class="explorer-panel" role="tabpanel" aria-labelledby="tab-btn-pipeline" tabindex="0" aria-hidden="true" style="display:none;">
           <p class="has-text-justified" style="margin-bottom:1rem; font-size:0.9rem;">
             At each rebalance date a <code>MarketSnapshot</code> is constructed and passed to the LLM
             for five-stage evaluation (S1&ndash;S5).
             Select a model, market scenario, and date to see the model&rsquo;s input and stage-by-stage output vs. ground truth.
           </p>
           <div class="explorer-controls" style="flex-wrap:wrap;">
-            <label><b>Model:</b></label>
+            <label for="pipeline-model-picker"><b>Model:</b></label>
             <select id="pipeline-model-picker" class="explorer-select"></select>
-            <label><b>Scenario:</b></label>
+            <label for="pipeline-scenario-picker"><b>Scenario:</b></label>
             <select id="pipeline-scenario-picker" class="explorer-select"></select>
-            <label><b>Date:</b></label>
+            <label for="pipeline-date-picker"><b>Date:</b></label>
             <select id="pipeline-date-picker" class="explorer-select"></select>
           </div>
-          <div id="pipeline-display"><div class="explorer-loading">Select a model and scenario to load.</div></div>
+          <div id="pipeline-display"><div class="explorer-loading">Loading pipeline data&hellip;</div></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<script src="./static/data/market_dataset.js"></script>
+<script src="./static/data/qa_samples.js"></script>
+<script src="./static/data/pipeline/index.js"></script>
 <script>
 (function() {
   /* ── helpers ── */
@@ -422,17 +447,17 @@
   }
   function regimeStyle(r) {
     if (!r) return "";
-    if (r === "bull")    return "color:#15803d;font-weight:700";
-    if (r === "bear")    return "color:#b91c1c;font-weight:700";
-    if (r === "crisis")  return "color:#b91c1c;font-weight:900";
-    return "color:#555";
+    if (r === "bull")    return "color:oklch(0.38 0.12 145);font-weight:700";
+    if (r === "bear")    return "color:oklch(0.42 0.16 25);font-weight:700";
+    if (r === "crisis")  return "color:oklch(0.38 0.16 25);font-weight:900";
+    return "color:" + getComputedStyle(document.documentElement).getPropertyValue('--muted').trim();
   }
   function scoreColor(s) {
-    if (s === null || s === undefined) return "#555";
+    if (s === null || s === undefined) return "oklch(0.48 0.008 255)";
     var n = parseFloat(s);
-    if (n >= 0.70) return "#15803d";
-    if (n >= 0.40) return "#b45309";
-    return "#b91c1c";
+    if (n >= 0.70) return "oklch(0.38 0.12 145)";
+    if (n >= 0.40) return "oklch(0.44 0.12 60)";
+    return "oklch(0.42 0.16 25)";
   }
   function scoreClass(s) {
     if (s === null || s === undefined) return "";
@@ -446,11 +471,22 @@
   var initialized = {market: false, qa: false, pipeline: false};
   document.querySelectorAll("#eval-tabs li").forEach(function(li) {
     li.addEventListener("click", function() {
-      document.querySelectorAll("#eval-tabs li").forEach(function(l) { l.classList.remove("is-active"); });
-      document.querySelectorAll(".explorer-panel").forEach(function(p) { p.style.display = "none"; });
+      document.querySelectorAll("#eval-tabs li").forEach(function(l) {
+        l.classList.remove("is-active");
+        var a = l.querySelector("[role='tab']");
+        if (a) { a.setAttribute("aria-selected", "false"); a.setAttribute("tabindex", "-1"); }
+      });
+      document.querySelectorAll(".explorer-panel").forEach(function(p) {
+        p.style.display = "none";
+        p.setAttribute("aria-hidden", "true");
+      });
       li.classList.add("is-active");
+      var a = li.querySelector("[role='tab']");
+      if (a) { a.setAttribute("aria-selected", "true"); a.setAttribute("tabindex", "0"); }
       var tab = li.dataset.tab;
-      document.getElementById("tab-" + tab).style.display = "";
+      var panel = document.getElementById("tab-" + tab);
+      panel.style.display = "";
+      panel.removeAttribute("aria-hidden");
       if (tab === "qa"     && !initialized.qa)       initQA();
       if (tab === "pipeline" && !initialized.pipeline) initPipeline();
     });
@@ -525,8 +561,8 @@
         var r20 = a.ret_20d !== null ? ((a.ret_20d >= 0 ? "+" : "") + pct(a.ret_20d, 1)) : "N/A";
         var r60 = a.ret_60d !== null ? ((a.ret_60d >= 0 ? "+" : "") + pct(a.ret_60d, 1)) : "N/A";
         var vol = a.vol !== null ? pct(a.vol, 1) : "N/A";
-        var r20c = a.ret_20d !== null ? (a.ret_20d >= 0 ? "color:#15803d" : "color:#b91c1c") : "";
-        var r60c = a.ret_60d !== null ? (a.ret_60d >= 0 ? "color:#15803d" : "color:#b91c1c") : "";
+        var r20c = a.ret_20d !== null ? (a.ret_20d >= 0 ? "color:oklch(0.38 0.12 145)" : "color:oklch(0.42 0.16 25)") : "";
+        var r60c = a.ret_60d !== null ? (a.ret_60d >= 0 ? "color:oklch(0.38 0.12 145)" : "color:oklch(0.42 0.16 25)") : "";
         html += '<tr>';
         html += '<td style="font-weight:700">' + esc(a.ticker) + '</td>';
         html += '<td>' + fmt(a.close, 2) + '</td>';
@@ -555,7 +591,7 @@
           if (c2 === c1) return;
           var v = snap.correlation[c1][c2];
           var style = "";
-          if (v !== null && Math.abs(parseFloat(v)) > 0.5) style = 'style="font-weight:700;color:#b91c1c"';
+          if (v !== null && Math.abs(parseFloat(v)) > 0.5) style = 'style="font-weight:700;color:oklch(0.42 0.16 25)"';
           html += '<td ' + style + '>' + (v !== null ? fmt(v, 2) : "N/A") + '</td>';
         });
         html += '</tr>';
@@ -569,7 +605,7 @@
       html += '<div class="showcase-inner-body"><ul style="font-size:0.78rem;margin:0;padding-left:18px;">';
       clsNews.forEach(function(item) {
         var t = cleanNewsText(item.text);
-        var src = item.source ? '<span style="color:#888;font-size:0.7rem;">[' + esc(item.source) + ']</span> ' : '';
+        var src = item.source ? '<span style="color:#666;font-size:0.7rem;">[' + esc(item.source) + ']</span> ' : '';
         html += '<li style="margin-bottom:4px;">' + src + esc(t) + '</li>';
       });
       html += '</ul></div></div>';
@@ -625,8 +661,8 @@
     var s = samples[qaCurIdx];
     var color = QA_COLORS[qaCurTmpl] || "si-qa-blue";
     var desc = QA_DESC[qaCurTmpl] || qaCurTmpl;
-    var regimeBadge = '<span style="background:#e5e7eb;color:#374151;border-radius:3px;padding:1px 6px;font-size:0.72rem;margin-left:8px;">' + esc(s.market_regime) + '</span>';
-    var splitBadge  = '<span style="background:#e5e7eb;color:#374151;border-radius:3px;padding:1px 6px;font-size:0.72rem;margin-left:4px;">' + esc(s.split) + '</span>';
+    var regimeBadge = '<span style="background:oklch(0.93 0.008 255);color:oklch(0.28 0.010 255);border-radius:3px;padding:1px 6px;font-size:0.72rem;margin-left:8px;">' + esc(s.market_regime) + '</span>';
+    var splitBadge  = '<span style="background:oklch(0.93 0.008 255);color:oklch(0.28 0.010 255);border-radius:3px;padding:1px 6px;font-size:0.72rem;margin-left:4px;">' + esc(s.split) + '</span>';
     var assetsBadge = (s.assets||[]).map(function(a){ return '<code style="font-size:0.75rem;background:#f3f4f6;padding:1px 4px;border-radius:2px;">' + esc(a) + '</code>'; }).join(" ");
 
     var html = '<div class="showcase-inner ' + color + '" style="text-align:left;">';
@@ -648,9 +684,9 @@
 
     /* carousel controls */
     html += '<div class="carousel-controls" style="margin-top:0.6rem;">';
-    html += '<button class="carousel-btn" id="qa-prev">&#8249;</button>';
+    html += '<button class="carousel-btn" aria-label="Previous sample" id="qa-prev">&#8249;</button>';
     html += '<span class="carousel-counter">' + (qaCurIdx+1) + ' / ' + n + '</span>';
-    html += '<button class="carousel-btn" id="qa-next">&#8250;</button>';
+    html += '<button class="carousel-btn" aria-label="Next sample" id="qa-next">&#8250;</button>';
     html += '</div>';
 
     document.getElementById("qa-carousel-display").innerHTML = html;
@@ -814,10 +850,10 @@
       var sortedW = wKeys.sort(function(a,b){ return (weights[b]||0) - (weights[a]||0); });
       sortedW.forEach(function(t) {
         var w = weights[t];
-        var bg = w > 0.05 ? "#dbeafe" : w > 0.02 ? "#eff6ff" : "#f9fafb";
-        var border = w > 0.05 ? "#93c5fd" : w > 0.02 ? "#bfdbfe" : "#e5e7eb";
+        var bg = w > 0.05 ? "oklch(0.93 0.040 250)" : w > 0.02 ? "oklch(0.97 0.010 250)" : "oklch(0.97 0.004 255)";
+        var border = w > 0.05 ? "oklch(0.78 0.090 255)" : w > 0.02 ? "oklch(0.91 0.055 255)" : "oklch(0.88 0.006 255)";
         html += '<span style="font-size:0.74rem;background:' + bg + ';padding:2px 7px;border-radius:3px;border:1px solid ' + border + ';">';
-        html += '<b>' + esc(t) + '</b> <span style="color:#6b7280">' + pct(w,1) + '</span></span>';
+        html += '<b>' + esc(t) + '</b> <span style="color:#374151">' + pct(w,1) + '</span></span>';
       });
       html += '</div></div></div>';
     }
@@ -833,9 +869,9 @@
       var sortedTR = trKeys.sort(function(a,b){ return Math.abs(tr[b]||0) - Math.abs(tr[a]||0); });
       sortedTR.forEach(function(t) {
         var v = tr[t];
-        var c = v >= 0 ? "#166534" : "#991b1b";
-        var bg = v >= 0 ? "#f0fdf4" : "#fef2f2";
-        var border = v >= 0 ? "#bbf7d0" : "#fecaca";
+        var c = v >= 0 ? "oklch(0.38 0.12 145)" : "oklch(0.42 0.16 25)";
+        var bg = v >= 0 ? "oklch(0.97 0.020 145)" : "oklch(0.97 0.015 25)";
+        var border = v >= 0 ? "oklch(0.82 0.06 145)" : "oklch(0.82 0.06 25)";
         var sign = v >= 0 ? "+" : "";
         html += '<span style="font-size:0.74rem;background:' + bg + ';padding:2px 7px;border-radius:3px;border:1px solid ' + border + ';">';
         html += '<b>' + esc(t) + '</b> <span style="color:' + c + '">' + sign + pct(v,1) + '</span></span>';
@@ -911,7 +947,7 @@
   }
 
   function renderStageOutput(stageId, obj) {
-    if (!obj) return "<span style='color:#888'>N/A</span>";
+    if (!obj) return "<span style='color:#555'>N/A</span>";
     var lines = [];
     if (stageId === "S1") {
       if (obj.detected_regime) lines.push("<b>Regime:</b> " + esc(obj.detected_regime));
@@ -937,7 +973,7 @@
       if (obj.portfolio_drawdown !== undefined) lines.push("<b>MaxDD:</b> " + pct(obj.portfolio_drawdown,2));
       if (obj.rebalance_needed !== undefined) lines.push("<b>Rebalance:</b> " + (obj.rebalance_needed ? "Yes" : "No"));
     }
-    return lines.join("<br>") || '<span style="color:#888">—</span>';
+    return lines.join("<br>") || '<span style="color:#555">—</span>';
   }
 
   /* ── Auto-init market tab (it's the default) ── */
@@ -948,11 +984,11 @@
 
 
 <!-- ==================== EVALUATION DETAILS BANNER ==================== -->
-<section class="hero is-light is-small section-banner">
-  <div class="hero-body has-text-centered">
-    <h1 class="title is-1" id="details">Evaluation Details</h1>
+<div class="section-divider">
+  <div class="container">
+    <h2 class="section-divider-title" id="details">Evaluation Details</h2>
   </div>
-</section>
+</div>
 
 <!-- ==================== EVALUATION DETAILS ==================== -->
 <section class="section">
@@ -962,31 +998,18 @@
     <div class="columns is-centered m-6">
       <div class="column is-full has-text-centered content">
         <h2 class="title is-3">At a Glance</h2>
-        <div class="columns is-centered has-text-centered" style="margin-top:1rem;">
-          <div class="column">
-            <div class="result-number">10</div>
-            <div class="result-label">LLMs Evaluated</div>
-          </div>
-          <div class="column">
-            <div class="result-number">5</div>
-            <div class="result-label">Classical Baselines</div>
-          </div>
-          <div class="column">
-            <div class="result-number">6</div>
-            <div class="result-label">Asset Classes</div>
-          </div>
-          <div class="column">
-            <div class="result-number">183</div>
-            <div class="result-label">Financial Instruments</div>
-          </div>
-          <div class="column">
-            <div class="result-number">6,269</div>
-            <div class="result-label">QA Pairs</div>
-          </div>
-          <div class="column">
-            <div class="result-number">10 yr</div>
-            <div class="result-label">2015 – 2025</div>
-          </div>
+        <div class="benchmark-specline">
+          <span><strong>10</strong> LLMs evaluated</span>
+          <span class="spec-sep">·</span>
+          <span><strong>5</strong> classical baselines</span>
+          <span class="spec-sep">·</span>
+          <span><strong>6</strong> asset classes</span>
+          <span class="spec-sep">·</span>
+          <span><strong>183</strong> financial instruments</span>
+          <span class="spec-sep">·</span>
+          <span><strong>6,269</strong> QA pairs</span>
+          <span class="spec-sep">·</span>
+          <span><strong>10 years</strong> of data (2015–2025)</span>
         </div>
       </div>
     </div>
@@ -1024,15 +1047,15 @@
               Ground truth computed from realized future returns with strict PiT safety.
             </span>
           </div>
-          <div class="stage-box" style="border-left-color:#aaa;">
-            <span class="stage-label" style="color:#555;">S4 · Execution Simulation</span>
+          <div class="stage-box is-deterministic">
+            <span class="stage-label">S4 · Execution Simulation</span>
             <span style="margin-left:1rem; font-size:0.9rem;">
               Deterministic. Fixed transaction costs (10 bps slippage + 5 bps commission).
               Scores turnover deviation from the oracle rebalancing rate.
             </span>
           </div>
-          <div class="stage-box" style="border-left-color:#aaa;">
-            <span class="stage-label" style="color:#555;">S5 · Risk Monitoring</span>
+          <div class="stage-box is-deterministic">
+            <span class="stage-label">S5 · Risk Monitoring</span>
             <span style="margin-left:1rem; font-size:0.9rem;">
               Deterministic. 50% rebalance-trigger accuracy + 50% VaR/drawdown estimation accuracy.
               Rebalance trigger fires when max single-asset drift exceeds 5%.
@@ -1115,8 +1138,8 @@ Default propagation weight  λ = 0.1
               <div class="profile-icon">🛡️</div>
               <div class="profile-name">Conservative</div>
               <div class="profile-constraints">
-                <div class="pc-item"><span class="pc-label">Equity + Crypto</span><span class="pc-value" style="color:#23d160;">≤ 40%</span></div>
-                <div class="pc-item"><span class="pc-label">Bond + Cash</span><span class="pc-value" style="color:#23d160;">≥ 40%</span></div>
+                <div class="pc-item"><span class="pc-label">Equity + Crypto</span><span class="pc-value" style="color:oklch(0.42 0.14 145);">≤ 40%</span></div>
+                <div class="pc-item"><span class="pc-label">Bond + Cash</span><span class="pc-value" style="color:oklch(0.42 0.14 145);">≥ 40%</span></div>
                 <div class="pc-item"><span class="pc-label">Max Drawdown</span><span class="pc-value">≤ 10%</span></div>
                 <div class="pc-item"><span class="pc-label">Daily VaR (95%)</span><span class="pc-value">≤ −1.0%</span></div>
               </div>
@@ -1127,8 +1150,8 @@ Default propagation weight  λ = 0.1
               <div class="profile-icon">⚖️</div>
               <div class="profile-name">Balanced</div>
               <div class="profile-constraints">
-                <div class="pc-item"><span class="pc-label">Equity + Crypto</span><span class="pc-value" style="color:#3273dc;">≤ 65%</span></div>
-                <div class="pc-item"><span class="pc-label">Bond + Cash</span><span class="pc-value" style="color:#3273dc;">≥ 20%</span></div>
+                <div class="pc-item"><span class="pc-label">Equity + Crypto</span><span class="pc-value" style="color:oklch(0.50 0.160 255);">≤ 65%</span></div>
+                <div class="pc-item"><span class="pc-label">Bond + Cash</span><span class="pc-value" style="color:oklch(0.50 0.160 255);">≥ 20%</span></div>
                 <div class="pc-item"><span class="pc-label">Max Drawdown</span><span class="pc-value">≤ 20%</span></div>
                 <div class="pc-item"><span class="pc-label">Daily VaR (95%)</span><span class="pc-value">≤ −2.0%</span></div>
               </div>
@@ -1139,8 +1162,8 @@ Default propagation weight  λ = 0.1
               <div class="profile-icon">🚀</div>
               <div class="profile-name">Aggressive</div>
               <div class="profile-constraints">
-                <div class="pc-item"><span class="pc-label">Equity + Crypto</span><span class="pc-value" style="color:#ff3860;">≤ 90%</span></div>
-                <div class="pc-item"><span class="pc-label">Bond + Cash</span><span class="pc-value" style="color:#ff3860;">≥ 5%</span></div>
+                <div class="pc-item"><span class="pc-label">Equity + Crypto</span><span class="pc-value" style="color:oklch(0.46 0.18 25);">≤ 90%</span></div>
+                <div class="pc-item"><span class="pc-label">Bond + Cash</span><span class="pc-value" style="color:oklch(0.46 0.18 25);">≥ 5%</span></div>
                 <div class="pc-item"><span class="pc-label">Max Drawdown</span><span class="pc-value">≤ 35%</span></div>
                 <div class="pc-item"><span class="pc-label">Daily VaR (95%)</span><span class="pc-value">≤ −4.0%</span></div>
               </div>
@@ -1195,11 +1218,11 @@ Default propagation weight  λ = 0.1
 </section>
 
 <!-- ==================== RESULTS BANNER ==================== -->
-<section class="hero is-light is-small section-banner" id="results">
-  <div class="hero-body has-text-centered">
-    <h1 class="title is-1">Results &amp; Insights</h1>
+<div class="section-divider" id="results">
+  <div class="container">
+    <h2 class="section-divider-title">Results &amp; Insights</h2>
   </div>
-</section>
+</div>
 
 <!-- ==================== RESULTS ==================== -->
 <section class="section">
@@ -1277,9 +1300,9 @@ Default propagation weight  λ = 0.1
           <b>Bold</b> = column best within each profile.
         </p>
         <div class="model-labels-container">
-          <span class="model-label" style="background:rgba(35,209,96,0.2);">Conservative</span>
-          <span class="model-label" style="background:rgba(50,115,220,0.15);">Balanced</span>
-          <span class="model-label" style="background:rgba(255,56,96,0.15);">Aggressive</span>
+          <span class="model-label" style="background:oklch(0.96 0.020 145);color:oklch(0.28 0.12 145);">Conservative</span>
+          <span class="model-label" style="background:oklch(0.97 0.015 255);color:oklch(0.38 0.155 255);">Balanced</span>
+          <span class="model-label" style="background:oklch(0.97 0.015 25);color:oklch(0.42 0.16 25);">Aggressive</span>
         </div>
         <div class="leaderboard-container">
           <div class="table-wrapper">
@@ -1348,10 +1371,10 @@ Default propagation weight  λ = 0.1
     <!-- Financial outcomes figures -->
     <div class="columns is-centered m-6">
       <div class="column is-full has-text-centered content">
-        <div style="margin-bottom:1.2rem;"><img src="./static/images/exp_metrics_balanced.png" alt="Risk-adjusted metrics, balanced" style="width:75%; display:block; margin:0 auto; border-radius:6px;">
+        <div style="margin-bottom:1.2rem;"><img loading="lazy" src="./static/images/exp_metrics_balanced.png" alt="Risk-adjusted metrics, balanced" style="width:75%; display:block; margin:0 auto; border-radius:6px;">
             <p class="fig-caption">Risk-adjusted return metrics (Sharpe, total return, max drawdown, CEPS) under the Balanced profile.</p>
         </div>
-        <div style="margin-bottom:1.2rem;"><img src="./static/images/exp_nav_balanced.png" alt="NAV trajectory, balanced" style="width:75%; display:block; margin:0 auto; border-radius:6px;">
+        <div style="margin-bottom:1.2rem;"><img loading="lazy" src="./static/images/exp_nav_balanced.png" alt="NAV trajectory, balanced" style="width:75%; display:block; margin:0 auto; border-radius:6px;">
             <p class="fig-caption">Portfolio NAV trajectories (2024). Shaded band = range across all LLMs; dashed lines = classical baselines.</p>
         </div>
       </div>
@@ -1387,13 +1410,13 @@ Default propagation weight  λ = 0.1
           maximum drawdown across all three historical stress regimes stays within the profile's tolerance.
           The images below show aggregate stress performance across all models and profiles.
         </p>
-        <div style="display:flex; gap:1.5rem; margin:1.5rem 0;">
-          <div style="flex:1; min-width:0;">
-            <img src="./static/images/exp_stress_drawdown.png" style="width:100%; height:340px; object-fit:contain; border-radius:6px; background:#fafafa;">
+        <div style="display:flex; flex-wrap:wrap; gap:1.5rem; margin:1.5rem 0;">
+          <div style="flex:1; min-width:220px;">
+            <img loading="lazy" src="./static/images/exp_stress_drawdown.png" style="width:100%; height:340px; object-fit:contain; border-radius:6px; background:#fafafa;">
             <p class="fig-caption">Max drawdown across three stress regimes (worst case, all profiles). Six of ten LLMs fail Conservative.</p>
           </div>
-          <div style="flex:1; min-width:0;">
-            <img src="./static/images/analysis_normal_vs_stress.png" style="width:100%; height:340px; object-fit:contain; border-radius:6px; background:#fafafa;">
+          <div style="flex:1; min-width:220px;">
+            <img loading="lazy" src="./static/images/analysis_normal_vs_stress.png" style="width:100%; height:340px; object-fit:contain; border-radius:6px; background:#fafafa;">
             <p class="fig-caption">Normal-period vs. stress-period CEPS (2022, Conservative). High normal scores do not predict stress survival.</p>
           </div>
         </div>
@@ -1449,7 +1472,7 @@ Default propagation weight  λ = 0.1
             </tbody>
           </table>
         </div>
-        <p style="font-size:0.8rem; color:#888; margin-top:0.5rem; text-align:left;">
+        <p style="font-size:0.8rem; color:#666; margin-top:0.5rem; text-align:left;">
           F = mean(T4,T5) formula-driven; J = mean(T1,T2,T6,T7) judgment-driven.
           Restricted (T4<sub>r</sub>, T5<sub>r</sub>) withholds the covariance matrix:
           7 of 10 models perform <em>better</em> without it, confirming format matching rather than genuine numerical reasoning.
@@ -1500,13 +1523,13 @@ Default propagation weight  λ = 0.1
             </tbody>
           </table>
         </div>
-        <div style="display:flex; gap:1.5rem; margin:1.5rem 0;">
-          <div style="flex:1; min-width:0;">
-            <img src="./static/images/analysis_s2_s4_quadrant.png" style="width:100%; height:340px; object-fit:contain; border-radius:6px; background:#fafafa;">
+        <div style="display:flex; flex-wrap:wrap; gap:1.5rem; margin:1.5rem 0;">
+          <div style="flex:1; min-width:220px;">
+            <img loading="lazy" src="./static/images/analysis_s2_s4_quadrant.png" style="width:100%; height:340px; object-fit:contain; border-radius:6px; background:#fafafa;">
             <p class="fig-caption">S2 (signal) vs. S4 (execution). Hunyuan3-Preview leads S2 yet collapses in S4: strong signals, no execution.</p>
           </div>
-          <div style="flex:1; min-width:0;">
-            <img src="./static/images/analysis_profile_adaptation.png" style="width:100%; height:340px; object-fit:contain; border-radius:6px; background:#fafafa;">
+          <div style="flex:1; min-width:220px;">
+            <img loading="lazy" src="./static/images/analysis_profile_adaptation.png" style="width:100%; height:340px; object-fit:contain; border-radius:6px; background:#fafafa;">
             <p class="fig-caption">Profile Alignment Score (PAS) per model. GLM-5.1 applies a nearly identical allocation regardless of risk profile (σ = 0.014).</p>
           </div>
         </div>
@@ -1517,7 +1540,7 @@ Default propagation weight  λ = 0.1
 </section>
 
 <!-- ==================== CITATION ==================== -->
-<section class="section" style="padding-top:1.5rem;">
+<section class="section" aria-label="Citation" style="padding-top:1.5rem;">
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-four-fifths">
