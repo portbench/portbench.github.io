@@ -183,42 +183,44 @@
   <div class="container" style="margin-bottom:2vh;">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Introduction</h2>
+        <h2 class="title is-3">Background &amp; Motivation</h2>
         <div class="content has-text-justified">
           <p>
             Large language models (LLMs) have shown strong performance across diverse financial tasks,
-            yet portfolio management (PM), a critical financial decision-making task, remains poorly benchmarked.
-            Existing benchmarks exhibit two main gaps: they <b>ignore cross-asset correlation structures</b>,
-            failing to distinguish genuinely diversified portfolios from concentrated ones,
-            and <b>fail to evaluate the complete PM decision pipeline</b> in real-world scenarios.
+            yet portfolio management (PM) remains poorly benchmarked. Existing benchmarks
+            <b>ignore cross-asset correlation structures</b> and <b>fail to evaluate the complete PM
+            decision pipeline</b>, missing the compounding errors that arise as reasoning propagates
+            through sequential allocation stages.
           </p>
           <p>
-            We introduce <b>PortBench</b>, a benchmark spanning six heterogeneous asset classes over ten years.
-            PortBench consists of two complementary layers: a static QA dataset of <b>6,269</b>
-            correlation-based questions across seven task templates, and a dynamic five-stage allocation
-            pipeline that mirrors the full PM decision cycle. To evaluate these layers we introduce two
-            dedicated metrics: a <b>dual-layer correlation score</b> that measures whether proposed portfolios
-            exploit inter-class hedging and avoid intra-class concentration, and <b>CEPS</b>, which quantifies
-            how reasoning errors compound across pipeline stages. We further assess strategy robustness and
-            investor alignment under <b>three historical stress regimes and three risk profiles</b>.
+            We introduce <b>PortBench</b> with the following key contributions:
           </p>
-          <p>
-            Critically, every component of PortBench is <b>objective, traceable, and scalable</b>.
-            The framework rests on a single auditable source: <b>the Market Base Dataset</b>.
-            <b>QA pairs</b> are auto-generated via rule-based templates <b>without human annotation</b>,
-            enabling seamless extension to new periods and assets.
-            Crucially, pipeline ground truths are <b>validated strictly against realized future returns</b>
-            that are <b>withheld from LLM prompts</b> (ensuring point-in-time safety).
-            Thus, every S1–S5 score traces back to <b>observed market outcomes</b>,
-            free from human judgment, oracle leakage, or hidden assumptions.
-            This guarantees fair, reproducible comparisons and allows the benchmark to
-            <b>scale without manual re-annotation</b>.
-          </p>
-          <p>
-            Evaluating ten frontier LLMs, we find that despite strong performance on static financial QA,
-            <b>90% of model-profile combinations fail to outperform a basic equal-weight allocation</b>,
-            and models that satisfy every procedural constraint still suffer catastrophic drawdowns under stress.
-          </p>
+          <div class="columns is-multiline" style="margin-top:0.5rem; margin-bottom:1rem;">
+            <div class="column is-half">
+              <div class="box" style="height:100%;">
+                <p class="heading" style="font-size:0.7rem; letter-spacing:0.05em; color:#888;">DATASET</p>
+                <p><b>Market Base Dataset</b>: 183 instruments across 6 asset classes over 10 years (2015–2025), forming a single auditable source for all benchmark components.</p>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="box" style="height:100%;">
+                <p class="heading" style="font-size:0.7rem; letter-spacing:0.05em; color:#888;">STATIC LAYER</p>
+                <p><b>6,269 QA pairs</b> across 7 correlation-based task templates, auto-generated without human annotation and extensible to new periods and assets.</p>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="box" style="height:100%;">
+                <p class="heading" style="font-size:0.7rem; letter-spacing:0.05em; color:#888;">DYNAMIC LAYER</p>
+                <p><b>Five-stage allocation pipeline</b> mirroring the full PM decision cycle, evaluated under 3 investor risk profiles and 3 historical stress regimes.</p>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="box" style="height:100%;">
+                <p class="heading" style="font-size:0.7rem; letter-spacing:0.05em; color:#888;">METRICS</p>
+                <p><b>Dual-layer correlation score</b> measuring inter-class hedging and intra-class concentration, plus <b>CEPS</b> quantifying how reasoning errors compound across pipeline stages.</p>
+              </div>
+            </div>
+          </div>
           <img loading="lazy" src="./static/images/method_framework.png" alt="Evaluation framework" style="width:100%; margin-top:1rem; border-radius:6px;">
           <p class="fig-caption" style="margin-top:0.5rem;">
             Evaluation framework. Static QA layer (Top): seven task templates generated automatically from
@@ -359,6 +361,10 @@
         <p class="has-text-justified" style="margin-bottom:1.2rem;">
           The evaluation framework has two complementary layers.
           Switch between the tabs below to explore the <b>QA Dataset</b> and the <b>Pipeline Evaluation</b> in detail.
+          Every component is <b>objective, traceable, and scalable</b>: QA pairs are auto-generated without
+          human annotation, and pipeline ground truths are validated against <b>realized future returns
+          withheld from model prompts</b>, eliminating oracle leakage and enabling seamless extension to
+          new periods and assets.
         </p>
 
         <!-- Tab nav (QA + Pipeline only) -->
