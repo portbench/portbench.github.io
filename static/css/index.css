@@ -809,6 +809,45 @@ th {
   text-align: left;
 }
 
+/* ── Contribution cards (Background & Motivation) ── */
+.contrib-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--accent);
+  border-radius: 5px;
+  padding: 1.2rem 1.25rem 1.3rem;
+  height: 100%;
+  transition: box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.contrib-card:hover {
+  box-shadow: 0 4px 16px oklch(0.12 0.01 255 / 0.05);
+}
+@media (prefers-reduced-motion: reduce) {
+  .contrib-card { transition: none; }
+  .contrib-card:hover { box-shadow: none; }
+}
+.contrib-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+.contrib-title {
+  display: block;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--ink);
+  margin-bottom: 0.25rem;
+}
+.contrib-desc {
+  font-size: 0.85rem;
+  color: var(--ink-2);
+  line-height: 1.55;
+}
+
 /* ── Key Finding callout boxes ── */
 .kf-callout {
   border-radius: 6px;
