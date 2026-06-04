@@ -7,7 +7,9 @@
   <meta name="keywords" content="PortBench, LLM, benchmark, portfolio management, finance, CEPS, correlation, multi-asset">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;0,8..60,900;1,8..60,400&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
@@ -22,7 +24,18 @@
   <script defer src="./static/js/index.js"></script>
 </head>
 <body>
+<a href="#findings" class="skip-link">Skip to content</a>
 <div class="scroll-progress" aria-hidden="true"></div>
+
+<!-- ==================== STICKY SECTION NAV ==================== -->
+<nav class="section-nav" id="section-nav" aria-label="Page sections">
+  <a href="#findings" class="section-nav-link">Findings</a>
+  <a href="#background" class="section-nav-link">Background</a>
+  <a href="#explorer" class="section-nav-link">Explorer</a>
+  <a href="#details" class="section-nav-link">Details</a>
+  <a href="#results" class="section-nav-link">Results</a>
+  <a href="#citation" class="section-nav-link">Citation</a>
+</nav>
 
 <!-- ==================== NAVBAR ==================== -->
 <nav class="navbar" role="navigation" aria-label="main navigation">
@@ -34,7 +47,7 @@
     </a>
   </div>
   <div class="navbar-menu">
-    <div class="navbar-start" style="flex-grow:1; justify-content:center;">
+    <div class="navbar-start flex-grow-1 justify-center">
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link">More Resources</a>
         <div class="navbar-dropdown">
@@ -60,7 +73,7 @@
 <!-- ==================== HERO ==================== -->
 <section class="hero pub-hero">
   <div class="hero-body">
-    <div class="container is-max-desktop">
+    <div class="container">
       <div class="columns is-centered">
         <div class="column has-text-centered">
           <h1 class="title is-1 publication-title is-bold">
@@ -82,16 +95,12 @@
             </span>
           </div>
 
-          <br>
-
-          <div class="is-size-6 publication-authors">
+          <div class="is-size-6 publication-authors mt-2">
             <span class="author-block"><sup>1</sup>Yantai Research Institute of Harbin Engineering University</span><br>
             <span class="author-block"><sup>2</sup>The Hong Kong University of Science and Technology (Guangzhou)</span>
           </div>
 
-          <br>
-
-          <div class="is-size-6 publication-authors">
+          <div class="is-size-6 publication-authors mt-1">
             <span class="author-block">Corresponding to: <a href="mailto:sijiachen@hkust-gz.edu.cn">sijiachen@hkust-gz.edu.cn</a></span>
           </div>
 
@@ -107,7 +116,7 @@
               <span class="link-block">
                 <a href="https://huggingface.co/collections/AgenticFinLab/portbench" target="_blank"
                    class="external-link button is-small is-rounded is-dark">
-                  <span class="icon" style="font-size:14px">🤗</span>
+                  <span class="icon text-xs">🤗</span>
                   <span>Dataset</span>
                 </a>
               </span>
@@ -144,47 +153,59 @@
   </div>
 </section>
 
-<!-- ==================== TEASER ==================== -->
-<section class="hero teaser">
-  <div class="container is-max-desktop has-text-centered">
-    <img src="./static/images/intro_overview.png" alt="PortBench overview" style="width:100%;">
-    <p style="margin-top:1rem;">
-      Overview of <b>PortBench</b>. We first collect the <b>Market Base Dataset</b>
-      (183 instruments × 6 asset classes, 2015–2025), then build a
-      <b>dual-layer evaluation framework</b> on top:
-      a static QA layer (6,269 correlation-based pairs) and a dynamic five-stage pipeline,
-      jointly assessed under three risk profiles and three historical stress regimes.
-    </p>
-  </div>
-</section>
-
-<!-- ==================== KEY FINDINGS STRIP ==================== -->
-<section class="findings-strip">
+<!-- ==================== KEY FINDINGS ==================== -->
+<section class="section" id="findings">
   <div class="container">
-    <div class="findings-strip-items">
-      <div class="finding-item">
-        <span class="finding-stat">27/30</span>
-        <span class="finding-label">LLM–profile combinations underperform a naive equal-weight allocation on Sharpe ratio</span>
+    <div class="content-reading">
+    <h2 class="section-heading">Key Findings</h2>
+    <div class="findings-editorial">
+      <div class="finding-block">
+        <div class="finding-stat">27/30</div>
+        <div class="finding-content">
+          <div class="finding-headline">LLMs Fail to Beat Equal-Weight</div>
+          <div class="finding-body">
+            Across 30 model–profile combinations,
+            <span class="finding-stat-inline">27 / 30</span> underperform a naive 1/N equal-weight baseline on <abbr title="Sharpe ratio: risk-adjusted return, calculated as (portfolio return − risk-free rate) / portfolio volatility">Sharpe ratio</abbr>.
+            High-quality market interpretation does <em>not</em> guarantee better portfolios.
+            Only Qwen3.6-Plus (Balanced) simultaneously beats Equal-Weight and passes all stress gates.
+          </div>
+        </div>
       </div>
-      <div class="finding-item">
-        <span class="finding-stat">6/10</span>
-        <span class="finding-label">LLMs fail the Conservative stress gate, all during the 2022 Crypto Collapse</span>
+      <div class="finding-block">
+        <div class="finding-stat">6/10</div>
+        <div class="finding-content">
+          <div class="finding-headline">Stress Rankings Diverge from Normal-Period</div>
+          <div class="finding-body">
+            Normal-period CEPS rankings do <em>not</em> predict stress survival.
+            <span class="finding-stat-inline">6 / 10</span> LLMs fail the Conservative stress gate, all during the 2022 Crypto Collapse.
+            Compliant allocations still produce double-digit <abbr title="Drawdown: the peak-to-trough decline in portfolio value during a specific period">drawdowns</abbr> via cross-asset contagion.
+            Normal-period benchmarks systematically overestimate robustness.
+          </div>
+        </div>
       </div>
-      <div class="finding-item">
-        <span class="finding-stat">ρ = −0.32</span>
-        <span class="finding-label">Spearman rank correlation between static QA accuracy and pipeline CEPS</span>
+      <div class="finding-block">
+        <div class="finding-stat">ρ = −0.32</div>
+        <div class="finding-content">
+          <div class="finding-headline">QA Performance ≠ Pipeline Competence</div>
+          <div class="finding-body">
+            Spearman rank correlation between QA accuracy and pipeline CEPS is
+            <span class="finding-stat-inline">ρ = −0.32</span>.
+            GLM-5.1 ranks 7th in QA yet 1st in CEPS; Kimi-K2.6 ranks last in QA yet 3rd in CEPS.
+            QA measures isolated recall; CEPS measures sustained reasoning across five causally dependent stages.
+          </div>
+        </div>
       </div>
+    </div>
     </div>
   </div>
 </section>
 
 <!-- ==================== BACKGROUND & MOTIVATION ==================== -->
-<section class="section">
-  <div class="container" style="margin-bottom:2vh;">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Background &amp; Motivation</h2>
-        <div class="content has-text-justified">
+<section class="section section--flush-top" id="background">
+  <div class="container">
+    <div class="content-reading">
+    <h2 class="section-heading">Background &amp; Motivation</h2>
+    <div class="content has-text-justified">
           <p>
             Large language models (LLMs) have shown strong performance across diverse financial tasks,
             yet portfolio management (PM) remains poorly benchmarked. Existing benchmarks
@@ -195,64 +216,70 @@
           <p>
             We introduce <b>PortBench</b> with the following key contributions:
           </p>
-          <div class="columns is-multiline" style="margin-top:0.5rem; margin-bottom:1rem;">
-            <div class="column is-half">
-              <div class="contrib-card">
-                <p class="contrib-label">Dataset</p>
+          <div class="contrib-list">
+            <div class="contrib-row">
+              <span class="contrib-label">Dataset</span>
+              <div class="contrib-content">
                 <span class="contrib-title">Market Base Dataset</span>
                 <p class="contrib-desc">183 instruments across 6 asset classes over 10 years (2015–2025), forming a single auditable source for all benchmark components.</p>
               </div>
             </div>
-            <div class="column is-half">
-              <div class="contrib-card">
-                <p class="contrib-label">Static Layer</p>
+            <div class="contrib-row">
+              <span class="contrib-label">Static Layer</span>
+              <div class="contrib-content">
                 <span class="contrib-title">6,269 QA Pairs</span>
                 <p class="contrib-desc">Across 7 correlation-based task templates, auto-generated without human annotation and extensible to new periods and assets.</p>
               </div>
             </div>
-            <div class="column is-half">
-              <div class="contrib-card">
-                <p class="contrib-label">Dynamic Layer</p>
+            <div class="contrib-row">
+              <span class="contrib-label">Dynamic Layer</span>
+              <div class="contrib-content">
                 <span class="contrib-title">Five-Stage Allocation Pipeline</span>
                 <p class="contrib-desc">Mirroring the full PM decision cycle, evaluated under 3 investor risk profiles and 3 historical stress regimes.</p>
               </div>
             </div>
-            <div class="column is-half">
-              <div class="contrib-card">
-                <p class="contrib-label">Metrics</p>
-                <span class="contrib-title">Dual-Layer Correlation Score + CEPS</span>
+            <div class="contrib-row">
+              <span class="contrib-label">Metrics</span>
+              <div class="contrib-content">
+                <span class="contrib-title">Dual-Layer Correlation Score + <abbr title="Cross-Stage Error Propagation Score: penalizes error cascades across pipeline stages">CEPS</abbr></span>
                 <p class="contrib-desc">Measuring inter-class hedging and intra-class concentration, plus quantifying how reasoning errors compound across pipeline stages.</p>
               </div>
             </div>
           </div>
-          <img loading="lazy" src="./static/images/method_framework.png" alt="Evaluation framework" style="width:100%; margin-top:1rem; border-radius:6px;">
-          <p class="fig-caption" style="margin-top:0.5rem;">
+          <img loading="lazy" src="./static/images/intro_overview.png" alt="PortBench framework overview: market data collection, dual-layer evaluation with static QA and dynamic pipeline, three risk profiles and stress regimes" class="img-figure">
+          <p class="fig-caption">
+            Overview of <b>PortBench</b>. We first collect the <b>Market Base Dataset</b>
+            (183 instruments × 6 asset classes, 2015–2025), then build a
+            <b>dual-layer evaluation framework</b> on top:
+            a static QA layer (6,269 correlation-based pairs) and a dynamic five-stage pipeline,
+            jointly assessed under three risk profiles and three historical stress regimes.
+          </p>
+          <img loading="lazy" src="./static/images/method_framework.png" alt="Two-layer evaluation framework: static QA layer with 6,269 pairs above, dynamic five-stage pipeline below, both fed by market snapshots" class="img-figure">
+          <p class="fig-caption">
             Evaluation framework. Static QA layer (Top): seven task templates generated automatically from
             historical data. Dynamic five-stage pipeline (Bottom): executed sequentially at every rebalance
             date under three investor profiles and three stress regimes.
           </p>
         </div>
-      </div>
     </div>
   </div>
 </section>
 
-
 <!-- ==================== PORTBENCH EXPLORER BANNER ==================== -->
 <div class="section-divider">
-  <div class="container">
-    <h2 class="section-divider-title" id="explorer">Interactive Browser</h2>
+  <div class="container content-wide">
+    <h2 class="section-heading" id="explorer">Interactive Browser</h2>
   </div>
 </div>
 
 <!-- ==================== PORTBENCH EXPLORER ==================== -->
-<section class="section">
-  <div class="container">
-    <div class="columns is-centered m-6">
+<section class="section section--flush-top">
+  <div class="container content-wide">
+    <div class="columns is-centered mt-4">
       <div class="column is-full content">
         <!-- General intro -->
-        <p class="has-text-justified" style="margin-bottom:2rem;">
-          The sections below let you interactively explore each layer of the PortBench framework.
+        <p class="has-text-justified mb-4">
+          The sections below let you interactively explore each layer of the PortBench.
           Start with the raw <b>Market Base Dataset</b>, then dive into the two evaluation layers
           that run on top of it.
         </p>
@@ -280,8 +307,8 @@
         </div>
 
         <!-- Interactive Market Snapshot -->
-        <h3 class="title is-4" style="margin-top:2rem;">Interactive Market Snapshot</h3>
-        <p class="has-text-justified" style="margin-bottom:1rem; font-size:0.9rem;">
+        <h3 class="title is-4 mt-4">Interactive Market Snapshot</h3>
+        <p class="has-text-justified mb-2 text-sm">
           183 instruments across 6 asset classes, daily data 2015&ndash;2025.
           Each monthly snapshot includes macro indicators, per-asset price summaries, and cross-class correlations.
           Select a date to see the full snapshot.
@@ -290,28 +317,28 @@
           <label for="market-date-picker"><b>Date:</b></label>
           <select id="market-date-picker" class="explorer-select"></select>
         </div>
-        <div id="market-snapshot-display"><div class="explorer-loading">Loading market data&hellip;</div></div>
+        <div id="market-snapshot-display"><div class="explorer-loading">Loading market snapshots&hellip;</div></div>
 
         <!-- Three-panel: ticker counts + correlation structure, side by side -->
-        <div style="display:flex; flex-wrap:wrap; gap:1.2rem; margin:1.5rem 0; align-items:flex-start;">
-          <div style="flex:1; min-width:220px;">
-            <img loading="lazy" src="./static/images/data_asset_tickers.png" alt="Instrument count by asset class" style="width:100%; border-radius:6px;">
+        <div class="img-panel-row">
+          <div class="img-panel">
+            <img loading="lazy" src="./static/images/data_asset_tickers.png" alt="Bar chart showing instrument count per asset class: 126 equities, 15 bonds, 16 commodities, 12 crypto, 10 real estate, 4 cash equivalents">
             <p class="fig-caption">Number of unique tickers/series per asset class.</p>
           </div>
-          <div style="flex:1; min-width:220px;">
-            <img loading="lazy" src="./static/images/data_corr_heatmap.png" alt="Correlation matrix" style="width:100%; border-radius:6px;">
+          <div class="img-panel">
+            <img loading="lazy" src="./static/images/data_corr_heatmap.png" alt="Pairwise Pearson correlation heatmap of daily returns across all 183 instruments, 2015–2022, showing strong intra-class and weak inter-class correlation">
             <p class="fig-caption">Pairwise Pearson correlation matrix (daily returns, 2015&ndash;2022).</p>
           </div>
-          <div style="flex:1; min-width:220px;">
-            <img loading="lazy" src="./static/images/data_corr_interclass.png" alt="Inter-class correlation" style="width:100%; border-radius:6px;">
+          <div class="img-panel">
+            <img loading="lazy" src="./static/images/data_corr_interclass.png" alt="Bar chart of mean inter-class correlation for each asset class vs. all others, showing low average cross-asset correlation">
             <p class="fig-caption">Mean pairwise correlation: each class vs. all others.</p>
           </div>
         </div>
 
         <!-- Price Trajectories Carousel -->
-        <h3 class="title is-4" style="margin-top:2rem;">Normalized Price Trajectories by Asset Class (2015&ndash;2025)</h3>
+        <h3 class="title is-4 mt-4">Normalized Price Trajectories by Asset Class (2015&ndash;2025)</h3>
         <p>Base = 100 at first listing date. Each panel shows representative instruments from one asset class.</p>
-        <div class="simple-carousel" id="asset-carousel">
+        <div class="simple-carousel" id="asset-carousel" tabindex="0" aria-roledescription="carousel" aria-label="Asset class price trajectories">
           <div class="slides">
             <div class="slide active">
               <img loading="lazy" src="./static/images/dataset_overview_equities.png" alt="Equities">
@@ -343,6 +370,7 @@
             <span class="carousel-counter" id="asset-counter">1 / 6</span>
             <button class="carousel-btn" aria-label="Next slide" onclick="assetCarousel(1)">&#8250;</button>
           </div>
+          <div id="carousel-live" aria-live="polite" aria-atomic="true" class="sr-only"></div>
         </div>
         <script>
           (function() {
@@ -354,15 +382,23 @@
               cur = (cur + dir + slides.length) % slides.length;
               slides[cur].classList.add('active');
               counter.textContent = (cur + 1) + ' / ' + slides.length;
+              /* Announce to screen readers */
+              var liveRegion = document.getElementById('carousel-live');
+              if (liveRegion) liveRegion.textContent = 'Showing slide ' + (cur + 1) + ' of ' + slides.length;
             };
+            /* Keyboard navigation */
+            document.getElementById('asset-carousel').addEventListener('keydown', function(e) {
+              if (e.key === 'ArrowLeft') { e.preventDefault(); assetCarousel(-1); }
+              if (e.key === 'ArrowRight') { e.preventDefault(); assetCarousel(1); }
+            });
           })();
         </script>
 
         <!-- ================================================================ -->
         <!-- SUBSECTION 2: EVALUATION FRAMEWORK -->
         <!-- ================================================================ -->
-        <h2 class="title is-3" style="margin-top:2.5rem;">Evaluation Framework</h2>
-        <p class="has-text-justified" style="margin-bottom:1.2rem;">
+        <h2 class="title is-3 mt-5">Evaluation Framework</h2>
+        <p class="has-text-justified mb-2">
           The evaluation framework has two complementary layers.
           Switch between the tabs below to explore the <b>QA Dataset</b> and the <b>Pipeline Evaluation</b> in detail.
           Every component is <b>objective, traceable, and scalable</b>: QA pairs are auto-generated without
@@ -371,45 +407,53 @@
           new periods and assets.
         </p>
 
-        <!-- Tab nav (QA + Pipeline only) -->
+        <!-- Tab nav (Pipeline + QA only) -->
         <div class="tabs is-centered is-boxed" id="eval-tabs">
           <ul role="tablist" aria-label="Evaluation framework layers">
-            <li class="is-active" data-tab="qa" role="presentation">
-              <a id="tab-btn-qa" role="tab" aria-selected="true" aria-controls="tab-qa" tabindex="0">&#x2753; QA Dataset (T1&ndash;T7)</a>
+            <li class="is-active" data-tab="pipeline" role="presentation">
+              <a id="tab-btn-pipeline" role="tab" aria-selected="true" aria-controls="tab-pipeline" tabindex="0">&#x2699;&#xFE0F; Pipeline Evaluation</a>
             </li>
-            <li data-tab="pipeline" role="presentation">
-              <a id="tab-btn-pipeline" role="tab" aria-selected="false" aria-controls="tab-pipeline" tabindex="-1">&#x2699;&#xFE0F; Pipeline Evaluation</a>
+            <li data-tab="qa" role="presentation">
+              <a id="tab-btn-qa" role="tab" aria-selected="false" aria-controls="tab-qa" tabindex="-1">&#x2753; QA Dataset (T1&ndash;T7)</a>
             </li>
           </ul>
         </div>
 
         <!-- ── Tab 1: QA Dataset ────────────────────────────────── -->
-        <div id="tab-qa" class="explorer-panel" role="tabpanel" aria-labelledby="tab-btn-qa" tabindex="0">
-          <p class="has-text-justified" style="margin-bottom:1rem; font-size:0.9rem;">
+        <div id="tab-qa" class="explorer-panel is-hidden" role="tabpanel" aria-labelledby="tab-btn-qa" tabindex="0" aria-hidden="true">
+          <p class="has-text-justified mb-2 text-sm">
             6,269 correlation-aware QA pairs across 7 task templates (T1&ndash;T7),
             spanning complexity levels 1&ndash;4 and three market regimes.
-            Select a template to browse sample question&ndash;answer pairs.
+            Each template tests a different aspect of portfolio reasoning.
+            Select a template below to browse sample question&ndash;answer pairs.
           </p>
-          <div class="qa-template-buttons" style="margin-bottom:1rem;">
-            <button class="qa-tmpl-btn is-active" data-tmpl="T1">T1 &middot; Return Prediction</button>
-            <button class="qa-tmpl-btn" data-tmpl="T2">T2 &middot; Risk Assessment</button>
-            <button class="qa-tmpl-btn" data-tmpl="T3">T3 &middot; Position Sizing</button>
-            <button class="qa-tmpl-btn" data-tmpl="T4">T4 &middot; Min-Variance</button>
-            <button class="qa-tmpl-btn" data-tmpl="T5">T5 &middot; Max-Sharpe</button>
-            <button class="qa-tmpl-btn" data-tmpl="T6">T6 &middot; Rebalancing</button>
-            <button class="qa-tmpl-btn" data-tmpl="T7">T7 &middot; Regime &amp; Allocation</button>
+          <div class="qa-template-buttons mb-2" role="tablist" aria-label="QA task templates">
+            <button class="qa-tmpl-btn is-active" data-tmpl="T1" role="tab" aria-selected="true" tabindex="0"
+              title="Predict next-period returns for individual assets based on market context. Complexity 1: single-step reasoning.">T1 &middot; Return Prediction</button>
+            <button class="qa-tmpl-btn" data-tmpl="T2" role="tab" aria-selected="false" tabindex="-1"
+              title="Assess portfolio risk using Value at Risk (VaR) and drawdown metrics. Complexity 1: single-step reasoning.">T2 &middot; Risk Assessment</button>
+            <button class="qa-tmpl-btn" data-tmpl="T3" role="tab" aria-selected="false" tabindex="-1"
+              title="Determine position size for a single asset given constraints. Complexity 1: single-step reasoning.">T3 &middot; Position Sizing</button>
+            <button class="qa-tmpl-btn" data-tmpl="T4" role="tab" aria-selected="false" tabindex="-1"
+              title="Compute minimum-variance weights for a two-asset pair using covariance. Complexity 2: two-step numerical reasoning.">T4 &middot; Min-Variance</button>
+            <button class="qa-tmpl-btn" data-tmpl="T5" role="tab" aria-selected="false" tabindex="-1"
+              title="Find the Sharpe-optimal allocation across multiple assets. Complexity 3: multi-step optimization with covariance matrix.">T5 &middot; Max-Sharpe</button>
+            <button class="qa-tmpl-btn" data-tmpl="T6" role="tab" aria-selected="false" tabindex="-1"
+              title="Decide whether and how to rebalance given drift and transaction costs. Complexity 3: multi-step judgment.">T6 &middot; Rebalancing</button>
+            <button class="qa-tmpl-btn" data-tmpl="T7" role="tab" aria-selected="false" tabindex="-1"
+              title="Detect market regime (bull/bear/crisis) and adjust allocation accordingly. Complexity 4: regime identification plus constrained allocation.">T7 &middot; Regime &amp; Allocation</button>
           </div>
-          <div id="qa-carousel-display"><div class="explorer-loading">Loading QA data&hellip;</div></div>
+          <div id="qa-carousel-display" role="region" aria-live="polite" aria-label="QA sample display"><div class="explorer-loading">Loading QA samples&hellip;</div></div>
         </div>
 
         <!-- ── Tab 2: Pipeline Evaluation ──────────────────────── -->
-        <div id="tab-pipeline" class="explorer-panel" role="tabpanel" aria-labelledby="tab-btn-pipeline" tabindex="0" aria-hidden="true" style="display:none;">
-          <p class="has-text-justified" style="margin-bottom:1rem; font-size:0.9rem;">
+        <div id="tab-pipeline" class="explorer-panel" role="tabpanel" aria-labelledby="tab-btn-pipeline" tabindex="0">
+          <p class="has-text-justified mb-2 text-sm">
             At each rebalance date a <code>MarketSnapshot</code> is constructed and passed to the LLM
             for five-stage evaluation (S1&ndash;S5).
             Select a model, market scenario, and date to see the model&rsquo;s input and stage-by-stage output vs. ground truth.
           </p>
-          <div class="explorer-controls" style="flex-wrap:wrap;">
+          <div class="explorer-controls flex-wrap">
             <label for="pipeline-model-picker"><b>Model:</b></label>
             <select id="pipeline-model-picker" class="explorer-select"></select>
             <label for="pipeline-scenario-picker"><b>Scenario:</b></label>
@@ -417,7 +461,7 @@
             <label for="pipeline-date-picker"><b>Date:</b></label>
             <select id="pipeline-date-picker" class="explorer-select"></select>
           </div>
-          <div id="pipeline-display"><div class="explorer-loading">Loading pipeline data&hellip;</div></div>
+          <div id="pipeline-display" role="region" aria-live="polite" aria-label="Pipeline evaluation display"><div class="explorer-loading">Loading pipeline traces&hellip;</div></div>
         </div>
       </div>
     </div>
@@ -455,19 +499,16 @@
     }
     return s;
   }
-  function regimeStyle(r) {
+  function regimeClass(r) {
     if (!r) return "";
-    if (r === "bull")    return "color:oklch(0.38 0.12 145);font-weight:700";
-    if (r === "bear")    return "color:oklch(0.42 0.16 25);font-weight:700";
-    if (r === "crisis")  return "color:oklch(0.38 0.16 25);font-weight:900";
-    return "color:" + getComputedStyle(document.documentElement).getPropertyValue('--muted').trim();
+    if (r === "bull")    return "regime-bull";
+    if (r === "bear")    return "regime-bear";
+    if (r === "crisis")  return "regime-crisis";
+    return "text-muted";
   }
-  function scoreColor(s) {
-    if (s === null || s === undefined) return "oklch(0.48 0.008 255)";
-    var n = parseFloat(s);
-    if (n >= 0.70) return "oklch(0.38 0.12 145)";
-    if (n >= 0.40) return "oklch(0.44 0.12 60)";
-    return "oklch(0.42 0.16 25)";
+  function retClass(v) {
+    if (v === null || v === undefined) return "";
+    return parseFloat(v) >= 0 ? "ret-pos" : "ret-neg";
   }
   function scoreClass(s) {
     if (s === null || s === undefined) return "";
@@ -479,27 +520,102 @@
 
   /* ── Tab switching (Evaluation Framework) ── */
   var initialized = {market: false, qa: false, pipeline: false};
-  document.querySelectorAll("#eval-tabs li").forEach(function(li) {
-    li.addEventListener("click", function() {
-      document.querySelectorAll("#eval-tabs li").forEach(function(l) {
-        l.classList.remove("is-active");
-        var a = l.querySelector("[role='tab']");
-        if (a) { a.setAttribute("aria-selected", "false"); a.setAttribute("tabindex", "-1"); }
-      });
-      document.querySelectorAll(".explorer-panel").forEach(function(p) {
-        p.style.display = "none";
-        p.setAttribute("aria-hidden", "true");
-      });
-      li.classList.add("is-active");
-      var a = li.querySelector("[role='tab']");
-      if (a) { a.setAttribute("aria-selected", "true"); a.setAttribute("tabindex", "0"); }
-      var tab = li.dataset.tab;
-      var panel = document.getElementById("tab-" + tab);
-      panel.style.display = "";
-      panel.removeAttribute("aria-hidden");
-      if (tab === "qa"     && !initialized.qa)       initQA();
-      if (tab === "pipeline" && !initialized.pipeline) initPipeline();
+  var tabList = document.getElementById("eval-tabs");
+  var tabs = tabList.querySelectorAll("[role='tab']");
+  var panels = document.querySelectorAll(".explorer-panel");
+
+  function activateTab(tab) {
+    tabs.forEach(function(t) {
+      t.setAttribute("aria-selected", "false");
+      t.setAttribute("tabindex", "-1");
+      t.parentElement.classList.remove("is-active");
     });
+    panels.forEach(function(p) {
+      p.classList.add("is-hidden");
+      p.setAttribute("aria-hidden", "true");
+    });
+    tab.setAttribute("aria-selected", "true");
+    tab.setAttribute("tabindex", "0");
+    tab.parentElement.classList.add("is-active");
+    tab.focus();
+    var tabId = tab.parentElement.dataset.tab;
+    var panel = document.getElementById("tab-" + tabId);
+    panel.classList.remove("is-hidden");
+    panel.removeAttribute("aria-hidden");
+    if (tabId === "qa" && !initialized.qa) initQA();
+    if (tabId === "pipeline" && !initialized.pipeline) initPipeline();
+    /* Update URL hash */
+    if (history.replaceState) history.replaceState(null, null, "#explorer:" + tabId);
+  }
+
+  tabs.forEach(function(tab) {
+    tab.addEventListener("click", function() { activateTab(tab); });
+    tab.addEventListener("keydown", function(e) {
+      var idx = Array.prototype.indexOf.call(tabs, tab);
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        e.preventDefault();
+        var prev = tabs[(idx - 1 + tabs.length) % tabs.length];
+        activateTab(prev);
+      } else if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        e.preventDefault();
+        var next = tabs[(idx + 1) % tabs.length];
+        activateTab(next);
+      } else if (e.key === "Home") {
+        e.preventDefault();
+        activateTab(tabs[0]);
+      } else if (e.key === "End") {
+        e.preventDefault();
+        activateTab(tabs[tabs.length - 1]);
+      }
+    });
+  });
+
+  /* ── Profile tab switching (Results table) ── */
+  document.addEventListener('DOMContentLoaded', function() {
+    var profileTabs = document.querySelectorAll('#profile-tabs .profile-tab');
+    var tbody = document.getElementById('profile-table-body');
+    var baselinesTpl = document.getElementById('profile-baselines');
+
+    function activateProfile(profile) {
+      profileTabs.forEach(function(t) {
+        var isActive = t.dataset.profile === profile;
+        t.classList.toggle('is-active', isActive);
+        t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        t.setAttribute('tabindex', isActive ? '0' : '-1');
+      });
+      var tpl = document.getElementById('profile-' + profile);
+      if (tpl && tbody) {
+        tbody.innerHTML = '';
+        var frag = tpl.content.cloneNode(true);
+        tbody.appendChild(frag);
+        if (baselinesTpl) {
+          tbody.appendChild(baselinesTpl.content.cloneNode(true));
+        }
+      }
+      if (history.replaceState) history.replaceState(null, null, '#results:' + profile);
+    }
+
+    profileTabs.forEach(function(btn, idx) {
+      btn.addEventListener('click', function() { activateProfile(btn.dataset.profile); });
+      btn.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          var prev = profileTabs[(idx - 1 + profileTabs.length) % profileTabs.length];
+          prev.focus();
+          activateProfile(prev.dataset.profile);
+        } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          var next = profileTabs[(idx + 1) % profileTabs.length];
+          next.focus();
+          activateProfile(next.dataset.profile);
+        }
+      });
+    });
+
+    /* Check URL hash for profile deep-link */
+    var hash = window.location.hash;
+    var match = hash.match(/^#results:(conservative|balanced|aggressive)/);
+    if (match) activateProfile(match[1]);
   });
 
   /* ═══════════════════════════════════════════════════
@@ -509,7 +625,10 @@
   function initMarket() {
     initialized.market = true;
     var data = window.PORTBENCH_MARKET;
-    if (!data) { document.getElementById("market-snapshot-display").innerHTML = "<p style='color:red'>Market data not loaded.</p>"; return; }
+    if (!data) {
+      document.getElementById("market-snapshot-display").innerHTML = '<div class="error-container"><p class="text-error">Market data failed to load. The interactive snapshot browser is unavailable.</p><button class="retry-btn" onclick="location.reload()">Reload page</button></div>';
+      return;
+    }
     marketData = data;
     var sel = document.getElementById("market-date-picker");
     data.dates.forEach(function(d) {
@@ -523,7 +642,7 @@
 
   function renderMarketSnapshot(date) {
     var snap = marketData.snapshots[date];
-    if (!snap) { document.getElementById("market-snapshot-display").innerHTML = "<p>No data for this date.</p>"; return; }
+    if (!snap) { document.getElementById("market-snapshot-display").innerHTML = '<div class="error-container"><p class="text-muted">No snapshot available for this date. Try a different month from the dropdown.</p></div>'; return; }
     var m = snap.macro;
     var clsNews = snap.news || [];
 
@@ -563,23 +682,23 @@
       html += '<div class="showcase-inner ' + classColors[cls] + '">';
       html += '<div class="showcase-inner-header">' + esc(cls) + '</div>';
       html += '<div class="showcase-inner-body">';
-      html += '<div class="table-wrapper" style="max-height:none;">';
-      html += '<table style="font-size:0.78rem;"><thead><tr>';
+      html += '<div class="table-wrapper">';
+      html += '<table class="table-compact"><thead><tr>';
       html += '<th>Ticker</th><th>Close</th><th>20d Ret</th><th>60d Ret</th><th>Ann.Vol</th><th>Regime</th>';
       html += '</tr></thead><tbody>';
       assets.forEach(function(a) {
         var r20 = a.ret_20d !== null ? ((a.ret_20d >= 0 ? "+" : "") + pct(a.ret_20d, 1)) : "N/A";
         var r60 = a.ret_60d !== null ? ((a.ret_60d >= 0 ? "+" : "") + pct(a.ret_60d, 1)) : "N/A";
         var vol = a.vol !== null ? pct(a.vol, 1) : "N/A";
-        var r20c = a.ret_20d !== null ? (a.ret_20d >= 0 ? "color:oklch(0.38 0.12 145)" : "color:oklch(0.42 0.16 25)") : "";
-        var r60c = a.ret_60d !== null ? (a.ret_60d >= 0 ? "color:oklch(0.38 0.12 145)" : "color:oklch(0.42 0.16 25)") : "";
+        var r20cls = retClass(a.ret_20d);
+        var r60cls = retClass(a.ret_60d);
         html += '<tr>';
-        html += '<td style="font-weight:700">' + esc(a.ticker) + '</td>';
+        html += '<td class="td-left">' + esc(a.ticker) + '</td>';
         html += '<td>' + fmt(a.close, 2) + '</td>';
-        html += '<td style="' + r20c + '">' + esc(r20) + '</td>';
-        html += '<td style="' + r60c + '">' + esc(r60) + '</td>';
+        html += '<td class="' + r20cls + '">' + esc(r20) + '</td>';
+        html += '<td class="' + r60cls + '">' + esc(r60) + '</td>';
         html += '<td>' + esc(vol) + '</td>';
-        html += '<td style="' + regimeStyle(a.regime) + '">' + esc(a.regime || "") + '</td>';
+        html += '<td class="' + regimeClass(a.regime) + '">' + esc(a.regime || "") + '</td>';
         html += '</tr>';
       });
       html += '</tbody></table></div></div></div>';
@@ -589,20 +708,19 @@
     var classes = Object.keys(snap.correlation || {});
     if (classes.length) {
       html += '<div class="showcase-inner si-cream">';
-      html += '<div class="showcase-inner-header">Two-Layer Correlation Interface <span style="font-weight:400;font-size:0.72rem;">41-day trailing window</span></div>';
+      html += '<div class="showcase-inner-header">Two-Layer Correlation Interface <span class="meta-sub">41-day trailing window</span></div>';
       html += '<div class="showcase-inner-body">';
       html += '<table class="corr-table"><thead><tr><th>Class</th><th>Intra-&rho;</th>';
       classes.forEach(function(c2) { if (c2 !== classes[0]) html += '<th>vs.' + esc(c2.substring(0,4)) + '</th>'; });
       html += '</tr></thead><tbody>';
       classes.forEach(function(c1) {
-        html += '<tr><td style="text-align:left">' + esc(c1) + '</td>';
+        html += '<tr><td class="td-left">' + esc(c1) + '</td>';
         html += '<td>' + (snap.correlation[c1][c1] !== null ? fmt(snap.correlation[c1][c1], 2) : "N/A") + '</td>';
         classes.forEach(function(c2) {
           if (c2 === c1) return;
           var v = snap.correlation[c1][c2];
-          var style = "";
-          if (v !== null && Math.abs(parseFloat(v)) > 0.5) style = 'style="font-weight:700;color:oklch(0.42 0.16 25)"';
-          html += '<td ' + style + '>' + (v !== null ? fmt(v, 2) : "N/A") + '</td>';
+          var cls = (v !== null && Math.abs(parseFloat(v)) > 0.5) ? 'corr-strong' : '';
+          html += '<td class="' + cls + '">' + (v !== null ? fmt(v, 2) : "N/A") + '</td>';
         });
         html += '</tr>';
       });
@@ -611,12 +729,12 @@
 
     if (clsNews.length) {
       html += '<div class="showcase-inner si-coral">';
-      html += '<div class="showcase-inner-header">Recent News Headlines <span style="font-weight:400;font-size:0.72rem;">nearest trading day to snapshot date</span></div>';
-      html += '<div class="showcase-inner-body"><ul style="font-size:0.78rem;margin:0;padding-left:18px;">';
+      html += '<div class="showcase-inner-header">Recent News Headlines <span class="meta-sub">nearest trading day to snapshot date</span></div>';
+      html += '<div class="showcase-inner-body"><ul class="news-list">';
       clsNews.forEach(function(item) {
         var t = cleanNewsText(item.text);
-        var src = item.source ? '<span style="color:#666;font-size:0.7rem;">[' + esc(item.source) + ']</span> ' : '';
-        html += '<li style="margin-bottom:4px;">' + src + esc(t) + '</li>';
+        var src = item.source ? '<span class="news-source">[' + esc(item.source) + ']</span> ' : '';
+        html += '<li class="news-item">' + src + esc(t) + '</li>';
       });
       html += '</ul></div></div>';
     }
@@ -638,27 +756,45 @@
     T7: "si-qa-red"
   };
   var QA_DESC = {
-    T1: "Return Prediction · Complexity 1",
-    T2: "Risk Assessment (VaR) · Complexity 1",
-    T3: "Position Sizing · Complexity 1",
-    T4: "Pairwise Min-Variance Allocation · Complexity 2",
-    T5: "Max-Sharpe Optimization · Complexity 3",
-    T6: "Rebalancing Decision · Complexity 3",
-    T7: "Regime Detection &amp; Allocation · Complexity 4"
+    T1: "Return Prediction · Complexity 1 · Predict next-period asset returns",
+    T2: "Risk Assessment · Complexity 1 · Estimate VaR and drawdown risk",
+    T3: "Position Sizing · Complexity 1 · Determine single-asset allocation",
+    T4: "Min-Variance Allocation · Complexity 2 · Optimize two-asset pair weights",
+    T5: "Max-Sharpe Optimization · Complexity 3 · Multi-asset risk-return tradeoff",
+    T6: "Rebalancing Decision · Complexity 3 · Adjust positions given drift and costs",
+    T7: "Regime Detection &amp; Allocation · Complexity 4 · Identify regime and reallocate"
   };
 
   function initQA() {
     initialized.qa = true;
     var data = window.PORTBENCH_QA;
-    if (!data) { document.getElementById("qa-carousel-display").innerHTML = "<p style='color:red'>QA data not loaded.</p>"; return; }
+    if (!data) {
+      document.getElementById("qa-carousel-display").innerHTML = '<div class="error-container"><p class="text-error">QA samples failed to load. The template browser is unavailable.</p><button class="retry-btn" onclick="location.reload()">Reload page</button></div>';
+      return;
+    }
     qaData = data;
-    document.querySelectorAll(".qa-tmpl-btn").forEach(function(btn) {
+    var tmplBtns = document.querySelectorAll(".qa-tmpl-btn");
+    tmplBtns.forEach(function(btn, idx) {
       btn.addEventListener("click", function() {
-        document.querySelectorAll(".qa-tmpl-btn").forEach(function(b){ b.classList.remove("is-active"); });
+        tmplBtns.forEach(function(b){ b.classList.remove("is-active"); });
         btn.classList.add("is-active");
         qaCurTmpl = btn.dataset.tmpl;
         qaCurIdx = 0;
         renderQA();
+      });
+      /* Keyboard navigation for template buttons */
+      btn.addEventListener("keydown", function(e) {
+        if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+          e.preventDefault();
+          var prev = tmplBtns[(idx - 1 + tmplBtns.length) % tmplBtns.length];
+          prev.focus();
+          prev.click();
+        } else if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+          e.preventDefault();
+          var next = tmplBtns[(idx + 1) % tmplBtns.length];
+          next.focus();
+          next.click();
+        }
       });
     });
     renderQA();
@@ -666,36 +802,36 @@
 
   function renderQA() {
     var samples = qaData[qaCurTmpl] || [];
-    if (!samples.length) { document.getElementById("qa-carousel-display").innerHTML = "<p>No samples.</p>"; return; }
+    if (!samples.length) { document.getElementById("qa-carousel-display").innerHTML = '<div class="error-container"><p class="text-muted">No samples available for this template yet.</p></div>'; return; }
     var n = samples.length;
     var s = samples[qaCurIdx];
     var color = QA_COLORS[qaCurTmpl] || "si-qa-blue";
     var desc = QA_DESC[qaCurTmpl] || qaCurTmpl;
-    var regimeBadge = '<span style="background:oklch(0.93 0.008 255);color:oklch(0.28 0.010 255);border-radius:3px;padding:1px 6px;font-size:0.72rem;margin-left:8px;">' + esc(s.market_regime) + '</span>';
-    var splitBadge  = '<span style="background:oklch(0.93 0.008 255);color:oklch(0.28 0.010 255);border-radius:3px;padding:1px 6px;font-size:0.72rem;margin-left:4px;">' + esc(s.split) + '</span>';
-    var assetsBadge = (s.assets||[]).map(function(a){ return '<code style="font-size:0.75rem;background:#f3f4f6;padding:1px 4px;border-radius:2px;">' + esc(a) + '</code>'; }).join(" ");
+    var regimeBadge = '<span class="qa-badge">' + esc(s.market_regime) + '</span>';
+    var splitBadge  = '<span class="qa-badge">' + esc(s.split) + '</span>';
+    var assetsBadge = (s.assets||[]).map(function(a){ return '<code class="asset-badge">' + esc(a) + '</code>'; }).join(" ");
 
-    var html = '<div class="showcase-inner ' + color + '" style="text-align:left;">';
+    var html = '<div class="showcase-inner ' + color + ' text-left">';
     html += '<div class="showcase-inner-header">' + qaCurTmpl + ': ' + desc + regimeBadge + splitBadge;
-    html += '<span style="font-weight:400;font-size:0.72rem;">' + s.decision_date + '</span></div>';
+    html += '<span class="meta-sub">' + s.decision_date + '</span></div>';
     html += '<div class="showcase-inner-body">';
     if (s.assets && s.assets.length) {
-      html += '<p style="margin-bottom:4px;font-size:0.78rem;"><b>Assets:</b> ' + assetsBadge + '</p>';
+      html += '<p class="qa-field-tight"><b>Assets:</b> ' + assetsBadge + '</p>';
     }
     if (s.context_summary) {
-      html += '<p style="margin-bottom:6px;font-size:0.78rem;color:#555;font-style:italic;">' + esc(s.context_summary) + '</p>';
+      html += '<p class="qa-context">' + esc(s.context_summary) + '</p>';
     }
-    html += '<p style="margin-bottom:6px;font-size:0.82rem;"><b>Question:</b> ' + esc(s.question) + '</p>';
-    html += '<p style="margin-bottom:4px;font-size:0.82rem;"><b>Answer:</b> <code>' + esc(s.answer) + '</code></p>';
+    html += '<p class="qa-field"><b>Question:</b> ' + esc(s.question) + '</p>';
+    html += '<p class="qa-field-tight"><b>Answer:</b> <code>' + esc(s.answer) + '</code></p>';
     if (s.explanation) {
-      html += '<p class="showcase-note" style="margin-top:6px;">' + esc(s.explanation) + '</p>';
+      html += '<p class="showcase-note mt-1">' + esc(s.explanation) + '</p>';
     }
     html += '</div></div>';
 
     /* carousel controls */
-    html += '<div class="carousel-controls" style="margin-top:0.6rem;">';
+    html += '<div class="carousel-controls mt-1" role="group" aria-label="Sample navigation">';
     html += '<button class="carousel-btn" aria-label="Previous sample" id="qa-prev">&#8249;</button>';
-    html += '<span class="carousel-counter">' + (qaCurIdx+1) + ' / ' + n + '</span>';
+    html += '<span class="carousel-counter" aria-live="polite">' + (qaCurIdx+1) + ' / ' + n + '</span>';
     html += '<button class="carousel-btn" aria-label="Next sample" id="qa-next">&#8250;</button>';
     html += '</div>';
 
@@ -706,6 +842,21 @@
     document.getElementById("qa-next").addEventListener("click", function(){
       qaCurIdx = (qaCurIdx + 1) % n; renderQA();
     });
+    /* Keyboard navigation for carousel buttons */
+    var prevBtn = document.getElementById("qa-prev");
+    var nextBtn = document.getElementById("qa-next");
+    if (prevBtn) {
+      prevBtn.addEventListener("keydown", function(e) {
+        if (e.key === "ArrowLeft") { e.preventDefault(); prevBtn.click(); }
+        if (e.key === "ArrowRight") { e.preventDefault(); nextBtn.click(); }
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener("keydown", function(e) {
+        if (e.key === "ArrowLeft") { e.preventDefault(); prevBtn.click(); }
+        if (e.key === "ArrowRight") { e.preventDefault(); nextBtn.click(); }
+      });
+    }
   }
 
   /* ═══════════════════════════════════════════════════
@@ -718,7 +869,10 @@
   function initPipeline() {
     initialized.pipeline = true;
     var data = window.PORTBENCH_PIPELINE_INDEX;
-    if (!data) { document.getElementById("pipeline-display").innerHTML = "<p style='color:red'>Pipeline index not loaded.</p>"; return; }
+    if (!data) {
+      document.getElementById("pipeline-display").innerHTML = '<div class="error-container"><p class="text-error">Pipeline index failed to load. The model browser is unavailable.</p><button class="retry-btn" onclick="location.reload()">Reload page</button></div>';
+      return;
+    }
     pipelineIndex = data;
     var modelSel = document.getElementById("pipeline-model-picker");
     Object.keys(data).sort().forEach(function(modelId) {
@@ -731,6 +885,8 @@
     document.getElementById("pipeline-scenario-picker").addEventListener("change", onPipelineScenarioChange);
     document.getElementById("pipeline-date-picker").addEventListener("change", onPipelineDateChange);
     onPipelineModelChange();
+    /* Check URL hash for deep-linking */
+    restoreFromHash();
   }
 
   function onPipelineModelChange() {
@@ -769,7 +925,7 @@
     var modelIdSafe = modelId.replace(/-/g,"_").replace(/\./g,"_");
     var key = modelIdSafe + "_" + scenario;
     if (pipelineCache[key]) { renderPipeline(document.getElementById("pipeline-date-picker").value); return; }
-    document.getElementById("pipeline-display").innerHTML = '<div class="explorer-loading">Loading pipeline data&hellip;</div>';
+    document.getElementById("pipeline-display").innerHTML = '<div class="explorer-loading">Loading pipeline traces&hellip;</div>';
     var varName = "PORTBENCH_PIPELINE_" + key.toUpperCase();
     // Try window global first (script already loaded)
     if (window[varName]) {
@@ -787,11 +943,11 @@
         pipelineCurrentKey = key;
         renderPipeline(document.getElementById("pipeline-date-picker").value);
       } else {
-        document.getElementById("pipeline-display").innerHTML = "<p style='color:red'>Data variable not found: " + varName + "</p>";
+        document.getElementById("pipeline-display").innerHTML = '<div class="error-container"><p class="text-error">Pipeline data could not be found for this model and scenario.</p><button class="retry-btn" onclick="location.reload()">Reload page</button></div>';
       }
     };
     script.onerror = function() {
-      document.getElementById("pipeline-display").innerHTML = "<p style='color:red'>Failed to load: " + key + ".js</p>";
+      document.getElementById("pipeline-display").innerHTML = '<div class="error-container"><p class="text-error">Pipeline data file failed to load.</p><button class="retry-btn" onclick="location.reload()">Reload page</button></div>';
     };
     document.head.appendChild(script);
   }
@@ -806,7 +962,7 @@
     pipelineCurrentKey = key;
 
     var entry = fileData[date];
-    if (!entry) { document.getElementById("pipeline-display").innerHTML = "<p>No data for date " + esc(date) + ".</p>"; return; }
+    if (!entry) { document.getElementById("pipeline-display").innerHTML = '<div class="error-container"><p class="text-muted">No pipeline trace available for ' + esc(date) + '. Try a different rebalance date.</p></div>'; return; }
 
     var snap = entry.snapshot || {};
     var ep   = entry.episode;
@@ -827,7 +983,7 @@
     /* Macro — all 12 indicators */
     html += '<div class="showcase-inner si-peri">';
     html += '<div class="showcase-inner-header">Macroeconomic Indicators &nbsp;';
-    html += '<span style="font-weight:400;font-size:0.72rem;">Regime: <b style="' + regimeStyle(snap.market_regime) + '">' + esc(snap.market_regime || "N/A") + '</b> &nbsp;|&nbsp; NAV: <b>$' + fmtN(snap.portfolio_value) + '</b></span></div>';
+    html += '<span class="meta-sub">Regime: <b class="' + regimeClass(snap.market_regime) + '">' + esc(snap.market_regime || "N/A") + '</b> &nbsp;|&nbsp; NAV: <b>$' + fmtN(snap.portfolio_value) + '</b></span></div>';
     html += '<div class="showcase-inner-body"><div class="macro-grid">';
     var macroRows = [
       ["Fed Funds", macro.fed_funds_rate, "%", 2],
@@ -854,16 +1010,15 @@
     var wKeys = Object.keys(weights);
     if (wKeys.length) {
       html += '<div class="showcase-inner si-blue">';
-      html += '<div class="showcase-inner-header">Current Portfolio Weights &nbsp;<span style="font-weight:400;font-size:0.72rem;">(' + wKeys.length + ' active positions)</span></div>';
+      html += '<div class="showcase-inner-header">Current Portfolio Weights &nbsp;<span class="meta-sub">(' + wKeys.length + ' active positions)</span></div>';
       html += '<div class="showcase-inner-body">';
-      html += '<div style="display:flex;flex-wrap:wrap;gap:6px;max-height:240px;overflow-y:auto;">';
+      html += '<div class="chip-container chip-container-weights">';
       var sortedW = wKeys.sort(function(a,b){ return (weights[b]||0) - (weights[a]||0); });
       sortedW.forEach(function(t) {
         var w = weights[t];
-        var bg = w > 0.05 ? "oklch(0.93 0.040 250)" : w > 0.02 ? "oklch(0.97 0.010 250)" : "oklch(0.97 0.004 255)";
-        var border = w > 0.05 ? "oklch(0.78 0.090 255)" : w > 0.02 ? "oklch(0.91 0.055 255)" : "oklch(0.88 0.006 255)";
-        html += '<span style="font-size:0.74rem;background:' + bg + ';padding:2px 7px;border-radius:3px;border:1px solid ' + border + ';">';
-        html += '<b>' + esc(t) + '</b> <span style="color:#374151">' + pct(w,1) + '</span></span>';
+        var cls = w > 0.05 ? "chip-w-lg" : w > 0.02 ? "chip-w-md" : "chip-w-sm";
+        html += '<span class="chip ' + cls + '">';
+        html += '<b>' + esc(t) + '</b> <span class="chip-value">' + pct(w,1) + '</span></span>';
       });
       html += '</div></div></div>';
     }
@@ -873,18 +1028,16 @@
     var trKeys = Object.keys(tr);
     if (trKeys.length) {
       html += '<div class="showcase-inner si-cream">';
-      html += '<div class="showcase-inner-header">60-Day Trailing Returns &nbsp;<span style="font-weight:400;font-size:0.72rem;">(' + trKeys.length + ' instruments)</span></div>';
+      html += '<div class="showcase-inner-header">60-Day Trailing Returns &nbsp;<span class="meta-sub">(' + trKeys.length + ' instruments)</span></div>';
       html += '<div class="showcase-inner-body">';
-      html += '<div style="display:flex;flex-wrap:wrap;gap:6px;max-height:280px;overflow-y:auto;">';
+      html += '<div class="chip-container chip-container-returns">';
       var sortedTR = trKeys.sort(function(a,b){ return Math.abs(tr[b]||0) - Math.abs(tr[a]||0); });
       sortedTR.forEach(function(t) {
         var v = tr[t];
-        var c = v >= 0 ? "oklch(0.38 0.12 145)" : "oklch(0.42 0.16 25)";
-        var bg = v >= 0 ? "oklch(0.97 0.020 145)" : "oklch(0.97 0.015 25)";
-        var border = v >= 0 ? "oklch(0.82 0.06 145)" : "oklch(0.82 0.06 25)";
+        var cls = v >= 0 ? "chip-r-pos" : "chip-r-neg";
         var sign = v >= 0 ? "+" : "";
-        html += '<span style="font-size:0.74rem;background:' + bg + ';padding:2px 7px;border-radius:3px;border:1px solid ' + border + ';">';
-        html += '<b>' + esc(t) + '</b> <span style="color:' + c + '">' + sign + pct(v,1) + '</span></span>';
+        html += '<span class="chip ' + cls + '">';
+        html += '<b>' + esc(t) + '</b> <span class="chip-val">' + sign + pct(v,1) + '</span></span>';
       });
       html += '</div></div></div>';
     }
@@ -893,9 +1046,9 @@
     var newsText = snap.news_text_preview || '';
     if (newsText) {
       html += '<div class="showcase-inner si-lav">';
-      html += '<div class="showcase-inner-header">News Context &nbsp;<span style="font-weight:400;font-size:0.72rem;">(truncated)</span></div>';
+      html += '<div class="showcase-inner-header">News Context &nbsp;<span class="meta-sub">(truncated)</span></div>';
       html += '<div class="showcase-inner-body">';
-      html += '<div style="font-size:0.78rem;color:#555;max-height:80px;overflow-y:auto;line-height:1.5;">' + esc(newsText) + '</div>';
+      html += '<div class="news-preview">' + esc(newsText) + '</div>';
       html += '</div></div>';
     }
 
@@ -904,9 +1057,9 @@
     /* ── Pipeline traces ── */
     if (ep && ep.stages && ep.stages.length) {
       var CEPS = ep.ceps_score !== null ? fmt(ep.ceps_score, 3) : "N/A";
-      html += '<div class="showcase-frame" style="margin-top:1rem;">';
+      html += '<div class="showcase-frame mt-2">';
       html += '<div class="showcase-frame-header">';
-      html += '<span>' + esc(displayName) + ' &mdash; Pipeline Trace</span>';
+      html += '<span>' + esc(displayName) + ' – Pipeline Trace</span>';
       html += '<span class="meta">CEPS = <b>' + CEPS + '</b> &nbsp;|&nbsp; ' + esc(date) + ' &nbsp;|&nbsp; ' + esc(scenDisplay) + '</span>';
       html += '</div><div class="showcase-frame-body">';
 
@@ -950,14 +1103,14 @@
 
       html += '</div></div>'; /* close trace frame */
     } else {
-      html += '<div class="highlight-box" style="margin-top:1rem;">No pipeline trace data available for this date.</div>';
+      html += '<div class="highlight-box mt-2">No stage-by-stage trace was recorded for this rebalance date.</div>';
     }
 
     document.getElementById("pipeline-display").innerHTML = html;
   }
 
   function renderStageOutput(stageId, obj) {
-    if (!obj) return "<span style='color:#555'>N/A</span>";
+    if (!obj) return '<span class="text-muted">N/A</span>';
     var lines = [];
     if (stageId === "S1") {
       if (obj.detected_regime) lines.push("<b>Regime:</b> " + esc(obj.detected_regime));
@@ -983,11 +1136,33 @@
       if (obj.portfolio_drawdown !== undefined) lines.push("<b>MaxDD:</b> " + pct(obj.portfolio_drawdown,2));
       if (obj.rebalance_needed !== undefined) lines.push("<b>Rebalance:</b> " + (obj.rebalance_needed ? "Yes" : "No"));
     }
-    return lines.join("<br>") || '<span style="color:#555">—</span>';
+    return lines.join("<br>") || '<span class="text-muted">–</span>';
   }
 
-  /* ── Auto-init market tab (it's the default) ── */
+  /* ── URL hash state restoration ── */
+  function restoreFromHash() {
+    var hash = window.location.hash;
+    if (!hash) return;
+    var match = hash.match(/^#explorer:(qa|pipeline)(?::(\d+))?/);
+    if (match) {
+      var tabName = match[1];
+      var tmplIdx = match[2] ? parseInt(match[2], 10) : null;
+      var tabEl = document.getElementById("tab-btn-" + tabName);
+      if (tabEl) {
+        activateTab(tabEl);
+        if (tabName === "qa" && tmplIdx !== null && initialized.qa) {
+          var tmplBtns = document.querySelectorAll(".qa-tmpl-btn");
+          if (tmplIdx >= 0 && tmplIdx < tmplBtns.length) {
+            tmplBtns[tmplIdx].click();
+          }
+        }
+      }
+    }
+  }
+
+  /* ── Initialize market and pipeline on load ── */
   initMarket();
+  initPipeline();
 
 })();
 </script>
@@ -995,62 +1170,74 @@
 
 <!-- ==================== EVALUATION DETAILS BANNER ==================== -->
 <div class="section-divider">
-  <div class="container">
-    <h2 class="section-divider-title" id="details">Evaluation Details</h2>
+  <div class="container content-wide">
+    <h2 class="section-heading" id="details">Evaluation Details</h2>
   </div>
 </div>
 
 <!-- ==================== EVALUATION DETAILS ==================== -->
-<section class="section">
-  <div class="container">
+<section class="section section--flush-top">
+  <div class="container content-wide">
 
     <!-- Key numbers -->
-    <div class="columns is-centered m-6">
+    <div class="columns is-centered mt-4">
       <div class="column is-full has-text-centered content">
         <h2 class="title is-3">At a Glance</h2>
         <div class="benchmark-specline">
-          <span><strong>10</strong> LLMs evaluated</span>
-          <span class="spec-sep">·</span>
-          <span><strong>5</strong> classical baselines</span>
-          <span class="spec-sep">·</span>
-          <span><strong>6</strong> asset classes</span>
-          <span class="spec-sep">·</span>
-          <span><strong>183</strong> financial instruments</span>
-          <span class="spec-sep">·</span>
-          <span><strong>6,269</strong> QA pairs</span>
-          <span class="spec-sep">·</span>
-          <span><strong>10 years</strong> of data (2015–2025)</span>
+          <div class="spec-item">
+            <span class="spec-number">10</span>
+            <span class="spec-label">LLMs evaluated</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-number">5</span>
+            <span class="spec-label">classical baselines</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-number">6</span>
+            <span class="spec-label">asset classes</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-number">183</span>
+            <span class="spec-label">financial instruments</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-number">6,269</span>
+            <span class="spec-label">QA pairs</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-number">10</span>
+            <span class="spec-label">years of data (2015–2025)</span>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Five-stage pipeline -->
-    <div class="columns is-centered m-6">
+    <div class="columns is-centered mt-4">
       <div class="column is-four-fifths has-text-centered content">
         <h2 class="title is-3">Five-Stage Decision Pipeline</h2>
         <p class="has-text-justified">
           At each rebalance date the LLM executes S1–S5 sequentially.
           LLMs and classical baselines share the identical backtest environment for controlled comparison.
         </p>
-        <br>
-        <div style="text-align:left;">
+        <div class="text-left mt-2">
           <div class="stage-box">
             <span class="stage-label">S1 · Market Interpretation</span>
-            <span style="margin-left:1rem; font-size:0.9rem;">
+            <span class="stage-desc">
               Continuous sentiment views <em>v<sub>i</sub> ∈ [−1,+1]</em> per asset.
               Scored as 1 − MAE(views, ground-truth) / 2.
             </span>
           </div>
           <div class="stage-box">
             <span class="stage-label">S2 · Signal Generation</span>
-            <span style="margin-left:1rem; font-size:0.9rem;">
+            <span class="stage-desc">
               Views discretized into buy / hold / sell signals (thresholds ±0.2).
               Scored as fraction of assets with the correct direction.
             </span>
           </div>
           <div class="stage-box">
             <span class="stage-label">S3 · Weight Optimization</span>
-            <span style="margin-left:1rem; font-size:0.9rem;">
+            <span class="stage-desc">
               Portfolio weights scored by the <b>two-layer correlation score</b>:
               weight accuracy (L₁ to signal-constrained max-Sharpe optimum, α = 0.5)
               + correlation structure (intra-class concentration penalty + inter-class hedging credit).
@@ -1059,14 +1246,14 @@
           </div>
           <div class="stage-box is-deterministic">
             <span class="stage-label">S4 · Execution Simulation</span>
-            <span style="margin-left:1rem; font-size:0.9rem;">
+            <span class="stage-desc">
               Deterministic. Fixed transaction costs (10 bps slippage + 5 bps commission).
               Scores turnover deviation from the oracle rebalancing rate.
             </span>
           </div>
           <div class="stage-box is-deterministic">
             <span class="stage-label">S5 · Risk Monitoring</span>
-            <span style="margin-left:1rem; font-size:0.9rem;">
+            <span class="stage-desc">
               Deterministic. 50% rebalance-trigger accuracy + 50% VaR/drawdown estimation accuracy.
               Rebalance trigger fires when max single-asset drift exceeds 5%.
             </span>
@@ -1076,7 +1263,7 @@
     </div>
 
     <!-- CEPS -->
-    <div class="columns is-centered m-6">
+    <div class="columns is-centered mt-4">
       <div class="column is-four-fifths has-text-centered content">
         <h2 class="title is-3">CEPS: Cross-Stage Error Propagation Score</h2>
         <div class="content has-text-justified">
@@ -1091,8 +1278,7 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
 
 Default propagation weight  λ = 0.1
           </div>
-          <br>
-          <p>
+          <p class="mt-2">
             Ground truth for all LLM-scored stages is derived from <em>realized future returns</em>
             withheld from prompts, guaranteeing point-in-time (PiT) safety throughout.
           </p>
@@ -1101,91 +1287,88 @@ Default propagation weight  λ = 0.1
     </div>
 
     <!-- CEPS Cascade Illustration -->
-    <div class="columns is-centered m-6">
+    <div class="columns is-centered mt-4">
       <div class="column is-four-fifths has-text-centered content">
         <h2 class="title is-3">CEPS: Cascade vs. Uniform Mediocrity</h2>
         <p class="has-text-justified">Two models with <em>identical</em> average stage scores (0.526) receive different CEPS scores because one cascades errors while the other is uniformly mediocre.</p>
-        <div class="table-wrapper" style="max-height:none; margin-top:1rem;">
+        <div class="table-wrapper mt-2">
           <table>
-            <thead><tr><th class="main-header"></th><th class="main-header">S1</th><th class="main-header">S2</th><th class="main-header">S3</th><th class="main-header">S4</th><th class="main-header">S5</th><th class="main-header">Avg</th></tr></thead>
+            <thead><tr><th class="main-header" scope="col"></th><th class="main-header" scope="col">S1</th><th class="main-header" scope="col">S2</th><th class="main-header" scope="col">S3</th><th class="main-header" scope="col">S4</th><th class="main-header" scope="col">S5</th><th class="main-header" scope="col">Avg</th></tr></thead>
             <tbody>
-              <tr><td style="text-align:left;font-weight:700;">Model A (cascade)</td><td>0.792</td><td>0.506</td><td>0.714</td><td>0.136</td><td>0.480</td><td>0.526</td></tr>
-              <tr><td style="text-align:left;font-weight:700;">Model B (uniform)</td><td>0.526</td><td>0.526</td><td>0.526</td><td>0.526</td><td>0.526</td><td>0.526</td></tr>
+              <tr><td class="td-left font-bold">Model A (cascade)</td><td>0.792</td><td>0.506</td><td>0.714</td><td>0.136</td><td>0.480</td><td>0.526</td></tr>
+              <tr><td class="td-left font-bold">Model B (uniform)</td><td>0.526</td><td>0.526</td><td>0.526</td><td>0.526</td><td>0.526</td><td>0.526</td></tr>
             </tbody>
           </table>
         </div>
-        <div class="table-wrapper" style="max-height:none; margin-top:8px;">
+        <div class="table-wrapper mt-1">
           <table>
-            <thead><tr><th class="main-header"></th><th class="main-header">Model A (cascade)</th><th class="main-header">Model B (uniform)</th></tr></thead>
+            <thead><tr><th class="main-header" scope="col"></th><th class="main-header" scope="col">Model A (cascade)</th><th class="main-header" scope="col">Model B (uniform)</th></tr></thead>
             <tbody>
-              <tr><td style="text-align:left;">Isolated avg</td><td>0.526</td><td>0.526</td></tr>
-              <tr><td style="text-align:left;">Cascade drops</td><td style="text-align:left;font-size:0.8rem;">(0.792-0.506) + (0.714-0.136) = 0.286 + 0.578 = <b>0.864</b></td><td>0</td></tr>
-              <tr><td style="text-align:left;">Penalty (lambda=0.1)</td><td>0.1 x 0.864 = <b>0.086</b></td><td>0</td></tr>
-              <tr style="font-weight:700; background:#fffbeb;"><td style="text-align:left;">CEPS</td><td style="color:#b91c1c;">0.526 - 0.086 = <b>0.440</b></td><td style="color:#15803d;">0.526 - 0 = <b>0.526</b></td></tr>
+              <tr><td>Isolated avg</td><td>0.526</td><td>0.526</td></tr>
+              <tr><td>Cascade drops</td><td class="text-left text-caption">(0.792-0.506) + (0.714-0.136) = 0.286 + 0.578 = <b>0.864</b></td><td>0</td></tr>
+              <tr><td>Penalty (lambda=0.1)</td><td>0.1 x 0.864 = <b>0.086</b></td><td>0</td></tr>
+              <tr class="row-highlight"><td class="td-left">CEPS</td><td class="text-neg-strong">0.526 - 0.086 = <b>0.440</b></td><td class="text-pos-strong">0.526 - 0 = <b>0.526</b></td></tr>
             </tbody>
           </table>
         </div>
-        <div class="highlight-box" style="margin-top:1rem; text-align:left;">
+        <div class="highlight-box mt-2 text-left">
           The cascade penalty (lambda=0.1) reduces Model A's CEPS by 0.086, penalizing the sharp S1 to S2 and S3 to S4 drops that indicate brittle error propagation. Model B's uniform mediocrity incurs no penalty.
         </div>
       </div>
     </div>
 
     <!-- Investor profiles -->
-    <div class="columns is-centered m-6">
+    <div class="columns is-centered mt-4">
       <div class="column is-full has-text-centered content">
         <h2 class="title is-3">Investor Profiles &amp; Stress Regimes</h2>
-        <p class="has-text-justified" style="margin-bottom:1.5rem;">
+        <p class="has-text-justified mb-3">
           CEPS is evaluated under <b>three investor risk profiles</b> with escalating risk tolerance,
           and back-tested across <b>three historical stress regimes</b> to assess robustness
           when market conditions deteriorate sharply.
         </p>
 
         <!-- Profile cards -->
-        <div class="columns is-centered" style="margin:1.5rem 0;">
+        <div class="columns is-centered my-3">
           <div class="column is-one-third">
             <div class="profile-card conservative">
-              <div class="profile-icon">🛡️</div>
               <div class="profile-name">Conservative</div>
               <div class="profile-constraints">
-                <div class="pc-item"><span class="pc-label">Equity + Crypto</span><span class="pc-value" style="color:oklch(0.42 0.14 145);">≤ 40%</span></div>
-                <div class="pc-item"><span class="pc-label">Bond + Cash</span><span class="pc-value" style="color:oklch(0.42 0.14 145);">≥ 40%</span></div>
+                <div class="pc-item"><span class="pc-label">Equity + Crypto</span><span class="pc-value">≤ 40%</span></div>
+                <div class="pc-item"><span class="pc-label">Bond + Cash</span><span class="pc-value">≥ 40%</span></div>
                 <div class="pc-item"><span class="pc-label">Max Drawdown</span><span class="pc-value">≤ 10%</span></div>
-                <div class="pc-item"><span class="pc-label">Daily VaR (95%)</span><span class="pc-value">≤ −1.0%</span></div>
+                <div class="pc-item"><span class="pc-label">Daily <abbr title="Value at Risk: maximum expected loss over a given period at a specified confidence level">VaR</abbr> (95%)</span><span class="pc-value">≤ −1.0%</span></div>
               </div>
             </div>
           </div>
           <div class="column is-one-third">
             <div class="profile-card balanced">
-              <div class="profile-icon">⚖️</div>
               <div class="profile-name">Balanced</div>
               <div class="profile-constraints">
-                <div class="pc-item"><span class="pc-label">Equity + Crypto</span><span class="pc-value" style="color:oklch(0.50 0.160 255);">≤ 65%</span></div>
-                <div class="pc-item"><span class="pc-label">Bond + Cash</span><span class="pc-value" style="color:oklch(0.50 0.160 255);">≥ 20%</span></div>
+                <div class="pc-item"><span class="pc-label">Equity + Crypto</span><span class="pc-value">≤ 65%</span></div>
+                <div class="pc-item"><span class="pc-label">Bond + Cash</span><span class="pc-value">≥ 20%</span></div>
                 <div class="pc-item"><span class="pc-label">Max Drawdown</span><span class="pc-value">≤ 20%</span></div>
-                <div class="pc-item"><span class="pc-label">Daily VaR (95%)</span><span class="pc-value">≤ −2.0%</span></div>
+                <div class="pc-item"><span class="pc-label">Daily <abbr title="Value at Risk: maximum expected loss over a given period at a specified confidence level">VaR</abbr> (95%)</span><span class="pc-value">≤ −2.0%</span></div>
               </div>
             </div>
           </div>
           <div class="column is-one-third">
             <div class="profile-card aggressive">
-              <div class="profile-icon">🚀</div>
               <div class="profile-name">Aggressive</div>
               <div class="profile-constraints">
-                <div class="pc-item"><span class="pc-label">Equity + Crypto</span><span class="pc-value" style="color:oklch(0.46 0.18 25);">≤ 90%</span></div>
-                <div class="pc-item"><span class="pc-label">Bond + Cash</span><span class="pc-value" style="color:oklch(0.46 0.18 25);">≥ 5%</span></div>
+                <div class="pc-item"><span class="pc-label">Equity + Crypto</span><span class="pc-value">≤ 90%</span></div>
+                <div class="pc-item"><span class="pc-label">Bond + Cash</span><span class="pc-value">≥ 5%</span></div>
                 <div class="pc-item"><span class="pc-label">Max Drawdown</span><span class="pc-value">≤ 35%</span></div>
-                <div class="pc-item"><span class="pc-label">Daily VaR (95%)</span><span class="pc-value">≤ −4.0%</span></div>
+                <div class="pc-item"><span class="pc-label">Daily <abbr title="Value at Risk: maximum expected loss over a given period at a specified confidence level">VaR</abbr> (95%)</span><span class="pc-value">≤ −4.0%</span></div>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Stress regime cards -->
-        <p class="has-text-justified" style="margin-bottom:0.8rem;">
+        <p class="has-text-justified mb-2">
           Each profile is tested under <b>three historical stress regimes</b>:
         </p>
-        <div class="columns is-centered" style="margin:0.8rem 0 1.5rem;">
+        <div class="columns is-centered mt-1 mb-3">
           <div class="column is-one-third">
             <div class="stress-card china">
               <span class="crisis-badge cb-china">2015</span>
@@ -1212,8 +1395,8 @@ Default propagation weight  λ = 0.1
           </div>
         </div>
 
-        <div class="content has-text-justified" style="max-width:760px; margin:0 auto;">
-          <p style="font-size:0.9rem; color:#555;">
+        <div class="content has-text-justified content-prose">
+          <p class="text-muted text-sm">
             A model passes the <b>stress gate</b> for a given profile if its maximum drawdown across all three
             regimes stays within the profile's tolerance.
             <b>Six of ten models fail the Conservative stress gate</b>, all during the 2022 Crypto Collapse,
@@ -1229,62 +1412,17 @@ Default propagation weight  λ = 0.1
 
 <!-- ==================== RESULTS BANNER ==================== -->
 <div class="section-divider" id="results">
-  <div class="container">
-    <h2 class="section-divider-title">Results &amp; Insights</h2>
+  <div class="container content-wide">
+    <h2 class="section-heading">Results &amp; Insights</h2>
   </div>
 </div>
 
 <!-- ==================== RESULTS ==================== -->
-<section class="section">
-  <div class="container">
-
-    <!-- Key Findings Summary Cards -->
-    <div class="columns is-centered" style="margin-bottom:0;">
-      <div class="column is-full has-text-centered content">
-        <h2 class="title is-3" style="margin-bottom:1.5rem;">Key Findings</h2>
-        <div class="columns is-centered" style="margin:0 0 2.5rem;">
-          <div class="column is-one-third">
-            <div class="insight-card i1" style="height:100%;">
-              <div class="insight-icon">📉</div>
-              <div class="insight-headline">LLMs Fail to Beat Equal-Weight</div>
-              <div class="insight-body">
-                Across 30 model–profile combinations,
-                <span class="insight-stat">27 / 30</span> underperform a naive 1/N equal-weight baseline on Sharpe ratio.
-                High-quality market interpretation does <em>not</em> guarantee better portfolios.
-                Only Qwen3.6-Plus (Balanced) simultaneously beats Equal-Weight and passes all stress gates.
-              </div>
-            </div>
-          </div>
-          <div class="column is-one-third">
-            <div class="insight-card i2" style="height:100%;">
-              <div class="insight-icon">⚠️</div>
-              <div class="insight-headline">Stress Rankings Diverge from Normal-Period</div>
-              <div class="insight-body">
-                Normal-period CEPS rankings do <em>not</em> predict stress survival.
-                <span class="insight-stat">6 / 10</span> LLMs fail the Conservative stress gate — all during the 2022 Crypto Collapse.
-                Compliant allocations still produce double-digit drawdowns via cross-asset contagion.
-                Normal-period benchmarks systematically overestimate robustness.
-              </div>
-            </div>
-          </div>
-          <div class="column is-one-third">
-            <div class="insight-card i3" style="height:100%;">
-              <div class="insight-icon">🔀</div>
-              <div class="insight-headline">QA Performance ≠ Pipeline Competence</div>
-              <div class="insight-body">
-                Spearman rank correlation between QA accuracy and pipeline CEPS is
-                <span class="insight-stat">ρ = −0.32</span>.
-                GLM-5.1 ranks 7th in QA yet 1st in CEPS; Kimi-K2.6 ranks last in QA yet 3rd in CEPS.
-                QA measures isolated recall; CEPS measures sustained reasoning across five causally dependent stages.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<section class="section section--flush-top">
+  <div class="container content-wide">
 
     <!-- Pipeline Performance: All Three Profiles -->
-    <div class="columns is-centered m-6">
+    <div class="columns is-centered mt-4">
       <div class="column is-full has-text-centered content">
         <h2 class="title is-3">Pipeline Performance: All Three Profiles</h2>
         <div class="kf-callout kf-blue">
@@ -1302,96 +1440,129 @@ Default propagation weight  λ = 0.1
     </div>
 
     <!-- Complete pipeline table all profiles -->
-    <div class="columns is-centered m-6">
+    <div class="columns is-centered mt-4">
       <div class="column is-full has-text-centered content">
         <p class="has-text-justified">
           The table below reports per-stage scores, CEPS, and financial outcomes for all ten LLMs
-          and five classical baselines across Conservative / Balanced / Aggressive profiles (normal period, 2024).
-          <b>Bold</b> = column best within each profile.
+          and five classical baselines (normal period, 2024).
+          <b>Bold</b> = column best within each profile. Select a profile to view results.
         </p>
-        <div class="model-labels-container">
-          <span class="model-label" style="background:oklch(0.96 0.020 145);color:oklch(0.28 0.12 145);">Conservative</span>
-          <span class="model-label" style="background:oklch(0.97 0.015 255);color:oklch(0.38 0.155 255);">Balanced</span>
-          <span class="model-label" style="background:oklch(0.97 0.015 25);color:oklch(0.42 0.16 25);">Aggressive</span>
+        <!-- Profile tabs -->
+        <div class="profile-tabs" role="tablist" aria-label="Profile selector" id="profile-tabs">
+          <button class="profile-tab is-active" data-profile="conservative" role="tab" aria-selected="true" tabindex="0">
+            <span class="profile-tab-label model-label-conservative">Conservative</span>
+          </button>
+          <button class="profile-tab" data-profile="balanced" role="tab" aria-selected="false" tabindex="-1">
+            <span class="profile-tab-label model-label-balanced">Balanced</span>
+          </button>
+          <button class="profile-tab" data-profile="aggressive" role="tab" aria-selected="false" tabindex="-1">
+            <span class="profile-tab-label model-label-aggressive">Aggressive</span>
+          </button>
         </div>
-        <div class="leaderboard-container">
+
+        <div class="leaderboard-container" id="profile-table-container" role="region" aria-live="polite" aria-label="Profile results table">
           <div class="table-wrapper">
             <table>
               <thead>
                 <tr>
-                  <th class="main-header" rowspan="2">Profile</th>
-                  <th class="main-header" rowspan="2" style="text-align:left;">Model</th>
-                  <th class="main-header" colspan="5">Pipeline Scores</th>
-                  <th class="main-header" rowspan="2">CEPS</th>
-                  <th class="main-header" colspan="4">Financial Outcomes</th>
-                  <th class="main-header" rowspan="2">Gate</th>
+                  <th class="main-header text-left" rowspan="2" scope="col">Model</th>
+                  <th class="main-header" colspan="5" scope="colgroup">Pipeline Scores</th>
+                  <th class="main-header" rowspan="2" scope="col">CEPS</th>
+                  <th class="main-header" colspan="4" scope="colgroup">Financial Outcomes</th>
+                  <th class="main-header" rowspan="2" scope="col">Gate</th>
                 </tr>
                 <tr>
-                  <th>S1</th><th>S2</th><th>S3</th><th>S4</th><th>S5</th>
-                  <th>Sharpe</th><th>Ret%</th><th>MaxDD%</th><th>Vol%</th>
+                  <th scope="col">S1</th><th scope="col">S2</th><th scope="col">S3</th><th scope="col">S4</th><th scope="col">S5</th>
+                  <th scope="col">Sharpe</th><th scope="col">Ret%</th><th scope="col">MaxDD%</th><th scope="col">Vol%</th>
                 </tr>
               </thead>
-              <tbody>
-                <!-- Conservative -->
-                <tr class="row-conservative"><td rowspan="10"><b>Cons.</b></td><td style="text-align:left;">DeepSeek-V4-Pro</td><td>.766</td><td>.406</td><td>.752</td><td>.173</td><td>.483</td><td><b>.436</b></td><td>0.217</td><td>5.49</td><td>−3.53</td><td>7.61</td><td class="fail-cell">✗</td></tr>
-                <tr class="row-conservative"><td style="text-align:left;">GLM-5.1</td><td>.769</td><td>.421</td><td>.751</td><td><b>.224</b></td><td><b>.561</b></td><td>.421</td><td><b>0.764</b></td><td>9.54</td><td>−3.14</td><td>8.14</td><td class="fail-cell">✗</td></tr>
-                <tr class="row-conservative"><td style="text-align:left;">DeepSeek-V4-Flash</td><td>.764</td><td>.390</td><td><b>.766</b></td><td>.219</td><td>.386</td><td>.402</td><td>0.080</td><td>4.54</td><td>−7.43</td><td>8.24</td><td class="fail-cell">✗</td></tr>
-                <tr class="row-conservative"><td style="text-align:left;">Kimi-K2.6</td><td>.791</td><td>.438</td><td>.758</td><td>.177</td><td>.319</td><td>.396</td><td>0.576</td><td>9.51</td><td>−4.90</td><td>9.64</td><td class="fail-cell">✗</td></tr>
-                <tr class="row-conservative"><td style="text-align:left;">Qwen3.7-Max</td><td>.750</td><td>.387</td><td>.746</td><td>.158</td><td>.395</td><td>.387</td><td>0.450</td><td>7.36</td><td>−3.00</td><td>6.86</td><td class="pass-cell">✓</td></tr>
-                <tr class="row-conservative"><td style="text-align:left;">Qwen3.6-Plus</td><td><b>.815</b></td><td>.466</td><td>.752</td><td>.128</td><td>.339</td><td>.386</td><td>0.548</td><td>9.13</td><td>−5.03</td><td>9.43</td><td class="pass-cell">✓</td></tr>
-                <tr class="row-conservative"><td style="text-align:left;">Qwen3.6-35B-A3B</td><td>.748</td><td>.445</td><td>.749</td><td>.177</td><td>.347</td><td>.383</td><td>−0.033</td><td>3.58</td><td>−5.54</td><td>11.10</td><td class="pass-cell">✓</td></tr>
-                <tr class="row-conservative"><td style="text-align:left;">Hunyuan3-Preview</td><td>.804</td><td><b>.527</b></td><td>.759</td><td>.029</td><td>.256</td><td>.372</td><td>0.621</td><td><b>9.95</b></td><td>−5.45</td><td>10.06</td><td class="fail-cell">✗</td></tr>
-                <tr class="row-conservative"><td style="text-align:left;">Doubao-Seed-2.0-Lite</td><td>.768</td><td>.370</td><td>.752</td><td>.060</td><td>.339</td><td>.330</td><td>0.462</td><td>7.17</td><td>−3.01</td><td>8.28</td><td class="pass-cell">✓</td></tr>
-                <tr class="row-conservative"><td style="text-align:left;">Doubao-Seed-2.0-Pro</td><td>.781</td><td>.449</td><td>.744</td><td>.094</td><td>.263</td><td>.325</td><td>0.708</td><td>8.85</td><td>−3.05</td><td>7.60</td><td class="fail-cell">✗</td></tr>
-                <!-- Balanced -->
-                <tr class="row-balanced"><td rowspan="10"><b>Bal.</b></td><td style="text-align:left;">GLM-5.1</td><td>.774</td><td>.427</td><td>.751</td><td>.161</td><td><b>.695</b></td><td><b>.470</b></td><td>0.560</td><td>11.00</td><td>−7.81</td><td>12.17</td><td class="fail-cell">✗</td></tr>
-                <tr class="row-balanced"><td style="text-align:left;">DeepSeek-V4-Flash</td><td>.763</td><td>.414</td><td>.761</td><td><b>.214</b></td><td>.618</td><td>.463</td><td>0.651</td><td>10.64</td><td>−5.13</td><td>9.56</td><td class="fail-cell">✗</td></tr>
-                <tr class="row-balanced"><td style="text-align:left;">Kimi-K2.6</td><td>.784</td><td>.444</td><td>.764</td><td>.208</td><td>.456</td><td>.434</td><td>0.488</td><td>10.30</td><td>−9.13</td><td>12.91</td><td class="fail-cell">✗</td></tr>
-                <tr class="row-balanced" style="font-weight:700;"><td style="text-align:left;">Qwen3.6-Plus ★</td><td>.789</td><td>.519</td><td>.761</td><td>.151</td><td>.370</td><td>.426</td><td><b>0.823</b></td><td><b>14.72</b></td><td>−6.84</td><td>12.15</td><td class="pass-cell">✓</td></tr>
-                <tr class="row-balanced"><td style="text-align:left;">Qwen3.6-35B-A3B</td><td>.770</td><td>.461</td><td>.758</td><td>.111</td><td>.517</td><td>.424</td><td>0.586</td><td>10.73</td><td>−6.74</td><td>11.01</td><td class="pass-cell">✓</td></tr>
-                <tr class="row-balanced"><td style="text-align:left;">Doubao-Seed-2.0-Pro</td><td>.784</td><td>.448</td><td>.744</td><td>.134</td><td>.395</td><td>.405</td><td>0.613</td><td>10.31</td><td>−5.04</td><td>9.71</td><td class="fail-cell">✗</td></tr>
-                <tr class="row-balanced"><td style="text-align:left;">Hunyuan3-Preview</td><td><b>.793</b></td><td><b>.543</b></td><td><b>.764</b></td><td>.032</td><td>.305</td><td>.389</td><td>0.669</td><td>12.42</td><td>−6.67</td><td>11.99</td><td class="fail-cell">✗</td></tr>
-                <tr class="row-balanced"><td style="text-align:left;">Qwen3.7-Max</td><td>.777</td><td>.432</td><td>.758</td><td>.123</td><td>.330</td><td>.384</td><td>0.467</td><td>9.35</td><td>−7.43</td><td>11.28</td><td class="pass-cell">✓</td></tr>
-                <tr class="row-balanced"><td style="text-align:left;">DeepSeek-V4-Pro</td><td>.765</td><td>.405</td><td>.749</td><td>.123</td><td>.283</td><td>.365</td><td>0.321</td><td>6.95</td><td>−5.18</td><td>9.02</td><td class="fail-cell">✗</td></tr>
-                <tr class="row-balanced"><td style="text-align:left;">Doubao-Seed-2.0-Lite</td><td>.772</td><td>.366</td><td>.755</td><td>.053</td><td>.392</td><td>.357</td><td>0.692</td><td>11.43</td><td>−5.65</td><td>10.05</td><td class="pass-cell">✓</td></tr>
-                <!-- Aggressive -->
-                <tr class="row-aggressive"><td rowspan="10"><b>Agg.</b></td><td style="text-align:left;">GLM-5.1</td><td>.763</td><td>.438</td><td>.748</td><td><b>.262</b></td><td>.607</td><td><b>.510</b></td><td>0.710</td><td>15.56</td><td>−10.97</td><td>14.22</td><td class="pass-cell">✓</td></tr>
-                <tr class="row-aggressive"><td style="text-align:left;">Qwen3.7-Max</td><td><b>.786</b></td><td>.485</td><td><b>.773</b></td><td>.109</td><td><b>.646</b></td><td>.463</td><td>0.621</td><td>16.20</td><td>−14.85</td><td>17.11</td><td class="pass-cell">✓</td></tr>
-                <tr class="row-aggressive"><td style="text-align:left;">Qwen3.6-Plus</td><td>.775</td><td><b>.527</b></td><td>.767</td><td>.073</td><td>.469</td><td>.445</td><td>0.674</td><td>16.23</td><td>−12.59</td><td>16.09</td><td class="pass-cell">✓</td></tr>
-                <tr class="row-aggressive"><td style="text-align:left;">DeepSeek-V4-Flash</td><td>.762</td><td>.383</td><td>.758</td><td>.160</td><td>.473</td><td>.408</td><td>0.679</td><td>15.78</td><td>−11.42</td><td>14.88</td><td class="pass-cell">✓</td></tr>
-                <tr class="row-aggressive"><td style="text-align:left;">DeepSeek-V4-Pro</td><td>.736</td><td>.390</td><td>.755</td><td>.174</td><td>.482</td><td>.396</td><td><b>0.752</b></td><td>14.45</td><td>−6.88</td><td>11.70</td><td class="pass-cell">✓</td></tr>
-                <tr class="row-aggressive"><td style="text-align:left;">Kimi-K2.6</td><td>.762</td><td>.431</td><td>.758</td><td>.144</td><td>.359</td><td>.396</td><td>0.586</td><td>15.13</td><td>−15.83</td><td>17.43</td><td class="pass-cell">✓</td></tr>
-                <tr class="row-aggressive"><td style="text-align:left;">Hunyuan3-Preview</td><td>.778</td><td>.519</td><td>.758</td><td>.044</td><td>.348</td><td>.393</td><td>0.652</td><td>12.54</td><td>−6.87</td><td>13.17</td><td class="pass-cell">✓</td></tr>
-                <tr class="row-aggressive"><td style="text-align:left;">Doubao-Seed-2.0-Lite</td><td>.770</td><td>.451</td><td>.758</td><td>.083</td><td>.293</td><td>.389</td><td>0.705</td><td><b>16.55</b></td><td>−11.49</td><td>15.77</td><td class="pass-cell">✓</td></tr>
-                <tr class="row-aggressive"><td style="text-align:left;">Qwen3.6-35B-A3B</td><td>.778</td><td>.452</td><td>.756</td><td>.130</td><td>.200</td><td>.388</td><td>0.658</td><td>15.33</td><td>−10.83</td><td>15.48</td><td class="pass-cell">✓</td></tr>
-                <tr class="row-aggressive"><td style="text-align:left;">Doubao-Seed-2.0-Pro</td><td>.755</td><td>.422</td><td>.756</td><td>.046</td><td>.260</td><td>.382</td><td>0.615</td><td>13.75</td><td>−9.47</td><td>14.22</td><td class="pass-cell">✓</td></tr>
+              <tbody id="profile-table-body">
+                <!-- Conservative (default) -->
+                <tr class="row-conservative"><th scope="row">DeepSeek-V4-Pro</th><td>.766</td><td>.406</td><td>.752</td><td>.173</td><td>.483</td><td><b>.436</b></td><td>0.217</td><td>5.49</td><td>−3.53</td><td>7.61</td><td class="fail-cell">✗</td></tr>
+                <tr class="row-conservative"><th scope="row">GLM-5.1</th><td>.769</td><td>.421</td><td>.751</td><td><b>.224</b></td><td><b>.561</b></td><td>.421</td><td><b>0.764</b></td><td>9.54</td><td>−3.14</td><td>8.14</td><td class="fail-cell">✗</td></tr>
+                <tr class="row-conservative"><th scope="row">DeepSeek-V4-Flash</th><td>.764</td><td>.390</td><td><b>.766</b></td><td>.219</td><td>.386</td><td>.402</td><td>0.080</td><td>4.54</td><td>−7.43</td><td>8.24</td><td class="fail-cell">✗</td></tr>
+                <tr class="row-conservative"><th scope="row">Kimi-K2.6</th><td>.791</td><td>.438</td><td>.758</td><td>.177</td><td>.319</td><td>.396</td><td>0.576</td><td>9.51</td><td>−4.90</td><td>9.64</td><td class="fail-cell">✗</td></tr>
+                <tr class="row-conservative"><th scope="row">Qwen3.7-Max</th><td>.750</td><td>.387</td><td>.746</td><td>.158</td><td>.395</td><td>.387</td><td>0.450</td><td>7.36</td><td>−3.00</td><td>6.86</td><td class="pass-cell">✓</td></tr>
+                <tr class="row-conservative"><th scope="row">Qwen3.6-Plus</th><td><b>.815</b></td><td>.466</td><td>.752</td><td>.128</td><td>.339</td><td>.386</td><td>0.548</td><td>9.13</td><td>−5.03</td><td>9.43</td><td class="pass-cell">✓</td></tr>
+                <tr class="row-conservative"><th scope="row">Qwen3.6-35B-A3B</th><td>.748</td><td>.445</td><td>.749</td><td>.177</td><td>.347</td><td>.383</td><td>−0.033</td><td>3.58</td><td>−5.54</td><td>11.10</td><td class="pass-cell">✓</td></tr>
+                <tr class="row-conservative"><th scope="row">Hunyuan3-Preview</th><td>.804</td><td><b>.527</b></td><td>.759</td><td>.029</td><td>.256</td><td>.372</td><td>0.621</td><td><b>9.95</b></td><td>−5.45</td><td>10.06</td><td class="fail-cell">✗</td></tr>
+                <tr class="row-conservative"><th scope="row">Doubao-Seed-2.0-Lite</th><td>.768</td><td>.370</td><td>.752</td><td>.060</td><td>.339</td><td>.330</td><td>0.462</td><td>7.17</td><td>−3.01</td><td>8.28</td><td class="pass-cell">✓</td></tr>
+                <tr class="row-conservative"><th scope="row">Doubao-Seed-2.0-Pro</th><td>.781</td><td>.449</td><td>.744</td><td>.094</td><td>.263</td><td>.325</td><td>0.708</td><td>8.85</td><td>−3.05</td><td>7.60</td><td class="fail-cell">✗</td></tr>
                 <!-- Baselines -->
-                <tr class="row-baseline"><td rowspan="5"><b>Base</b></td><td style="text-align:left;">Equal-Weight (EqW)</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>0.740</td><td>12.13</td><td>−5.09</td><td>10.25</td><td>N/A</td></tr>
-                <tr class="row-baseline"><td style="text-align:left;">60/40</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>0.651</td><td>10.17</td><td>−4.27</td><td>8.82</td><td>N/A</td></tr>
-                <tr class="row-baseline"><td style="text-align:left;">Risk Parity</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>0.111</td><td>4.56</td><td>−2.02</td><td>3.24</td><td>N/A</td></tr>
-                <tr class="row-baseline"><td style="text-align:left;">Cov. Risk Parity</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>−0.147</td><td>3.71</td><td>−2.02</td><td>2.98</td><td>N/A</td></tr>
-                <tr class="row-baseline"><td style="text-align:left;">Min-Variance</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>−0.601</td><td>2.45</td><td>−2.02</td><td>2.71</td><td>N/A</td></tr>
+                <tr class="row-baseline"><th scope="row">Equal-Weight (EqW)</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>0.740</td><td>12.13</td><td>−5.09</td><td>10.25</td><td>N/A</td></tr>
+                <tr class="row-baseline"><th scope="row">60/40</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>0.651</td><td>10.17</td><td>−4.27</td><td>8.82</td><td>N/A</td></tr>
+                <tr class="row-baseline"><th scope="row">Risk Parity</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>0.111</td><td>4.56</td><td>−2.02</td><td>3.24</td><td>N/A</td></tr>
+                <tr class="row-baseline"><th scope="row">Cov. Risk Parity</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>−0.147</td><td>3.71</td><td>−2.02</td><td>2.98</td><td>N/A</td></tr>
+                <tr class="row-baseline"><th scope="row">Min-Variance</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>−0.601</td><td>2.45</td><td>−2.02</td><td>2.71</td><td>N/A</td></tr>
               </tbody>
             </table>
           </div>
         </div>
+
+        <!-- Hidden profile data for tab switching -->
+        <template id="profile-conservative">
+          <tr class="row-conservative"><th scope="row">DeepSeek-V4-Pro</th><td>.766</td><td>.406</td><td>.752</td><td>.173</td><td>.483</td><td><b>.436</b></td><td>0.217</td><td>5.49</td><td>−3.53</td><td>7.61</td><td class="fail-cell">✗</td></tr>
+          <tr class="row-conservative"><th scope="row">GLM-5.1</th><td>.769</td><td>.421</td><td>.751</td><td><b>.224</b></td><td><b>.561</b></td><td>.421</td><td><b>0.764</b></td><td>9.54</td><td>−3.14</td><td>8.14</td><td class="fail-cell">✗</td></tr>
+          <tr class="row-conservative"><th scope="row">DeepSeek-V4-Flash</th><td>.764</td><td>.390</td><td><b>.766</b></td><td>.219</td><td>.386</td><td>.402</td><td>0.080</td><td>4.54</td><td>−7.43</td><td>8.24</td><td class="fail-cell">✗</td></tr>
+          <tr class="row-conservative"><th scope="row">Kimi-K2.6</th><td>.791</td><td>.438</td><td>.758</td><td>.177</td><td>.319</td><td>.396</td><td>0.576</td><td>9.51</td><td>−4.90</td><td>9.64</td><td class="fail-cell">✗</td></tr>
+          <tr class="row-conservative"><th scope="row">Qwen3.7-Max</th><td>.750</td><td>.387</td><td>.746</td><td>.158</td><td>.395</td><td>.387</td><td>0.450</td><td>7.36</td><td>−3.00</td><td>6.86</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-conservative"><th scope="row">Qwen3.6-Plus</th><td><b>.815</b></td><td>.466</td><td>.752</td><td>.128</td><td>.339</td><td>.386</td><td>0.548</td><td>9.13</td><td>−5.03</td><td>9.43</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-conservative"><th scope="row">Qwen3.6-35B-A3B</th><td>.748</td><td>.445</td><td>.749</td><td>.177</td><td>.347</td><td>.383</td><td>−0.033</td><td>3.58</td><td>−5.54</td><td>11.10</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-conservative"><th scope="row">Hunyuan3-Preview</th><td>.804</td><td><b>.527</b></td><td>.759</td><td>.029</td><td>.256</td><td>.372</td><td>0.621</td><td><b>9.95</b></td><td>−5.45</td><td>10.06</td><td class="fail-cell">✗</td></tr>
+          <tr class="row-conservative"><th scope="row">Doubao-Seed-2.0-Lite</th><td>.768</td><td>.370</td><td>.752</td><td>.060</td><td>.339</td><td>.330</td><td>0.462</td><td>7.17</td><td>−3.01</td><td>8.28</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-conservative"><th scope="row">Doubao-Seed-2.0-Pro</th><td>.781</td><td>.449</td><td>.744</td><td>.094</td><td>.263</td><td>.325</td><td>0.708</td><td>8.85</td><td>−3.05</td><td>7.60</td><td class="fail-cell">✗</td></tr>
+        </template>
+        <template id="profile-balanced">
+          <tr class="row-balanced"><th scope="row">GLM-5.1</th><td>.774</td><td>.427</td><td>.751</td><td>.161</td><td><b>.695</b></td><td><b>.470</b></td><td>0.560</td><td>11.00</td><td>−7.81</td><td>12.17</td><td class="fail-cell">✗</td></tr>
+          <tr class="row-balanced"><th scope="row">DeepSeek-V4-Flash</th><td>.763</td><td>.414</td><td>.761</td><td><b>.214</b></td><td>.618</td><td>.463</td><td>0.651</td><td>10.64</td><td>−5.13</td><td>9.56</td><td class="fail-cell">✗</td></tr>
+          <tr class="row-balanced"><th scope="row">Kimi-K2.6</th><td>.784</td><td>.444</td><td>.764</td><td>.208</td><td>.456</td><td>.434</td><td>0.488</td><td>10.30</td><td>−9.13</td><td>12.91</td><td class="fail-cell">✗</td></tr>
+          <tr class="row-balanced font-bold"><th scope="row">Qwen3.6-Plus ★</th><td>.789</td><td>.519</td><td>.761</td><td>.151</td><td>.370</td><td>.426</td><td><b>0.823</b></td><td><b>14.72</b></td><td>−6.84</td><td>12.15</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-balanced"><th scope="row">Qwen3.6-35B-A3B</th><td>.770</td><td>.461</td><td>.758</td><td>.111</td><td>.517</td><td>.424</td><td>0.586</td><td>10.73</td><td>−6.74</td><td>11.01</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-balanced"><th scope="row">Doubao-Seed-2.0-Pro</th><td>.784</td><td>.448</td><td>.744</td><td>.134</td><td>.395</td><td>.405</td><td>0.613</td><td>10.31</td><td>−5.04</td><td>9.71</td><td class="fail-cell">✗</td></tr>
+          <tr class="row-balanced"><th scope="row">Hunyuan3-Preview</th><td><b>.793</b></td><td><b>.543</b></td><td><b>.764</b></td><td>.032</td><td>.305</td><td>.389</td><td>0.669</td><td>12.42</td><td>−6.67</td><td>11.99</td><td class="fail-cell">✗</td></tr>
+          <tr class="row-balanced"><th scope="row">Qwen3.7-Max</th><td>.777</td><td>.432</td><td>.758</td><td>.123</td><td>.330</td><td>.384</td><td>0.467</td><td>9.35</td><td>−7.43</td><td>11.28</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-balanced"><th scope="row">DeepSeek-V4-Pro</th><td>.765</td><td>.405</td><td>.749</td><td>.123</td><td>.283</td><td>.365</td><td>0.321</td><td>6.95</td><td>−5.18</td><td>9.02</td><td class="fail-cell">✗</td></tr>
+          <tr class="row-balanced"><th scope="row">Doubao-Seed-2.0-Lite</th><td>.772</td><td>.366</td><td>.755</td><td>.053</td><td>.392</td><td>.357</td><td>0.692</td><td>11.43</td><td>−5.65</td><td>10.05</td><td class="pass-cell">✓</td></tr>
+        </template>
+        <template id="profile-aggressive">
+          <tr class="row-aggressive"><th scope="row">GLM-5.1</th><td>.763</td><td>.438</td><td>.748</td><td><b>.262</b></td><td>.607</td><td><b>.510</b></td><td>0.710</td><td>15.56</td><td>−10.97</td><td>14.22</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-aggressive"><th scope="row">Qwen3.7-Max</th><td><b>.786</b></td><td>.485</td><td><b>.773</b></td><td>.109</td><td><b>.646</b></td><td>.463</td><td>0.621</td><td>16.20</td><td>−14.85</td><td>17.11</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-aggressive"><th scope="row">Qwen3.6-Plus</th><td>.775</td><td><b>.527</b></td><td>.767</td><td>.073</td><td>.469</td><td>.445</td><td>0.674</td><td>16.23</td><td>−12.59</td><td>16.09</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-aggressive"><th scope="row">DeepSeek-V4-Flash</th><td>.762</td><td>.383</td><td>.758</td><td>.160</td><td>.473</td><td>.408</td><td>0.679</td><td>15.78</td><td>−11.42</td><td>14.88</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-aggressive"><th scope="row">DeepSeek-V4-Pro</th><td>.736</td><td>.390</td><td>.755</td><td>.174</td><td>.482</td><td>.396</td><td><b>0.752</b></td><td>14.45</td><td>−6.88</td><td>11.70</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-aggressive"><th scope="row">Kimi-K2.6</th><td>.762</td><td>.431</td><td>.758</td><td>.144</td><td>.359</td><td>.396</td><td>0.586</td><td>15.13</td><td>−15.83</td><td>17.43</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-aggressive"><th scope="row">Hunyuan3-Preview</th><td>.778</td><td>.519</td><td>.758</td><td>.044</td><td>.348</td><td>.393</td><td>0.652</td><td>12.54</td><td>−6.87</td><td>13.17</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-aggressive"><th scope="row">Doubao-Seed-2.0-Lite</th><td>.770</td><td>.451</td><td>.758</td><td>.083</td><td>.293</td><td>.389</td><td>0.705</td><td><b>16.55</b></td><td>−11.49</td><td>15.77</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-aggressive"><th scope="row">Qwen3.6-35B-A3B</th><td>.778</td><td>.452</td><td>.756</td><td>.130</td><td>.200</td><td>.388</td><td>0.658</td><td>15.33</td><td>−10.83</td><td>15.48</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-aggressive"><th scope="row">Doubao-Seed-2.0-Pro</th><td>.755</td><td>.422</td><td>.756</td><td>.046</td><td>.260</td><td>.382</td><td>0.615</td><td>13.75</td><td>−9.47</td><td>14.22</td><td class="pass-cell">✓</td></tr>
+        </template>
+        <!-- Shared baselines -->
+        <template id="profile-baselines">
+          <tr class="row-baseline"><th scope="row">Equal-Weight (EqW)</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>0.740</td><td>12.13</td><td>−5.09</td><td>10.25</td><td>N/A</td></tr>
+          <tr class="row-baseline"><th scope="row">60/40</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>0.651</td><td>10.17</td><td>−4.27</td><td>8.82</td><td>N/A</td></tr>
+          <tr class="row-baseline"><th scope="row">Risk Parity</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>0.111</td><td>4.56</td><td>−2.02</td><td>3.24</td><td>N/A</td></tr>
+          <tr class="row-baseline"><th scope="row">Cov. Risk Parity</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>−0.147</td><td>3.71</td><td>−2.02</td><td>2.98</td><td>N/A</td></tr>
+          <tr class="row-baseline"><th scope="row">Min-Variance</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>−0.601</td><td>2.45</td><td>−2.02</td><td>2.71</td><td>N/A</td></tr>
+        </template>
       </div>
     </div>
 
     <!-- Financial outcomes figures -->
-    <div class="columns is-centered m-6">
+    <div class="columns is-centered mt-4">
       <div class="column is-full has-text-centered content">
-        <div style="margin-bottom:1.2rem;"><img loading="lazy" src="./static/images/exp_metrics_balanced.png" alt="Risk-adjusted metrics, balanced" style="width:75%; display:block; margin:0 auto; border-radius:6px;">
-            <p class="fig-caption">Risk-adjusted return metrics (Sharpe, total return, max drawdown, CEPS) under the Balanced profile.</p>
+        <div class="mb-2">
+          <img loading="lazy" src="./static/images/exp_metrics_balanced.png" alt="Bar charts comparing Sharpe ratio, total return, maximum drawdown, and CEPS for 10 LLMs and 5 baselines under the Balanced profile" class="img-figure img-figure-centered">
+          <p class="fig-caption">Risk-adjusted return metrics (Sharpe, total return, max drawdown, CEPS) under the Balanced profile.</p>
         </div>
-        <div style="margin-bottom:1.2rem;"><img loading="lazy" src="./static/images/exp_nav_balanced.png" alt="NAV trajectory, balanced" style="width:75%; display:block; margin:0 auto; border-radius:6px;">
-            <p class="fig-caption">Portfolio NAV trajectories (2024). Shaded band = range across all LLMs; dashed lines = classical baselines.</p>
+        <div class="mb-2">
+          <img loading="lazy" src="./static/images/exp_nav_balanced.png" alt="Net asset value trajectories over 2024 for all LLMs under the Balanced profile, with shaded band showing range and dashed lines for classical baselines" class="img-figure img-figure-centered">
+          <p class="fig-caption">Portfolio NAV trajectories (2024). Shaded band = range across all LLMs; dashed lines = classical baselines.</p>
         </div>
       </div>
     </div>
 
     <!-- Stress regime results -->
-    <div class="columns is-centered m-6">
+    <div class="columns is-centered mt-4">
       <div class="column is-full has-text-centered content">
         <h2 class="title is-3">Stress Regime Results</h2>
         <div class="kf-callout kf-red">
@@ -1404,7 +1575,7 @@ Default propagation weight  λ = 0.1
             misleading for real-world deployment. Benchmarks that evaluate only under i.i.d. market
             conditions systematically overestimate model robustness.
           </div>
-          <div class="kf-text" style="margin-top:0.6rem;">
+          <div class="kf-text mt-1">
             More troubling still, <b>6 of 10 LLMs fail the Conservative stress gate</b>,
             all during the 2022 Crypto Collapse. These models satisfy every allocation constraint
             (equity/crypto caps, bond/cash floors, drawdown/VaR limits) yet still suffer double-digit
@@ -1420,17 +1591,17 @@ Default propagation weight  λ = 0.1
           maximum drawdown across all three historical stress regimes stays within the profile's tolerance.
           The images below show aggregate stress performance across all models and profiles.
         </p>
-        <div style="display:flex; flex-wrap:wrap; gap:1.5rem; margin:1.5rem 0;">
-          <div style="flex:1; min-width:220px;">
-            <img loading="lazy" src="./static/images/exp_stress_drawdown.png" style="width:100%; height:340px; object-fit:contain; border-radius:6px; background:#fafafa;">
+        <div class="img-row">
+          <div class="img-panel">
+            <img loading="lazy" src="./static/images/exp_stress_drawdown.png" class="img-analysis" alt="Grouped bar chart showing maximum drawdown for each LLM across three stress regimes (China Shock, COVID, Crypto Collapse), with Conservative tolerance threshold line">
             <p class="fig-caption">Max drawdown across three stress regimes (worst case, all profiles). Six of ten LLMs fail Conservative.</p>
           </div>
-          <div style="flex:1; min-width:220px;">
-            <img loading="lazy" src="./static/images/analysis_normal_vs_stress.png" style="width:100%; height:340px; object-fit:contain; border-radius:6px; background:#fafafa;">
+          <div class="img-panel">
+            <img loading="lazy" src="./static/images/analysis_normal_vs_stress.png" class="img-analysis" alt="Scatter plot of normal-period CEPS vs. stress-period CEPS under Conservative profile, showing weak correlation and models that pass normal but fail stress">
             <p class="fig-caption">Normal-period vs. stress-period CEPS (2022, Conservative). High normal scores do not predict stress survival.</p>
           </div>
         </div>
-        <p style="font-size:0.88rem; color:#555; text-align:left;">
+        <p class="text-xs has-text-left">
           <b>Takeaway:</b> Stress-regime evaluation is the only layer that reveals which models are
           genuinely safe for deployment; normal-period benchmarks alone systematically overestimate robustness.
         </p>
@@ -1438,7 +1609,7 @@ Default propagation weight  λ = 0.1
     </div>
 
     <!-- Static QA results -->
-    <div class="columns is-centered m-6">
+    <div class="columns is-centered mt-4">
       <div class="column is-full has-text-centered content">
         <h2 class="title is-3">Static QA Evaluation Results</h2>
         <p class="has-text-justified">
@@ -1450,11 +1621,11 @@ Default propagation weight  λ = 0.1
           Per-template accuracy (full &amp; restricted covariance conditions), formula vs. judgment averages,
           and accuracy by market regime. <b>Bold</b> = column best. Pink rows = Mean &lt; 0.65.
         </p>
-        <div class="table-wrapper" style="max-height:none;">
+        <div class="table-wrapper no-scroll">
           <table>
             <thead>
               <tr>
-                <th class="main-header" rowspan="2" style="text-align:left;">Model</th>
+                <th class="main-header text-left" rowspan="2">Model</th>
                 <th class="main-header" colspan="7">Per-Template (Full)</th>
                 <th class="main-header" rowspan="2">Mean</th>
                 <th class="main-header" colspan="2">Restricted</th>
@@ -1469,20 +1640,20 @@ Default propagation weight  λ = 0.1
               </tr>
             </thead>
             <tbody>
-              <tr><td style="text-align:left;">DeepSeek-V4-Flash</td><td><b>.520</b></td><td>.843</td><td>.945</td><td><b>1.00</b></td><td>.932</td><td>.652</td><td><b>.843</b></td><td><b>.819</b></td><td>.975</td><td>.860</td><td>.966</td><td>.715</td><td>.827</td><td>.823</td><td><b>.812</b></td></tr>
-              <tr><td style="text-align:left;">Qwen3.7-Max</td><td>.500</td><td><b>.859</b></td><td>.951</td><td><b>1.00</b></td><td>.954</td><td>.724</td><td>.742</td><td><b>.819</b></td><td><b>1.00</b></td><td><b>.990</b></td><td>.977</td><td>.706</td><td>.814</td><td><b>.863</b></td><td>.810</td></tr>
-              <tr><td style="text-align:left;">DeepSeek-V4-Pro</td><td><b>.520</b></td><td>.837</td><td>.963</td><td><b>1.00</b></td><td><b>.992</b></td><td>.652</td><td>.760</td><td>.818</td><td><b>1.00</b></td><td>.660</td><td><b>.996</b></td><td>.692</td><td><b>.844</b></td><td>.846</td><td>.802</td></tr>
-              <tr><td style="text-align:left;">Doubao-Seed-2.0-Lite</td><td>.460</td><td>.798</td><td>.957</td><td>.956</td><td>.897</td><td>.810</td><td>.747</td><td>.804</td><td>.961</td><td>.940</td><td>.927</td><td>.704</td><td>.780</td><td>.846</td><td>.806</td></tr>
-              <tr><td style="text-align:left;">Doubao-Seed-2.0-Pro</td><td>.440</td><td>.847</td><td>.963</td><td>.991</td><td>.912</td><td>.824</td><td>.530</td><td>.787</td><td>.979</td><td>.923</td><td>.952</td><td>.660</td><td>.764</td><td>.806</td><td>.792</td></tr>
-              <tr><td style="text-align:left;">Qwen3.6-Plus</td><td>.440</td><td>.858</td><td><b>.968</b></td><td><b>1.00</b></td><td>.804</td><td>.640</td><td>.768</td><td>.783</td><td><b>1.00</b></td><td>.810</td><td>.902</td><td>.677</td><td>.799</td><td>.801</td><td>.771</td></tr>
-              <tr><td style="text-align:left;">GLM-5.1</td><td>.440</td><td>.855</td><td>.964</td><td><b>1.00</b></td><td>.421</td><td><b>.882</b></td><td>.738</td><td>.757</td><td><b>1.00</b></td><td>.531</td><td>.711</td><td><b>.729</b></td><td>.778</td><td>.765</td><td>.746</td></tr>
-              <tr><td style="text-align:left;">Qwen3.6-35B-A3B</td><td>.460</td><td>.808</td><td>.961</td><td><b>1.00</b></td><td>.230</td><td>.564</td><td>.763</td><td>.684</td><td><b>1.00</b></td><td>.320</td><td>.615</td><td>.649</td><td>.714</td><td>.729</td><td>.662</td></tr>
-              <tr style="background:#fff0f0;"><td style="text-align:left;">Hunyuan3-Preview</td><td>.460</td><td>.386</td><td>.336</td><td>.975</td><td>.958</td><td>.468</td><td>.783</td><td>.624</td><td>.982</td><td>.974</td><td>.967</td><td>.524</td><td>.664</td><td>.663</td><td>.597</td></tr>
-              <tr style="background:#fff0f0;"><td style="text-align:left;">Kimi-K2.6</td><td>.420</td><td>.422</td><td>.493</td><td>.956</td><td>.280</td><td>.684</td><td>.320</td><td>.511</td><td>.978</td><td>.710</td><td>.618</td><td>.462</td><td>.556</td><td>.531</td><td>.487</td></tr>
+              <tr><td>DeepSeek-V4-Flash</td><td><b>.520</b></td><td>.843</td><td>.945</td><td><b>1.00</b></td><td>.932</td><td>.652</td><td><b>.843</b></td><td><b>.819</b></td><td>.975</td><td>.860</td><td>.966</td><td>.715</td><td>.827</td><td>.823</td><td><b>.812</b></td></tr>
+              <tr><td>Qwen3.7-Max</td><td>.500</td><td><b>.859</b></td><td>.951</td><td><b>1.00</b></td><td>.954</td><td>.724</td><td>.742</td><td><b>.819</b></td><td><b>1.00</b></td><td><b>.990</b></td><td>.977</td><td>.706</td><td>.814</td><td><b>.863</b></td><td>.810</td></tr>
+              <tr><td>DeepSeek-V4-Pro</td><td><b>.520</b></td><td>.837</td><td>.963</td><td><b>1.00</b></td><td><b>.992</b></td><td>.652</td><td>.760</td><td>.818</td><td><b>1.00</b></td><td>.660</td><td><b>.996</b></td><td>.692</td><td><b>.844</b></td><td>.846</td><td>.802</td></tr>
+              <tr><td>Doubao-Seed-2.0-Lite</td><td>.460</td><td>.798</td><td>.957</td><td>.956</td><td>.897</td><td>.810</td><td>.747</td><td>.804</td><td>.961</td><td>.940</td><td>.927</td><td>.704</td><td>.780</td><td>.846</td><td>.806</td></tr>
+              <tr><td>Doubao-Seed-2.0-Pro</td><td>.440</td><td>.847</td><td>.963</td><td>.991</td><td>.912</td><td>.824</td><td>.530</td><td>.787</td><td>.979</td><td>.923</td><td>.952</td><td>.660</td><td>.764</td><td>.806</td><td>.792</td></tr>
+              <tr><td>Qwen3.6-Plus</td><td>.440</td><td>.858</td><td><b>.968</b></td><td><b>1.00</b></td><td>.804</td><td>.640</td><td>.768</td><td>.783</td><td><b>1.00</b></td><td>.810</td><td>.902</td><td>.677</td><td>.799</td><td>.801</td><td>.771</td></tr>
+              <tr><td>GLM-5.1</td><td>.440</td><td>.855</td><td>.964</td><td><b>1.00</b></td><td>.421</td><td><b>.882</b></td><td>.738</td><td>.757</td><td><b>1.00</b></td><td>.531</td><td>.711</td><td><b>.729</b></td><td>.778</td><td>.765</td><td>.746</td></tr>
+              <tr><td>Qwen3.6-35B-A3B</td><td>.460</td><td>.808</td><td>.961</td><td><b>1.00</b></td><td>.230</td><td>.564</td><td>.763</td><td>.684</td><td><b>1.00</b></td><td>.320</td><td>.615</td><td>.649</td><td>.714</td><td>.729</td><td>.662</td></tr>
+              <tr class="row-alert"><td class="td-left">Hunyuan3-Preview</td><td>.460</td><td>.386</td><td>.336</td><td>.975</td><td>.958</td><td>.468</td><td>.783</td><td>.624</td><td>.982</td><td>.974</td><td>.967</td><td>.524</td><td>.664</td><td>.663</td><td>.597</td></tr>
+              <tr class="row-alert"><td class="td-left">Kimi-K2.6</td><td>.420</td><td>.422</td><td>.493</td><td>.956</td><td>.280</td><td>.684</td><td>.320</td><td>.511</td><td>.978</td><td>.710</td><td>.618</td><td>.462</td><td>.556</td><td>.531</td><td>.487</td></tr>
             </tbody>
           </table>
         </div>
-        <p style="font-size:0.8rem; color:#666; margin-top:0.5rem; text-align:left;">
+        <p class="text-caption">
           F = mean(T4,T5) formula-driven; J = mean(T1,T2,T6,T7) judgment-driven.
           Restricted (T4<sub>r</sub>, T5<sub>r</sub>) withholds the covariance matrix:
           7 of 10 models perform <em>better</em> without it, confirming format matching rather than genuine numerical reasoning.
@@ -1491,7 +1662,7 @@ Default propagation weight  λ = 0.1
     </div>
     
     <!-- QA–Pipeline dissociation -->
-    <div class="columns is-centered m-6">
+    <div class="columns is-centered mt-4">
       <div class="column is-full has-text-centered content">
         <h2 class="title is-3">QA–Pipeline Rank Dissociation</h2>
         <div class="kf-callout kf-orange">
@@ -1507,7 +1678,7 @@ Default propagation weight  λ = 0.1
             formula-driven tasks (T4/T5) often collapse when translating signals into actual orders.
           </div>
         </div>
-        <div class="table-wrapper" style="max-height:none;">
+        <div class="table-wrapper no-scroll">
           <table>
             <thead>
               <tr>
@@ -1520,26 +1691,26 @@ Default propagation weight  λ = 0.1
               </tr>
             </thead>
             <tbody>
-              <tr><td style="text-align:left;">DeepSeek-V4-Flash</td><td>.819</td><td>1</td><td>.463</td><td>2</td><td>−1</td></tr>
-              <tr><td style="text-align:left;">Qwen3.7-Max</td><td>.819</td><td>2</td><td>.384</td><td>8</td><td>−6</td></tr>
-              <tr><td style="text-align:left;">DeepSeek-V4-Pro</td><td>.818</td><td>3</td><td>.365</td><td>9</td><td>−6</td></tr>
-              <tr><td style="text-align:left;">Doubao-Seed-2.0-Lite</td><td>.804</td><td>4</td><td>.357</td><td>10</td><td>−6</td></tr>
-              <tr><td style="text-align:left;">Doubao-Seed-2.0-Pro</td><td>.787</td><td>5</td><td>.405</td><td>6</td><td>−1</td></tr>
-              <tr><td style="text-align:left;">Qwen3.6-Plus</td><td>.783</td><td>6</td><td>.426</td><td>4</td><td>+2</td></tr>
-              <tr style="font-weight:700; background:#fffbeb;"><td style="text-align:left;">GLM-5.1</td><td>.757</td><td>7</td><td>.470</td><td>1</td><td><b>+6</b></td></tr>
-              <tr><td style="text-align:left;">Qwen3.6-35B-A3B</td><td>.684</td><td>8</td><td>.424</td><td>5</td><td>+3</td></tr>
-              <tr><td style="text-align:left;">Hunyuan3-Preview</td><td>.624</td><td>9</td><td>.389</td><td>7</td><td>+2</td></tr>
-              <tr style="font-weight:700; background:#fffbeb;"><td style="text-align:left;">Kimi-K2.6</td><td>.511</td><td>10</td><td>.434</td><td>3</td><td><b>+7</b></td></tr>
+              <tr><td>DeepSeek-V4-Flash</td><td>.819</td><td>1</td><td>.463</td><td>2</td><td>−1</td></tr>
+              <tr><td>Qwen3.7-Max</td><td>.819</td><td>2</td><td>.384</td><td>8</td><td>−6</td></tr>
+              <tr><td>DeepSeek-V4-Pro</td><td>.818</td><td>3</td><td>.365</td><td>9</td><td>−6</td></tr>
+              <tr><td>Doubao-Seed-2.0-Lite</td><td>.804</td><td>4</td><td>.357</td><td>10</td><td>−6</td></tr>
+              <tr><td>Doubao-Seed-2.0-Pro</td><td>.787</td><td>5</td><td>.405</td><td>6</td><td>−1</td></tr>
+              <tr><td>Qwen3.6-Plus</td><td>.783</td><td>6</td><td>.426</td><td>4</td><td>+2</td></tr>
+              <tr class="row-highlight"><td class="td-left">GLM-5.1</td><td>.757</td><td>7</td><td>.470</td><td>1</td><td><b>+6</b></td></tr>
+              <tr><td>Qwen3.6-35B-A3B</td><td>.684</td><td>8</td><td>.424</td><td>5</td><td>+3</td></tr>
+              <tr><td>Hunyuan3-Preview</td><td>.624</td><td>9</td><td>.389</td><td>7</td><td>+2</td></tr>
+              <tr class="row-highlight"><td class="td-left">Kimi-K2.6</td><td>.511</td><td>10</td><td>.434</td><td>3</td><td><b>+7</b></td></tr>
             </tbody>
           </table>
         </div>
-        <div style="display:flex; flex-wrap:wrap; gap:1.5rem; margin:1.5rem 0;">
-          <div style="flex:1; min-width:220px;">
-            <img loading="lazy" src="./static/images/analysis_s2_s4_quadrant.png" style="width:100%; height:340px; object-fit:contain; border-radius:6px; background:#fafafa;">
+        <div class="img-row">
+          <div class="img-panel">
+            <img loading="lazy" src="./static/images/analysis_s2_s4_quadrant.png" class="img-analysis" alt="Quadrant scatter plot of S2 signal accuracy vs. S4 execution fidelity per model, highlighting models with strong signals but poor execution">
             <p class="fig-caption">S2 (signal) vs. S4 (execution). Hunyuan3-Preview leads S2 yet collapses in S4: strong signals, no execution.</p>
           </div>
-          <div style="flex:1; min-width:220px;">
-            <img loading="lazy" src="./static/images/analysis_profile_adaptation.png" style="width:100%; height:340px; object-fit:contain; border-radius:6px; background:#fafafa;">
+          <div class="img-panel">
+            <img loading="lazy" src="./static/images/analysis_profile_adaptation.png" class="img-analysis" alt="Profile alignment scores per model measuring portfolio similarity across Conservative, Balanced, and Aggressive profiles, revealing models that apply near-identical allocations regardless of risk tolerance">
             <p class="fig-caption">Profile Alignment Score (PAS) per model. GLM-5.1 applies a nearly identical allocation regardless of risk profile (σ = 0.014).</p>
           </div>
         </div>
@@ -1550,19 +1721,15 @@ Default propagation weight  λ = 0.1
 </section>
 
 <!-- ==================== CITATION ==================== -->
-<section class="section" aria-label="Citation" style="padding-top:1.5rem;">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3 has-text-centered">Citation</h2>
-        <pre class="citation-box">@article{zhao2026portbench,
+<section class="section pt-3" aria-label="Citation" id="citation">
+  <div class="content-reading">
+    <h2 class="title is-3 has-text-centered">Citation</h2>
+    <pre class="citation-box">@article{zhao2026portbench,
   title={PortBench: A Correlation-Aware, Full-Pipeline Benchmark for LLM-Driven Portfolio Management},
   author={Zhao, Yuxuan and Chen, Sijia and Su, Ningxin},
   journal={arXiv preprint arXiv:2605.27887},
   year={2026}
 }</pre>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -1583,6 +1750,55 @@ Default propagation weight  λ = 0.1
     </div>
   </div>
 </footer>
+
+<!-- Back to top button -->
+<button class="back-to-top" id="back-to-top" aria-label="Back to top" title="Back to top">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M9 14V4M9 4L4 9M9 4L14 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<script>
+(function() {
+  var nav = document.getElementById('section-nav');
+  var btn = document.getElementById('back-to-top');
+  var heroBottom = document.querySelector('.teaser') || document.querySelector('.pub-hero');
+  var sections = ['findings', 'background', 'explorer', 'details', 'results', 'citation']
+    .map(function(id) { return document.getElementById(id); })
+    .filter(Boolean);
+  var links = document.querySelectorAll('.section-nav-link');
+
+  function onScroll() {
+    var heroY = heroBottom ? heroBottom.getBoundingClientRect().bottom : 400;
+    var pastHero = heroY < 0;
+    nav.classList.toggle('is-visible', pastHero);
+    btn.classList.toggle('is-visible', pastHero);
+  }
+
+  /* IntersectionObserver for active section */
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var id = entry.target.id;
+        links.forEach(function(link) {
+          var isMatch = link.getAttribute('href') === '#' + id;
+          link.classList.toggle('is-active', isMatch);
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -60% 0px', threshold: 0 });
+
+  sections.forEach(function(sec) { observer.observe(sec); });
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* Back to top */
+  btn.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();
+</script>
 
 </body>
 </html>
