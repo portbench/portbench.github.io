@@ -312,6 +312,8 @@
           183 instruments across 6 asset classes, daily data 2015&ndash;2025.
           Each monthly snapshot includes macro indicators, per-asset price summaries, and cross-class correlations.
           Select a date to see the full snapshot.
+          To keep the layout compact, the six asset class tables are <b>collapsed by default</b>: click
+          any class header to expand and inspect its representative tickers.
         </p>
         <div class="explorer-controls">
           <label for="market-date-picker"><b>Date:</b></label>
@@ -638,6 +640,16 @@
     sel.selectedIndex = midIdx;
     sel.addEventListener("change", function() { renderMarketSnapshot(sel.value); });
     renderMarketSnapshot(sel.value);
+
+    /* Collapsible toggle for asset tables and correlation matrix */
+    document.getElementById("market-snapshot-display").addEventListener("click", function(e) {
+      var header = e.target.closest(".ms-toggleable .showcase-inner-header");
+      if (!header) return;
+      var parent = header.parentElement;
+      if (parent && parent.classList.contains("ms-toggleable")) {
+        parent.classList.toggle("ms-expanded");
+      }
+    });
   }
 
   function renderMarketSnapshot(date) {
@@ -673,14 +685,24 @@
     });
     html += '</div></div></div>';
 
-    /* Per-asset table by class */
+    /* Per-asset table by class (collapsible) */
     var assetClasses = ["Equities","Bonds","Commodities","Crypto","Real Estate","Cash"];
     var classColors = {"Equities":"si-blue","Bonds":"si-lav","Commodities":"si-cream","Crypto":"si-coral","Real Estate":"si-teal","Cash":"si-peri"};
     assetClasses.forEach(function(cls) {
       var assets = (snap.assets[cls] || []);
       if (!assets.length) return;
-      html += '<div class="showcase-inner ' + classColors[cls] + '">';
-      html += '<div class="showcase-inner-header">' + esc(cls) + '</div>';
+
+      /* Build summary: count + avg 20d ret */
+      var rets = assets.filter(function(a){ return a.ret_20d !== null; }).map(function(a){ return a.ret_20d; });
+      var avgRet = rets.length ? rets.reduce(function(s,v){return s+v;},0)/rets.length : null;
+      var avgStr = avgRet !== null ? ((avgRet >= 0 ? "+" : "") + pct(avgRet, 1)) : "N/A";
+      var avgCls = avgRet !== null && avgRet >= 0 ? "ret-pos" : "ret-neg";
+
+      html += '<div class="showcase-inner ms-toggleable ' + classColors[cls] + '">';
+      html += '<div class="showcase-inner-header">';
+      html += esc(cls) + ' <span class="ms-toggle">▸</span>';
+      html += '<span class="ms-summary">' + assets.length + ' tickers · avg 20d <span class="' + avgCls + '">' + avgStr + '</span></span>';
+      html += '</div>';
       html += '<div class="showcase-inner-body">';
       html += '<div class="table-wrapper">';
       html += '<table class="table-compact"><thead><tr>';
@@ -704,7 +726,7 @@
       html += '</tbody></table></div></div></div>';
     });
 
-    /* Correlation box */
+    /* Correlation box (always expanded) */
     var classes = Object.keys(snap.correlation || {});
     if (classes.length) {
       html += '<div class="showcase-inner si-cream">';

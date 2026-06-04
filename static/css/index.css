@@ -1422,6 +1422,40 @@ table th {
 .table-compact { font-size: 0.78rem; }
 .table-compact td { font-size: 0.76rem; }
 
+/* ── Collapsible market snapshot sections ── */
+.ms-toggleable .showcase-inner-header {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: background 0.15s;
+}
+.ms-toggleable .showcase-inner-header:hover {
+  filter: brightness(0.96);
+}
+.ms-toggle {
+  font-size: 0.65rem;
+  margin-left: var(--space-sm);
+  opacity: 0.5;
+  transition: transform 0.2s, opacity 0.15s;
+  display: inline-block;
+}
+.ms-toggleable.ms-expanded .ms-toggle {
+  transform: rotate(90deg);
+  opacity: 0.7;
+}
+.ms-summary {
+  font-size: 0.72rem;
+  font-weight: 400;
+  font-family: var(--font-mono);
+  margin-left: auto;
+  padding-left: var(--space-md);
+}
+.ms-summary .ret-pos { color: var(--pos); }
+.ms-summary .ret-neg { color: var(--neg); }
+.ms-toggleable:not(.ms-expanded) > .showcase-inner-body {
+  display: none;
+}
+
 /* ── Highlight rows (replacing #fffbeb / #fff0f0) ── */
 .row-highlight {
   background: var(--accent-wash);
