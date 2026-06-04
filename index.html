@@ -24,13 +24,13 @@
   <script defer src="./static/js/index.js"></script>
 </head>
 <body>
-<a href="#findings" class="skip-link">Skip to content</a>
+<a href="#background" class="skip-link">Skip to content</a>
 <div class="scroll-progress" aria-hidden="true"></div>
 
 <!-- ==================== STICKY SECTION NAV ==================== -->
 <nav class="section-nav" id="section-nav" aria-label="Page sections">
-  <a href="#findings" class="section-nav-link">Findings</a>
   <a href="#background" class="section-nav-link">Background</a>
+  <a href="#findings" class="section-nav-link">Findings</a>
   <a href="#explorer" class="section-nav-link">Explorer</a>
   <a href="#details" class="section-nav-link">Details</a>
   <a href="#results" class="section-nav-link">Results</a>
@@ -149,6 +149,83 @@
           </div>
         </div>
       </div>
+
+      <!-- ==================== TEASER / CORE FINDING BANNER ==================== -->
+      <div class="teaser-banner">
+        <p class="teaser-banner-text">
+          Despite strong performance on static financial QA,
+          <strong class="teaser-stat">90%</strong> of model-profile combinations fail to outperform a basic equal-weight allocation.
+          <br>
+          Models that satisfy every procedural constraint
+          still suffer <strong class="teaser-stat">catastrophic drawdowns</strong> under stress.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==================== BACKGROUND & MOTIVATION ==================== -->
+<section class="section section--flush-top" id="background">
+  <div class="container">
+    <div class="content-reading">
+    <h2 class="section-heading">Background &amp; Motivation</h2>
+    <div class="content has-text-justified">
+          <p>
+            Large language models (LLMs) have shown strong performance across diverse financial tasks,
+            yet portfolio management (PM) remains poorly benchmarked. Existing benchmarks
+            <b>ignore cross-asset correlation structures</b> and <b>fail to evaluate the complete PM
+            decision pipeline</b>, missing the compounding errors that arise as reasoning propagates
+            through sequential allocation stages.
+          </p>
+          <p>
+            We introduce <b>PortBench</b> with the following key contributions:
+          </p>
+          <div class="contrib-list">
+            <div class="contrib-row">
+              <span class="contrib-label">Dataset</span>
+              <div class="contrib-content">
+                <span class="contrib-title">Market Base Dataset</span>
+                <p class="contrib-desc">183 instruments across 6 asset classes (equities, bonds, commodities, crypto, real estate, cash) spanning 2015&ndash;2025, with daily prices, returns, macro indicators, and news. Inter-class correlations are low, intra-class correlations are high: true diversification means crossing asset-class boundaries, not just picking more tickers.</p>
+              </div>
+            </div>
+            <div class="contrib-row">
+              <span class="contrib-label">Static Layer</span>
+              <div class="contrib-content">
+                <span class="contrib-title">6,269 QA Pairs</span>
+                <p class="contrib-desc">6,269 correlation-based QA pairs across 7 templates (T1&ndash;T7) and 4 difficulty levels, auto-generated from historical data via analytical formulas. Tests correlation reasoning from single-asset prediction to multi-asset constrained allocation to regime-driven rebalancing. Questions and ground truths are derived automatically (no human annotation needed), and new templates can be added on demand.</p>
+              </div>
+            </div>
+            <div class="contrib-row">
+              <span class="contrib-label">Dynamic Layer</span>
+              <div class="contrib-content">
+                <span class="contrib-title">Five-Stage Allocation Pipeline</span>
+                <p class="contrib-desc">Models execute S1 (Market Interpretation) &rarr; S2 (Signal Generation) &rarr; S3 (Weight Optimization) &rarr; S4 (Execution Simulation) &rarr; S5 (Risk Monitoring) sequentially at each rebalance date. A stateful sandbox tracks per-stage scores, weights, and NAV through time to reveal how early errors cascade into final outcomes. Evaluated under 3 investor profiles and 3 historical stress regimes.</p>
+              </div>
+            </div>
+            <div class="contrib-row">
+              <span class="contrib-label">Metrics</span>
+              <div class="contrib-content">
+                <span class="contrib-title">Dual-Layer Correlation Score + <abbr title="Cross-Stage Error Propagation Score: penalizes error cascades across pipeline stages">CEPS</abbr></span>
+                <p class="contrib-desc">A dual-layer correlation score that measures whether portfolios truly exploit inter-class hedging and avoid intra-class concentration. <abbr title="Cross-Stage Error Propagation Score">CEPS</abbr>, a cross-stage error propagation score, quantifies how reasoning errors compound across pipeline stages: unlike prior benchmarks, CEPS penalizes error cascades rather than averaging scores.</p>
+              </div>
+            </div>
+          </div>
+          <img loading="lazy" src="./static/images/intro_overview.png" alt="PortBench framework overview: market data collection, dual-layer evaluation with static QA and dynamic pipeline, three risk profiles and stress regimes" class="img-figure">
+          <p class="fig-caption">
+            Overview of <b>PortBench</b>. We first collect the <b>Market Base Dataset</b>
+            (183 instruments × 6 asset classes, 2015–2025), then build a
+            <b>dual-layer evaluation framework</b> on top:
+            a static QA layer (6,269 correlation-based pairs) and a dynamic five-stage pipeline,
+            jointly assessed under three risk profiles and three historical stress regimes.
+          </p>
+          <img loading="lazy" src="./static/images/method_framework.png" alt="Two-layer evaluation framework: static QA layer with 6,269 pairs above, dynamic five-stage pipeline below, both fed by market snapshots" class="img-figure">
+          <p class="fig-caption">
+            Evaluation framework. Static QA layer (Top): seven task templates generated automatically from
+            historical data. Dynamic five-stage pipeline (Bottom): executed sequentially at every rebalance
+            date under three investor profiles and three stress regimes.
+          </p>
+        </div>
     </div>
   </div>
 </section>
@@ -196,71 +273,6 @@
         </div>
       </div>
     </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== BACKGROUND & MOTIVATION ==================== -->
-<section class="section section--flush-top" id="background">
-  <div class="container">
-    <div class="content-reading">
-    <h2 class="section-heading">Background &amp; Motivation</h2>
-    <div class="content has-text-justified">
-          <p>
-            Large language models (LLMs) have shown strong performance across diverse financial tasks,
-            yet portfolio management (PM) remains poorly benchmarked. Existing benchmarks
-            <b>ignore cross-asset correlation structures</b> and <b>fail to evaluate the complete PM
-            decision pipeline</b>, missing the compounding errors that arise as reasoning propagates
-            through sequential allocation stages.
-          </p>
-          <p>
-            We introduce <b>PortBench</b> with the following key contributions:
-          </p>
-          <div class="contrib-list">
-            <div class="contrib-row">
-              <span class="contrib-label">Dataset</span>
-              <div class="contrib-content">
-                <span class="contrib-title">Market Base Dataset</span>
-                <p class="contrib-desc">183 instruments across 6 asset classes over 10 years (2015–2025), forming a single auditable source for all benchmark components.</p>
-              </div>
-            </div>
-            <div class="contrib-row">
-              <span class="contrib-label">Static Layer</span>
-              <div class="contrib-content">
-                <span class="contrib-title">6,269 QA Pairs</span>
-                <p class="contrib-desc">Across 7 correlation-based task templates, auto-generated without human annotation and extensible to new periods and assets.</p>
-              </div>
-            </div>
-            <div class="contrib-row">
-              <span class="contrib-label">Dynamic Layer</span>
-              <div class="contrib-content">
-                <span class="contrib-title">Five-Stage Allocation Pipeline</span>
-                <p class="contrib-desc">Mirroring the full PM decision cycle, evaluated under 3 investor risk profiles and 3 historical stress regimes.</p>
-              </div>
-            </div>
-            <div class="contrib-row">
-              <span class="contrib-label">Metrics</span>
-              <div class="contrib-content">
-                <span class="contrib-title">Dual-Layer Correlation Score + <abbr title="Cross-Stage Error Propagation Score: penalizes error cascades across pipeline stages">CEPS</abbr></span>
-                <p class="contrib-desc">Measuring inter-class hedging and intra-class concentration, plus quantifying how reasoning errors compound across pipeline stages.</p>
-              </div>
-            </div>
-          </div>
-          <img loading="lazy" src="./static/images/intro_overview.png" alt="PortBench framework overview: market data collection, dual-layer evaluation with static QA and dynamic pipeline, three risk profiles and stress regimes" class="img-figure">
-          <p class="fig-caption">
-            Overview of <b>PortBench</b>. We first collect the <b>Market Base Dataset</b>
-            (183 instruments × 6 asset classes, 2015–2025), then build a
-            <b>dual-layer evaluation framework</b> on top:
-            a static QA layer (6,269 correlation-based pairs) and a dynamic five-stage pipeline,
-            jointly assessed under three risk profiles and three historical stress regimes.
-          </p>
-          <img loading="lazy" src="./static/images/method_framework.png" alt="Two-layer evaluation framework: static QA layer with 6,269 pairs above, dynamic five-stage pipeline below, both fed by market snapshots" class="img-figure">
-          <p class="fig-caption">
-            Evaluation framework. Static QA layer (Top): seven task templates generated automatically from
-            historical data. Dynamic five-stage pipeline (Bottom): executed sequentially at every rebalance
-            date under three investor profiles and three stress regimes.
-          </p>
-        </div>
     </div>
   </div>
 </section>
@@ -1785,7 +1797,7 @@ Default propagation weight  λ = 0.1
   var nav = document.getElementById('section-nav');
   var btn = document.getElementById('back-to-top');
   var heroBottom = document.querySelector('.teaser') || document.querySelector('.pub-hero');
-  var sections = ['findings', 'background', 'explorer', 'details', 'results', 'citation']
+  var sections = ['background', 'findings', 'explorer', 'details', 'results', 'citation']
     .map(function(id) { return document.getElementById(id); })
     .filter(Boolean);
   var links = document.querySelectorAll('.section-nav-link');

@@ -1432,6 +1432,54 @@ table th {
 .ms-toggleable .showcase-inner-header:hover {
   filter: brightness(0.96);
 }
+
+/* ── Teaser text (inside hero) ── */
+.teaser-banner-text {
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  color: var(--ink);
+  line-height: 1.6;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+/* Thin accent rule above the teaser — same vocabulary as .section-heading::after */
+.teaser-banner-text::before {
+  content: '';
+  display: block;
+  width: 2.5rem;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 1px;
+  margin: 0 auto var(--space-md);
+}
+
+/* Key statistics in the teaser carry accent color for data emphasis */
+.teaser-stat {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* Teaser banner — narrower editorial width gives findings spatial identity
+   distinct from the 880px reading sections below */
+.teaser-banner {
+  max-width: 680px;
+  margin: var(--space-3xl) auto var(--space-xl);
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .teaser-banner-text {
+    font-size: 0.95rem;
+  }
+
+  .teaser-banner {
+    max-width: 100%;
+    margin-top: var(--space-2xl);
+    margin-bottom: var(--space-lg);
+  }
+}
+
 .ms-toggle {
   font-size: 0.65rem;
   margin-left: var(--space-sm);
