@@ -940,6 +940,109 @@ th {
   }
 }
 
+/* ── Datasets row ── */
+.datasets-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  margin: var(--space-xl) 0;
+}
+
+.dataset-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+.dataset-card:hover {
+  border-color: var(--accent-rule);
+  box-shadow: 0 2px 12px oklch(0.12 0.01 255 / 0.06);
+  text-decoration: none;
+  color: inherit;
+}
+
+.dataset-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-color: var(--accent-rule);
+}
+
+.dataset-card:active {
+  background: var(--surface-2);
+  box-shadow: none;
+  transition-duration: 0.05s;
+}
+
+.dataset-card .dataset-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  width: 1.75rem;
+  text-align: center;
+  line-height: 1;
+}
+
+.dataset-card .dataset-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.dataset-card .dataset-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--ink);
+  line-height: 1.3;
+}
+
+.dataset-card .dataset-desc {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.4;
+  margin-top: 0.1rem;
+}
+
+.dataset-card .dataset-arrow {
+  flex-shrink: 0;
+  font-size: 0.82rem;
+  color: var(--faint);
+  transition: color 0.2s ease-out, transform 0.2s ease-out;
+}
+
+.dataset-card:hover .dataset-arrow,
+.dataset-card:focus-visible .dataset-arrow {
+  color: var(--accent);
+  transform: translateX(2px);
+}
+
+@media screen and (max-width: 768px) {
+  .datasets-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+  .dataset-card {
+    padding: var(--space-sm) var(--space-md);
+    gap: var(--space-sm);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dataset-card {
+    transition: none;
+  }
+  .dataset-card .dataset-arrow {
+    transition: none;
+  }
+}
+
 /* ── Key Finding callout boxes ── */
 .kf-callout {
   border-radius: 6px;
