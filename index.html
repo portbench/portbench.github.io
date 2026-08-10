@@ -161,10 +161,10 @@
       <div class="teaser-banner">
         <p class="teaser-banner-text">
           Despite strong performance on static financial QA,
-          <strong class="teaser-stat">90%</strong> of model-profile combinations fail to outperform a basic equal-weight allocation.
+          <strong class="teaser-stat">90%</strong> of model-profile combinations fail to outperform a basic equal-weight allocation in 2024.
           <br>
           Models that satisfy every procedural constraint
-          still suffer <strong class="teaser-stat">catastrophic drawdowns</strong> under stress.
+          still suffer <strong class="teaser-stat">large drawdowns</strong> under stress.
         </p>
       </div>
 
@@ -245,38 +245,42 @@
     <h2 class="section-heading">Key Findings</h2>
     <div class="findings-editorial">
       <div class="finding-block">
-        <div class="finding-stat">27/30</div>
+        <div class="finding-stat">90%</div>
         <div class="finding-content">
           <div class="finding-headline">LLMs Fail to Beat Equal-Weight</div>
           <div class="finding-body">
-            Across 30 model–profile combinations,
-            <span class="finding-stat-inline">27 / 30</span> underperform a naive 1/N equal-weight baseline on <abbr title="Sharpe ratio: risk-adjusted return, calculated as (portfolio return − risk-free rate) / portfolio volatility">Sharpe ratio</abbr>.
-            High-quality market interpretation does <em>not</em> guarantee better portfolios.
-            Only Qwen3.6-Plus (Balanced) simultaneously beats Equal-Weight and passes all stress gates.
+            In 2024,
+            <span class="finding-stat-inline">90%</span> of model–profile cases
+            (<span class="finding-stat-inline">27 / 30</span>) fail to beat a naive 1/N equal-weight baseline on <abbr title="Sharpe ratio: risk-adjusted return, calculated as (portfolio return − risk-free rate) / portfolio volatility">Sharpe ratio</abbr>.
+            Across four market periods the beat rate is only
+            <span class="finding-stat-inline">32.5%</span> (39/120).
+            None of the three 2024 winners also pass every profile’s stress gate.
           </div>
         </div>
       </div>
       <div class="finding-block">
-        <div class="finding-stat">6/10</div>
+        <div class="finding-stat">70%</div>
         <div class="finding-content">
           <div class="finding-headline">Stress Rankings Diverge from Normal-Period</div>
           <div class="finding-body">
             Normal-period CEPS rankings do <em>not</em> predict stress survival.
-            <span class="finding-stat-inline">6 / 10</span> LLMs fail the Conservative stress gate, all during the 2022 Crypto Collapse.
-            Compliant allocations still produce double-digit <abbr title="Drawdown: the peak-to-trough decline in portfolio value during a specific period">drawdowns</abbr> via cross-asset contagion.
-            Normal-period benchmarks systematically overestimate robustness.
+            <span class="finding-stat-inline">70%</span> of models
+            (<span class="finding-stat-inline">7 / 10</span>) fail the Conservative stress gate, concentrated in the 2022 Crypto Collapse.
+            Only Qwen3.6-Plus, Qwen3.7-Max, and Doubao-Seed-2.0-Lite pass all three stress regimes under Conservative.
+            Compliant allocations can still produce double-digit <abbr title="Drawdown: the peak-to-trough decline in portfolio value during a specific period">drawdowns</abbr> via cross-asset contagion.
           </div>
         </div>
       </div>
       <div class="finding-block">
-        <div class="finding-stat">ρ = −0.32</div>
+        <div class="finding-stat">ρ = −0.47</div>
         <div class="finding-content">
           <div class="finding-headline">QA Performance ≠ Pipeline Competence</div>
           <div class="finding-body">
             Spearman rank correlation between QA accuracy and pipeline CEPS is
-            <span class="finding-stat-inline">ρ = −0.32</span>.
-            GLM-5.1 ranks 7th in QA yet 1st in CEPS; Kimi-K2.6 ranks last in QA yet 3rd in CEPS.
-            QA measures isolated recall; CEPS measures sustained reasoning across five causally dependent stages.
+            <span class="finding-stat-inline">ρ = −0.47</span>.
+            GLM-5.1 ranks 7th in QA yet 1st in CEPS; Kimi-K2.6 ranks last in QA yet 3rd in CEPS;
+            DeepSeek-V4-Flash ranks 1st in QA but 9th in CEPS.
+            QA measures isolated factual recall; CEPS assesses sustained reasoning across five causally dependent stages.
           </div>
         </div>
       </div>
@@ -424,9 +428,9 @@
           The evaluation framework has two complementary layers.
           Switch between the tabs below to explore the <b>QA Dataset</b> and the <b>Pipeline Evaluation</b> in detail.
           Every component is <b>objective, traceable, and scalable</b>: QA pairs are auto-generated without
-          human annotation, and pipeline ground truths are validated against <b>realized future returns
-          withheld from model prompts</b>, eliminating oracle leakage and enabling seamless extension to
-          new periods and assets.
+          human annotation, and pipeline scoring uses a <b>lookback oracle</b> (trailing data available at
+          the decision date; no future returns in the main rankings), eliminating oracle leakage and enabling
+          seamless extension to new periods and assets.
         </p>
 
         <!-- Tab nav (Pipeline + QA only) -->
@@ -472,7 +476,8 @@
         <div id="tab-pipeline" class="explorer-panel" role="tabpanel" aria-labelledby="tab-btn-pipeline" tabindex="0">
           <p class="has-text-justified mb-2 text-sm">
             At each rebalance date a <code>MarketSnapshot</code> is constructed and passed to the LLM
-            for five-stage evaluation (S1&ndash;S5).
+            for five-stage evaluation (S1&ndash;S5) under the <b>Balanced</b> profile.
+            Traces use the <b>lookback</b> S3 oracle (no future returns), matching the paper&rsquo;s main pipeline results.
             Select a model, market scenario, and date to see the model&rsquo;s input and stage-by-stage output vs. ground truth.
           </p>
           <div class="explorer-controls flex-wrap">
@@ -592,11 +597,18 @@
     });
   });
 
-  /* ── Profile tab switching (Results table) ── */
+  /* ── Profile tab switching (Results table + NAV figure) ── */
   document.addEventListener('DOMContentLoaded', function() {
     var profileTabs = document.querySelectorAll('#profile-tabs .profile-tab');
     var tbody = document.getElementById('profile-table-body');
     var baselinesTpl = document.getElementById('profile-baselines');
+    var navImg = document.getElementById('profile-nav-figure');
+    var navCaption = document.getElementById('profile-nav-caption');
+    var profileLabels = {
+      conservative: 'Conservative',
+      balanced: 'Balanced',
+      aggressive: 'Aggressive'
+    };
 
     function activateProfile(profile) {
       profileTabs.forEach(function(t) {
@@ -613,6 +625,14 @@
         if (baselinesTpl) {
           tbody.appendChild(baselinesTpl.content.cloneNode(true));
         }
+      }
+      var label = profileLabels[profile] || profile;
+      if (navImg) {
+        navImg.src = './static/images/exp_nav_' + profile + '.png';
+        navImg.alt = 'Net asset value trajectories over 2024 for all LLMs under the ' + label + ' profile, with shaded band showing range and dashed lines for classical baselines';
+      }
+      if (navCaption) {
+        navCaption.textContent = 'Portfolio NAV trajectories (2024, ' + label + '). Shaded band = range across all LLMs; dashed lines = classical baselines.';
       }
       if (history.replaceState) history.replaceState(null, null, '#results:' + profile);
     }
@@ -1231,7 +1251,7 @@
             <span class="spec-label">LLMs evaluated</span>
           </div>
           <div class="spec-item">
-            <span class="spec-number">5</span>
+            <span class="spec-number">6</span>
             <span class="spec-label">classical baselines</span>
           </div>
           <div class="spec-item">
@@ -1283,7 +1303,7 @@
               Portfolio weights scored by the <b>two-layer correlation score</b>:
               weight accuracy (L₁ to signal-constrained max-Sharpe optimum, α = 0.5)
               + correlation structure (intra-class concentration penalty + inter-class hedging credit).
-              Ground truth computed from realized future returns with strict PiT safety.
+              Primary ground truth: trailing 60-day lookback max-Sharpe (no future returns); ex-post oracle only as appendix diagnostic.
             </span>
           </div>
           <div class="stage-box is-deterministic">
@@ -1297,7 +1317,7 @@
             <span class="stage-label">S5 · Risk Monitoring</span>
             <span class="stage-desc">
               Deterministic. 50% rebalance-trigger accuracy + 50% VaR/drawdown estimation accuracy.
-              Rebalance trigger fires when max single-asset drift exceeds 5%.
+              Rebalance trigger fires on drawdown breach of the profile tolerance, or when max weight drift from 1/n exceeds 5%.
             </span>
           </div>
         </div>
@@ -1321,8 +1341,8 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
 Default propagation weight  λ = 0.1
           </div>
           <p class="mt-2">
-            Ground truth for all LLM-scored stages is derived from <em>realized future returns</em>
-            withheld from prompts, guaranteeing point-in-time (PiT) safety throughout.
+            Main-text rankings use a <em>lookback</em> oracle (trailing 60-day returns available at the decision date; no future returns).
+            An ex-post variant that optimizes on realized forward returns is reported only as an appendix diagnostic.
           </p>
         </div>
       </div>
@@ -1332,13 +1352,13 @@ Default propagation weight  λ = 0.1
     <div class="columns is-centered mt-4">
       <div class="column is-four-fifths has-text-centered content">
         <h2 class="title is-3">CEPS: Cascade vs. Uniform Mediocrity</h2>
-        <p class="has-text-justified">Two models with <em>identical</em> average stage scores (0.526) receive different CEPS scores because one cascades errors while the other is uniformly mediocre.</p>
+        <p class="has-text-justified">Two models with <em>identical</em> average stage scores (0.516) receive different CEPS scores because one cascades errors while the other is uniformly mediocre.</p>
         <div class="table-wrapper mt-2">
           <table>
             <thead><tr><th class="main-header" scope="col"></th><th class="main-header" scope="col">S1</th><th class="main-header" scope="col">S2</th><th class="main-header" scope="col">S3</th><th class="main-header" scope="col">S4</th><th class="main-header" scope="col">S5</th><th class="main-header" scope="col">Avg</th></tr></thead>
             <tbody>
-              <tr><td class="td-left font-bold">Model A (cascade)</td><td>0.792</td><td>0.506</td><td>0.714</td><td>0.136</td><td>0.480</td><td>0.526</td></tr>
-              <tr><td class="td-left font-bold">Model B (uniform)</td><td>0.526</td><td>0.526</td><td>0.526</td><td>0.526</td><td>0.526</td><td>0.526</td></tr>
+              <tr><td class="td-left font-bold">Model A (cascade)</td><td>0.792</td><td>0.506</td><td>0.714</td><td>0.086</td><td>0.480</td><td>0.516</td></tr>
+              <tr><td class="td-left font-bold">Model B (uniform)</td><td>0.516</td><td>0.516</td><td>0.516</td><td>0.516</td><td>0.516</td><td>0.516</td></tr>
             </tbody>
           </table>
         </div>
@@ -1346,10 +1366,10 @@ Default propagation weight  λ = 0.1
           <table>
             <thead><tr><th class="main-header" scope="col"></th><th class="main-header" scope="col">Model A (cascade)</th><th class="main-header" scope="col">Model B (uniform)</th></tr></thead>
             <tbody>
-              <tr><td>Isolated avg</td><td>0.526</td><td>0.526</td></tr>
-              <tr><td>Cascade drops</td><td class="text-left text-caption">(0.792-0.506) + (0.714-0.136) = 0.286 + 0.578 = <b>0.864</b></td><td>0</td></tr>
-              <tr><td>Penalty (lambda=0.1)</td><td>0.1 x 0.864 = <b>0.086</b></td><td>0</td></tr>
-              <tr class="row-highlight"><td class="td-left">CEPS</td><td class="text-neg-strong">0.526 - 0.086 = <b>0.440</b></td><td class="text-pos-strong">0.526 - 0 = <b>0.526</b></td></tr>
+              <tr><td>Isolated avg</td><td>0.516</td><td>0.516</td></tr>
+              <tr><td>Cascade drops</td><td class="text-left text-caption">(0.792−0.506) + (0.714−0.086) = 0.286 + 0.628 = <b>0.914</b></td><td>0</td></tr>
+              <tr><td>Penalty (lambda=0.1)</td><td>0.1 × 0.914 = <b>0.091</b></td><td>0</td></tr>
+              <tr class="row-highlight"><td class="td-left">CEPS</td><td class="text-neg-strong">0.516 − 0.091 = <b>0.425</b></td><td class="text-pos-strong">0.516 − 0 = <b>0.516</b></td></tr>
             </tbody>
           </table>
         </div>
@@ -1441,7 +1461,7 @@ Default propagation weight  λ = 0.1
           <p class="text-muted text-sm">
             A model passes the <b>stress gate</b> for a given profile if its maximum drawdown across all three
             regimes stays within the profile's tolerance.
-            <b>Six of ten models fail the Conservative stress gate</b>, all during the 2022 Crypto Collapse,
+            <b>70% of models (7 of 10) fail the Conservative stress gate</b>, concentrated in the 2022 Crypto Collapse,
             where small crypto exposures compliant with allocation caps amplify into double-digit drawdowns
             (<em>compliance trap</em>: every process constraint satisfied, outcome safety violated).
           </p>
@@ -1471,11 +1491,11 @@ Default propagation weight  λ = 0.1
           <div class="kf-label">🔑 Key Finding</div>
           <div class="kf-text">
             Across 30 model–profile combinations (10 LLMs × 3 profiles),
-            <b>27 of 30 underperform a naive 1/N equal-weight allocation</b> on Sharpe ratio.
-            This holds <em>despite</em> strong S1–S3 pipeline scores, since high-quality market
-            interpretation and signal generation do not guarantee portfolios that outperform a
-            rule-based baseline. Only Qwen3.6-Plus (Balanced) simultaneously beats Equal-Weight
-            and passes all stress gates.
+            <b>90% (27 of 30) fail to beat a naive 1/N equal-weight allocation</b> on Sharpe ratio
+            in 2024 (EqW Sharpe <b>0.863</b>), and none of the three that succeed also pass every profile’s stress gate.
+            S1 is nearly saturated while S4 is weakest: models extract views but under-trade
+            (balanced mean turnover ratio <b>10.9%</b>).
+            The three EqW beaters are Qwen3.6-35B-A3B (Conservative/Aggressive) and Doubao-Seed-2.0-Pro (Conservative).
           </div>
         </div>
       </div>
@@ -1486,8 +1506,9 @@ Default propagation weight  λ = 0.1
       <div class="column is-full has-text-centered content">
         <p class="has-text-justified">
           The table below reports per-stage scores, CEPS, and financial outcomes for all ten LLMs
-          and five classical baselines (normal period, 2024).
+          and six classical baselines (normal period, 2024), including Black–Litterman.
           <b>Bold</b> = column best within each profile. Select a profile to view results.
+          Under Conservative, 70% of models fail the stress gate; all pass under Balanced and Aggressive.
         </p>
         <!-- Profile tabs -->
         <div class="profile-tabs" role="tablist" aria-label="Profile selector" id="profile-tabs">
@@ -1520,22 +1541,23 @@ Default propagation weight  λ = 0.1
               </thead>
               <tbody id="profile-table-body">
                 <!-- Conservative (default) -->
-                <tr class="row-conservative"><th scope="row">DeepSeek-V4-Pro</th><td>.766</td><td>.406</td><td>.752</td><td>.173</td><td>.483</td><td><b>.436</b></td><td>0.217</td><td>5.49</td><td>−3.53</td><td>7.61</td><td class="fail-cell">✗</td></tr>
-                <tr class="row-conservative"><th scope="row">GLM-5.1</th><td>.769</td><td>.421</td><td>.751</td><td><b>.224</b></td><td><b>.561</b></td><td>.421</td><td><b>0.764</b></td><td>9.54</td><td>−3.14</td><td>8.14</td><td class="fail-cell">✗</td></tr>
-                <tr class="row-conservative"><th scope="row">DeepSeek-V4-Flash</th><td>.764</td><td>.390</td><td><b>.766</b></td><td>.219</td><td>.386</td><td>.402</td><td>0.080</td><td>4.54</td><td>−7.43</td><td>8.24</td><td class="fail-cell">✗</td></tr>
-                <tr class="row-conservative"><th scope="row">Kimi-K2.6</th><td>.791</td><td>.438</td><td>.758</td><td>.177</td><td>.319</td><td>.396</td><td>0.576</td><td>9.51</td><td>−4.90</td><td>9.64</td><td class="fail-cell">✗</td></tr>
-                <tr class="row-conservative"><th scope="row">Qwen3.7-Max</th><td>.750</td><td>.387</td><td>.746</td><td>.158</td><td>.395</td><td>.387</td><td>0.450</td><td>7.36</td><td>−3.00</td><td>6.86</td><td class="pass-cell">✓</td></tr>
-                <tr class="row-conservative"><th scope="row">Qwen3.6-Plus</th><td><b>.815</b></td><td>.466</td><td>.752</td><td>.128</td><td>.339</td><td>.386</td><td>0.548</td><td>9.13</td><td>−5.03</td><td>9.43</td><td class="pass-cell">✓</td></tr>
-                <tr class="row-conservative"><th scope="row">Qwen3.6-35B-A3B</th><td>.748</td><td>.445</td><td>.749</td><td>.177</td><td>.347</td><td>.383</td><td>−0.033</td><td>3.58</td><td>−5.54</td><td>11.10</td><td class="pass-cell">✓</td></tr>
-                <tr class="row-conservative"><th scope="row">Hunyuan3-Preview</th><td>.804</td><td><b>.527</b></td><td>.759</td><td>.029</td><td>.256</td><td>.372</td><td>0.621</td><td><b>9.95</b></td><td>−5.45</td><td>10.06</td><td class="fail-cell">✗</td></tr>
-                <tr class="row-conservative"><th scope="row">Doubao-Seed-2.0-Lite</th><td>.768</td><td>.370</td><td>.752</td><td>.060</td><td>.339</td><td>.330</td><td>0.462</td><td>7.17</td><td>−3.01</td><td>8.28</td><td class="pass-cell">✓</td></tr>
-                <tr class="row-conservative"><th scope="row">Doubao-Seed-2.0-Pro</th><td>.781</td><td>.449</td><td>.744</td><td>.094</td><td>.263</td><td>.325</td><td>0.708</td><td>8.85</td><td>−3.05</td><td>7.60</td><td class="fail-cell">✗</td></tr>
+                <tr class="row-conservative"><th scope="row">GLM-5.1</th><td>.769</td><td>.458</td><td>.751</td><td><b>.239</b></td><td>.314</td><td><b>.420</b></td><td>0.652</td><td>10.96</td><td>−7.24</td><td>10.04</td><td class="fail-cell">✗</td></tr>
+                <tr class="row-conservative"><th scope="row">Qwen3.6-Plus</th><td>.780</td><td>.496</td><td>.752</td><td>.089</td><td>.319</td><td>.391</td><td>0.748</td><td>12.95</td><td>−8.52</td><td>11.22</td><td class="pass-cell">✓</td></tr>
+                <tr class="row-conservative"><th scope="row">Kimi-K2.6</th><td>.771</td><td>.388</td><td>.750</td><td>.199</td><td>.331</td><td>.388</td><td>0.631</td><td>10.18</td><td>−5.87</td><td>9.16</td><td class="fail-cell">✗</td></tr>
+                <tr class="row-conservative"><th scope="row">Qwen3.6-35B-A3B</th><td>.756</td><td>.395</td><td>.754</td><td>.138</td><td><b>.339</b></td><td>.376</td><td><b>1.068</b></td><td><b>14.28</b></td><td>−5.08</td><td>8.68</td><td class="fail-cell">✗</td></tr>
+                <tr class="row-conservative"><th scope="row">DeepSeek-V4-Flash</th><td>.744</td><td>.302</td><td><b>.995</b></td><td>.180</td><td>.300</td><td>.375</td><td>0.250</td><td>6.19</td><td>−7.11</td><td>8.73</td><td class="fail-cell">✗</td></tr>
+                <tr class="row-conservative"><th scope="row">Hunyuan3-Preview</th><td><b>.782</b></td><td><b>.499</b></td><td>.736</td><td>.033</td><td>.317</td><td>.374</td><td>0.800</td><td>11.60</td><td>−5.17</td><td>8.72</td><td class="fail-cell">✗</td></tr>
+                <tr class="row-conservative"><th scope="row">DeepSeek-V4-Pro</th><td>.751</td><td>.321</td><td>.995</td><td>.115</td><td>.306</td><td>.365</td><td>0.624</td><td>9.79</td><td>−6.02</td><td>8.65</td><td class="fail-cell">✗</td></tr>
+                <tr class="row-conservative"><th scope="row">Qwen3.7-Max</th><td>.752</td><td>.393</td><td>.738</td><td>.086</td><td>.299</td><td>.352</td><td>0.823</td><td>11.47</td><td>−5.25</td><td>8.30</td><td class="pass-cell">✓</td></tr>
+                <tr class="row-conservative"><th scope="row">Doubao-Seed-2.0-Pro</th><td>.753</td><td>.406</td><td>.744</td><td>.057</td><td>.315</td><td>.351</td><td>0.939</td><td>12.11</td><td><b>−4.75</b></td><td><b>7.82</b></td><td class="fail-cell">✗</td></tr>
+                <tr class="row-conservative"><th scope="row">Doubao-Seed-2.0-Lite</th><td>.755</td><td>.342</td><td>.745</td><td>.053</td><td>.300</td><td>.328</td><td>0.863</td><td>11.84</td><td>−5.64</td><td>8.29</td><td class="pass-cell">✓</td></tr>
                 <!-- Baselines -->
-                <tr class="row-baseline"><th scope="row">Equal-Weight (EqW)</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>0.740</td><td>12.13</td><td>−5.09</td><td>10.25</td><td>N/A</td></tr>
-                <tr class="row-baseline"><th scope="row">60/40</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>0.651</td><td>10.17</td><td>−4.27</td><td>8.82</td><td>N/A</td></tr>
-                <tr class="row-baseline"><th scope="row">Risk Parity</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>0.111</td><td>4.56</td><td>−2.02</td><td>3.24</td><td>N/A</td></tr>
-                <tr class="row-baseline"><th scope="row">Cov. Risk Parity</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>−0.147</td><td>3.71</td><td>−2.02</td><td>2.98</td><td>N/A</td></tr>
-                <tr class="row-baseline"><th scope="row">Min-Variance</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>−0.601</td><td>2.45</td><td>−2.02</td><td>2.71</td><td>N/A</td></tr>
+                <tr class="row-baseline"><th scope="row">Equal-Weight (EqW)</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td><b>0.863</b></td><td>11.54</td><td>−4.48</td><td>7.95</td><td>N/A</td></tr>
+                <tr class="row-baseline"><th scope="row">60/40</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>0.841</td><td><b>11.95</b></td><td>−4.27</td><td>8.65</td><td>N/A</td></tr>
+                <tr class="row-baseline"><th scope="row">Risk Parity</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>0.603</td><td>6.01</td><td>−1.39</td><td>2.77</td><td>N/A</td></tr>
+                <tr class="row-baseline"><th scope="row">Cov. Risk Parity</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>0.343</td><td>5.09</td><td>−1.43</td><td>2.39</td><td>N/A</td></tr>
+                <tr class="row-baseline"><th scope="row">Min-Variance</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>−0.043</td><td>4.11</td><td><b>−1.28</b></td><td><b>2.10</b></td><td>N/A</td></tr>
+                <tr class="row-baseline"><th scope="row">Black–Litterman</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>−0.173</td><td>3.06</td><td>−4.48</td><td>5.47</td><td>N/A</td></tr>
               </tbody>
             </table>
           </div>
@@ -1543,48 +1565,49 @@ Default propagation weight  λ = 0.1
 
         <!-- Hidden profile data for tab switching -->
         <template id="profile-conservative">
-          <tr class="row-conservative"><th scope="row">DeepSeek-V4-Pro</th><td>.766</td><td>.406</td><td>.752</td><td>.173</td><td>.483</td><td><b>.436</b></td><td>0.217</td><td>5.49</td><td>−3.53</td><td>7.61</td><td class="fail-cell">✗</td></tr>
-          <tr class="row-conservative"><th scope="row">GLM-5.1</th><td>.769</td><td>.421</td><td>.751</td><td><b>.224</b></td><td><b>.561</b></td><td>.421</td><td><b>0.764</b></td><td>9.54</td><td>−3.14</td><td>8.14</td><td class="fail-cell">✗</td></tr>
-          <tr class="row-conservative"><th scope="row">DeepSeek-V4-Flash</th><td>.764</td><td>.390</td><td><b>.766</b></td><td>.219</td><td>.386</td><td>.402</td><td>0.080</td><td>4.54</td><td>−7.43</td><td>8.24</td><td class="fail-cell">✗</td></tr>
-          <tr class="row-conservative"><th scope="row">Kimi-K2.6</th><td>.791</td><td>.438</td><td>.758</td><td>.177</td><td>.319</td><td>.396</td><td>0.576</td><td>9.51</td><td>−4.90</td><td>9.64</td><td class="fail-cell">✗</td></tr>
-          <tr class="row-conservative"><th scope="row">Qwen3.7-Max</th><td>.750</td><td>.387</td><td>.746</td><td>.158</td><td>.395</td><td>.387</td><td>0.450</td><td>7.36</td><td>−3.00</td><td>6.86</td><td class="pass-cell">✓</td></tr>
-          <tr class="row-conservative"><th scope="row">Qwen3.6-Plus</th><td><b>.815</b></td><td>.466</td><td>.752</td><td>.128</td><td>.339</td><td>.386</td><td>0.548</td><td>9.13</td><td>−5.03</td><td>9.43</td><td class="pass-cell">✓</td></tr>
-          <tr class="row-conservative"><th scope="row">Qwen3.6-35B-A3B</th><td>.748</td><td>.445</td><td>.749</td><td>.177</td><td>.347</td><td>.383</td><td>−0.033</td><td>3.58</td><td>−5.54</td><td>11.10</td><td class="pass-cell">✓</td></tr>
-          <tr class="row-conservative"><th scope="row">Hunyuan3-Preview</th><td>.804</td><td><b>.527</b></td><td>.759</td><td>.029</td><td>.256</td><td>.372</td><td>0.621</td><td><b>9.95</b></td><td>−5.45</td><td>10.06</td><td class="fail-cell">✗</td></tr>
-          <tr class="row-conservative"><th scope="row">Doubao-Seed-2.0-Lite</th><td>.768</td><td>.370</td><td>.752</td><td>.060</td><td>.339</td><td>.330</td><td>0.462</td><td>7.17</td><td>−3.01</td><td>8.28</td><td class="pass-cell">✓</td></tr>
-          <tr class="row-conservative"><th scope="row">Doubao-Seed-2.0-Pro</th><td>.781</td><td>.449</td><td>.744</td><td>.094</td><td>.263</td><td>.325</td><td>0.708</td><td>8.85</td><td>−3.05</td><td>7.60</td><td class="fail-cell">✗</td></tr>
+          <tr class="row-conservative"><th scope="row">GLM-5.1</th><td>.769</td><td>.458</td><td>.751</td><td><b>.239</b></td><td>.314</td><td><b>.420</b></td><td>0.652</td><td>10.96</td><td>−7.24</td><td>10.04</td><td class="fail-cell">✗</td></tr>
+          <tr class="row-conservative"><th scope="row">Qwen3.6-Plus</th><td>.780</td><td>.496</td><td>.752</td><td>.089</td><td>.319</td><td>.391</td><td>0.748</td><td>12.95</td><td>−8.52</td><td>11.22</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-conservative"><th scope="row">Kimi-K2.6</th><td>.771</td><td>.388</td><td>.750</td><td>.199</td><td>.331</td><td>.388</td><td>0.631</td><td>10.18</td><td>−5.87</td><td>9.16</td><td class="fail-cell">✗</td></tr>
+          <tr class="row-conservative"><th scope="row">Qwen3.6-35B-A3B</th><td>.756</td><td>.395</td><td>.754</td><td>.138</td><td><b>.339</b></td><td>.376</td><td><b>1.068</b></td><td><b>14.28</b></td><td>−5.08</td><td>8.68</td><td class="fail-cell">✗</td></tr>
+          <tr class="row-conservative"><th scope="row">DeepSeek-V4-Flash</th><td>.744</td><td>.302</td><td><b>.995</b></td><td>.180</td><td>.300</td><td>.375</td><td>0.250</td><td>6.19</td><td>−7.11</td><td>8.73</td><td class="fail-cell">✗</td></tr>
+          <tr class="row-conservative"><th scope="row">Hunyuan3-Preview</th><td><b>.782</b></td><td><b>.499</b></td><td>.736</td><td>.033</td><td>.317</td><td>.374</td><td>0.800</td><td>11.60</td><td>−5.17</td><td>8.72</td><td class="fail-cell">✗</td></tr>
+          <tr class="row-conservative"><th scope="row">DeepSeek-V4-Pro</th><td>.751</td><td>.321</td><td>.995</td><td>.115</td><td>.306</td><td>.365</td><td>0.624</td><td>9.79</td><td>−6.02</td><td>8.65</td><td class="fail-cell">✗</td></tr>
+          <tr class="row-conservative"><th scope="row">Qwen3.7-Max</th><td>.752</td><td>.393</td><td>.738</td><td>.086</td><td>.299</td><td>.352</td><td>0.823</td><td>11.47</td><td>−5.25</td><td>8.30</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-conservative"><th scope="row">Doubao-Seed-2.0-Pro</th><td>.753</td><td>.406</td><td>.744</td><td>.057</td><td>.315</td><td>.351</td><td>0.939</td><td>12.11</td><td><b>−4.75</b></td><td><b>7.82</b></td><td class="fail-cell">✗</td></tr>
+          <tr class="row-conservative"><th scope="row">Doubao-Seed-2.0-Lite</th><td>.755</td><td>.342</td><td>.745</td><td>.053</td><td>.300</td><td>.328</td><td>0.863</td><td>11.84</td><td>−5.64</td><td>8.29</td><td class="pass-cell">✓</td></tr>
         </template>
         <template id="profile-balanced">
-          <tr class="row-balanced"><th scope="row">GLM-5.1</th><td>.774</td><td>.427</td><td>.751</td><td>.161</td><td><b>.695</b></td><td><b>.470</b></td><td>0.560</td><td>11.00</td><td>−7.81</td><td>12.17</td><td class="fail-cell">✗</td></tr>
-          <tr class="row-balanced"><th scope="row">DeepSeek-V4-Flash</th><td>.763</td><td>.414</td><td>.761</td><td><b>.214</b></td><td>.618</td><td>.463</td><td>0.651</td><td>10.64</td><td>−5.13</td><td>9.56</td><td class="fail-cell">✗</td></tr>
-          <tr class="row-balanced"><th scope="row">Kimi-K2.6</th><td>.784</td><td>.444</td><td>.764</td><td>.208</td><td>.456</td><td>.434</td><td>0.488</td><td>10.30</td><td>−9.13</td><td>12.91</td><td class="fail-cell">✗</td></tr>
-          <tr class="row-balanced font-bold"><th scope="row">Qwen3.6-Plus ★</th><td>.789</td><td>.519</td><td>.761</td><td>.151</td><td>.370</td><td>.426</td><td><b>0.823</b></td><td><b>14.72</b></td><td>−6.84</td><td>12.15</td><td class="pass-cell">✓</td></tr>
-          <tr class="row-balanced"><th scope="row">Qwen3.6-35B-A3B</th><td>.770</td><td>.461</td><td>.758</td><td>.111</td><td>.517</td><td>.424</td><td>0.586</td><td>10.73</td><td>−6.74</td><td>11.01</td><td class="pass-cell">✓</td></tr>
-          <tr class="row-balanced"><th scope="row">Doubao-Seed-2.0-Pro</th><td>.784</td><td>.448</td><td>.744</td><td>.134</td><td>.395</td><td>.405</td><td>0.613</td><td>10.31</td><td>−5.04</td><td>9.71</td><td class="fail-cell">✗</td></tr>
-          <tr class="row-balanced"><th scope="row">Hunyuan3-Preview</th><td><b>.793</b></td><td><b>.543</b></td><td><b>.764</b></td><td>.032</td><td>.305</td><td>.389</td><td>0.669</td><td>12.42</td><td>−6.67</td><td>11.99</td><td class="fail-cell">✗</td></tr>
-          <tr class="row-balanced"><th scope="row">Qwen3.7-Max</th><td>.777</td><td>.432</td><td>.758</td><td>.123</td><td>.330</td><td>.384</td><td>0.467</td><td>9.35</td><td>−7.43</td><td>11.28</td><td class="pass-cell">✓</td></tr>
-          <tr class="row-balanced"><th scope="row">DeepSeek-V4-Pro</th><td>.765</td><td>.405</td><td>.749</td><td>.123</td><td>.283</td><td>.365</td><td>0.321</td><td>6.95</td><td>−5.18</td><td>9.02</td><td class="fail-cell">✗</td></tr>
-          <tr class="row-balanced"><th scope="row">Doubao-Seed-2.0-Lite</th><td>.772</td><td>.366</td><td>.755</td><td>.053</td><td>.392</td><td>.357</td><td>0.692</td><td>11.43</td><td>−5.65</td><td>10.05</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-balanced"><th scope="row">GLM-5.1</th><td>.777</td><td>.473</td><td>.756</td><td><b>.245</b></td><td><b>.630</b></td><td><b>.495</b></td><td>0.549</td><td>12.01</td><td>−13.22</td><td>14.60</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-balanced"><th scope="row">Qwen3.6-Plus</th><td><b>.797</b></td><td><b>.543</b></td><td>.747</td><td>.150</td><td>.387</td><td>.434</td><td><b>0.814</b></td><td><b>13.87</b></td><td>−8.29</td><td>11.27</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-balanced"><th scope="row">Kimi-K2.6</th><td>.789</td><td>.472</td><td>.754</td><td>.192</td><td>.282</td><td>.402</td><td>0.689</td><td>12.81</td><td>−8.34</td><td>12.15</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-balanced"><th scope="row">Qwen3.6-35B-A3B</th><td>.773</td><td>.476</td><td>.749</td><td>.185</td><td>.285</td><td>.399</td><td>0.654</td><td>11.58</td><td>−6.35</td><td>10.98</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-balanced"><th scope="row">DeepSeek-V4-Pro</th><td>.764</td><td>.382</td><td><b>.995</b></td><td>.160</td><td>.332</td><td>.399</td><td>0.435</td><td>8.21</td><td>−5.88</td><td>9.33</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-balanced"><th scope="row">Qwen3.7-Max</th><td>.780</td><td>.468</td><td>.749</td><td>.113</td><td>.362</td><td>.398</td><td>0.645</td><td>12.46</td><td>−9.76</td><td>12.61</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-balanced"><th scope="row">Doubao-Seed-2.0-Pro</th><td>.783</td><td>.484</td><td>.747</td><td>.106</td><td>.297</td><td>.386</td><td>0.651</td><td>11.72</td><td>−8.89</td><td>11.26</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-balanced"><th scope="row">Hunyuan3-Preview</th><td>.795</td><td>.528</td><td>.719</td><td>.044</td><td>.305</td><td>.384</td><td>0.721</td><td>12.37</td><td>−6.72</td><td>10.90</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-balanced"><th scope="row">DeepSeek-V4-Flash</th><td>.776</td><td>.314</td><td>.995</td><td>.061</td><td>.303</td><td>.348</td><td>0.757</td><td>11.04</td><td><b>−4.94</b></td><td><b>8.55</b></td><td class="pass-cell">✓</td></tr>
+          <tr class="row-balanced"><th scope="row">Doubao-Seed-2.0-Lite</th><td>.778</td><td>.395</td><td>.747</td><td>.051</td><td>.224</td><td>.329</td><td>0.805</td><td>13.32</td><td>−7.78</td><td>10.75</td><td class="pass-cell">✓</td></tr>
         </template>
         <template id="profile-aggressive">
-          <tr class="row-aggressive"><th scope="row">GLM-5.1</th><td>.763</td><td>.438</td><td>.748</td><td><b>.262</b></td><td>.607</td><td><b>.510</b></td><td>0.710</td><td>15.56</td><td>−10.97</td><td>14.22</td><td class="pass-cell">✓</td></tr>
-          <tr class="row-aggressive"><th scope="row">Qwen3.7-Max</th><td><b>.786</b></td><td>.485</td><td><b>.773</b></td><td>.109</td><td><b>.646</b></td><td>.463</td><td>0.621</td><td>16.20</td><td>−14.85</td><td>17.11</td><td class="pass-cell">✓</td></tr>
-          <tr class="row-aggressive"><th scope="row">Qwen3.6-Plus</th><td>.775</td><td><b>.527</b></td><td>.767</td><td>.073</td><td>.469</td><td>.445</td><td>0.674</td><td>16.23</td><td>−12.59</td><td>16.09</td><td class="pass-cell">✓</td></tr>
-          <tr class="row-aggressive"><th scope="row">DeepSeek-V4-Flash</th><td>.762</td><td>.383</td><td>.758</td><td>.160</td><td>.473</td><td>.408</td><td>0.679</td><td>15.78</td><td>−11.42</td><td>14.88</td><td class="pass-cell">✓</td></tr>
-          <tr class="row-aggressive"><th scope="row">DeepSeek-V4-Pro</th><td>.736</td><td>.390</td><td>.755</td><td>.174</td><td>.482</td><td>.396</td><td><b>0.752</b></td><td>14.45</td><td>−6.88</td><td>11.70</td><td class="pass-cell">✓</td></tr>
-          <tr class="row-aggressive"><th scope="row">Kimi-K2.6</th><td>.762</td><td>.431</td><td>.758</td><td>.144</td><td>.359</td><td>.396</td><td>0.586</td><td>15.13</td><td>−15.83</td><td>17.43</td><td class="pass-cell">✓</td></tr>
-          <tr class="row-aggressive"><th scope="row">Hunyuan3-Preview</th><td>.778</td><td>.519</td><td>.758</td><td>.044</td><td>.348</td><td>.393</td><td>0.652</td><td>12.54</td><td>−6.87</td><td>13.17</td><td class="pass-cell">✓</td></tr>
-          <tr class="row-aggressive"><th scope="row">Doubao-Seed-2.0-Lite</th><td>.770</td><td>.451</td><td>.758</td><td>.083</td><td>.293</td><td>.389</td><td>0.705</td><td><b>16.55</b></td><td>−11.49</td><td>15.77</td><td class="pass-cell">✓</td></tr>
-          <tr class="row-aggressive"><th scope="row">Qwen3.6-35B-A3B</th><td>.778</td><td>.452</td><td>.756</td><td>.130</td><td>.200</td><td>.388</td><td>0.658</td><td>15.33</td><td>−10.83</td><td>15.48</td><td class="pass-cell">✓</td></tr>
-          <tr class="row-aggressive"><th scope="row">Doubao-Seed-2.0-Pro</th><td>.755</td><td>.422</td><td>.756</td><td>.046</td><td>.260</td><td>.382</td><td>0.615</td><td>13.75</td><td>−9.47</td><td>14.22</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-aggressive"><th scope="row">GLM-5.1</th><td>.779</td><td>.498</td><td>.760</td><td><b>.260</b></td><td>.538</td><td><b>.489</b></td><td>0.680</td><td>15.27</td><td>−13.74</td><td>16.23</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-aggressive"><th scope="row">Qwen3.6-35B-A3B</th><td>.783</td><td>.528</td><td>.769</td><td>.193</td><td><b>.571</b></td><td>.486</td><td><b>0.944</b></td><td><b>21.01</b></td><td>−15.41</td><td>16.77</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-aggressive"><th scope="row">Qwen3.6-Plus</th><td><b>.807</b></td><td>.573</td><td>.751</td><td>.096</td><td>.570</td><td>.470</td><td>0.764</td><td>16.08</td><td>−11.78</td><td>15.09</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-aggressive"><th scope="row">Qwen3.7-Max</th><td>.787</td><td>.473</td><td>.757</td><td>.156</td><td>.458</td><td>.431</td><td>0.626</td><td>13.19</td><td>−11.77</td><td>14.36</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-aggressive"><th scope="row">DeepSeek-V4-Pro</th><td>.784</td><td>.468</td><td><b>.995</b></td><td>.154</td><td>.331</td><td>.426</td><td>0.851</td><td>11.96</td><td><b>−5.00</b></td><td><b>8.56</b></td><td class="pass-cell">✓</td></tr>
+          <tr class="row-aggressive"><th scope="row">Doubao-Seed-2.0-Lite</th><td>.790</td><td>.480</td><td>.753</td><td>.061</td><td>.535</td><td>.424</td><td>0.735</td><td>14.85</td><td>−11.43</td><td>14.09</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-aggressive"><th scope="row">Kimi-K2.6</th><td>.786</td><td>.505</td><td>.752</td><td>.163</td><td>.377</td><td>.424</td><td>0.697</td><td>15.08</td><td>−11.73</td><td>15.42</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-aggressive"><th scope="row">Doubao-Seed-2.0-Pro</th><td>.791</td><td>.501</td><td>.752</td><td>.092</td><td>.439</td><td>.419</td><td>0.751</td><td>13.87</td><td>−9.60</td><td>12.41</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-aggressive"><th scope="row">DeepSeek-V4-Flash</th><td>.789</td><td>.463</td><td>.971</td><td>.110</td><td>.298</td><td>.403</td><td>0.721</td><td>11.54</td><td>−6.52</td><td>9.74</td><td class="pass-cell">✓</td></tr>
+          <tr class="row-aggressive"><th scope="row">Hunyuan3-Preview</th><td>.805</td><td><b>.589</b></td><td>.739</td><td>.042</td><td>.282</td><td>.399</td><td>0.730</td><td>12.43</td><td>−7.20</td><td>10.81</td><td class="pass-cell">✓</td></tr>
         </template>
         <!-- Shared baselines -->
         <template id="profile-baselines">
-          <tr class="row-baseline"><th scope="row">Equal-Weight (EqW)</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>0.740</td><td>12.13</td><td>−5.09</td><td>10.25</td><td>N/A</td></tr>
-          <tr class="row-baseline"><th scope="row">60/40</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>0.651</td><td>10.17</td><td>−4.27</td><td>8.82</td><td>N/A</td></tr>
-          <tr class="row-baseline"><th scope="row">Risk Parity</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>0.111</td><td>4.56</td><td>−2.02</td><td>3.24</td><td>N/A</td></tr>
-          <tr class="row-baseline"><th scope="row">Cov. Risk Parity</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>−0.147</td><td>3.71</td><td>−2.02</td><td>2.98</td><td>N/A</td></tr>
-          <tr class="row-baseline"><th scope="row">Min-Variance</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>−0.601</td><td>2.45</td><td>−2.02</td><td>2.71</td><td>N/A</td></tr>
+          <tr class="row-baseline"><th scope="row">Equal-Weight (EqW)</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td><b>0.863</b></td><td>11.54</td><td>−4.48</td><td>7.95</td><td>N/A</td></tr>
+          <tr class="row-baseline"><th scope="row">60/40</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>0.841</td><td><b>11.95</b></td><td>−4.27</td><td>8.65</td><td>N/A</td></tr>
+          <tr class="row-baseline"><th scope="row">Risk Parity</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>0.603</td><td>6.01</td><td>−1.39</td><td>2.77</td><td>N/A</td></tr>
+          <tr class="row-baseline"><th scope="row">Cov. Risk Parity</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>0.343</td><td>5.09</td><td>−1.43</td><td>2.39</td><td>N/A</td></tr>
+          <tr class="row-baseline"><th scope="row">Min-Variance</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>−0.043</td><td>4.11</td><td><b>−1.28</b></td><td><b>2.10</b></td><td>N/A</td></tr>
+          <tr class="row-baseline"><th scope="row">Black–Litterman</th><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>−0.173</td><td>3.06</td><td>−4.48</td><td>5.47</td><td>N/A</td></tr>
         </template>
       </div>
     </div>
@@ -1593,12 +1616,8 @@ Default propagation weight  λ = 0.1
     <div class="columns is-centered mt-4">
       <div class="column is-full has-text-centered content">
         <div class="mb-2">
-          <img loading="lazy" src="./static/images/exp_metrics_balanced.png" alt="Bar charts comparing Sharpe ratio, total return, maximum drawdown, and CEPS for 10 LLMs and 5 baselines under the Balanced profile" class="img-figure img-figure-centered">
-          <p class="fig-caption">Risk-adjusted return metrics (Sharpe, total return, max drawdown, CEPS) under the Balanced profile.</p>
-        </div>
-        <div class="mb-2">
-          <img loading="lazy" src="./static/images/exp_nav_balanced.png" alt="Net asset value trajectories over 2024 for all LLMs under the Balanced profile, with shaded band showing range and dashed lines for classical baselines" class="img-figure img-figure-centered">
-          <p class="fig-caption">Portfolio NAV trajectories (2024). Shaded band = range across all LLMs; dashed lines = classical baselines.</p>
+          <img id="profile-nav-figure" loading="lazy" src="./static/images/exp_nav_conservative.png" alt="Net asset value trajectories over 2024 for all LLMs under the Conservative profile, with shaded band showing range and dashed lines for classical baselines" class="img-figure img-figure-centered">
+          <p id="profile-nav-caption" class="fig-caption">Portfolio NAV trajectories (2024, Conservative). Shaded band = range across all LLMs; dashed lines = classical baselines.</p>
         </div>
       </div>
     </div>
@@ -1611,42 +1630,79 @@ Default propagation weight  λ = 0.1
           <div class="kf-label">🔑 Key Finding</div>
           <div class="kf-text">
             <b>Normal-period CEPS rankings do not predict stress survival.</b>
-            Models with strong normal-period CEPS rankings can collapse under historical stress, and
-            the correlation between normal and stress-period scores is weak.
-            Ranking models by calm-market performance alone is insufficient and potentially
-            misleading for real-world deployment. Benchmarks that evaluate only under i.i.d. market
-            conditions systematically overestimate model robustness.
+            <b>70% of models fail the Conservative stress gate</b> despite satisfying every allocation constraint
+            (equity/crypto caps, bond/cash floors, drawdown/VaR limits)—a <b>compliance trap</b>.
+            Failures concentrate in the 2022 Crypto Collapse. Only Qwen3.6-Plus, Qwen3.7-Max, and
+            Doubao-Seed-2.0-Lite keep worst-case drawdowns within the Conservative 10% tolerance across all three regimes.
           </div>
           <div class="kf-text mt-1">
-            More troubling still, <b>6 of 10 LLMs fail the Conservative stress gate</b>,
-            all during the 2022 Crypto Collapse. These models satisfy every allocation constraint
-            (equity/crypto caps, bond/cash floors, drawdown/VaR limits) yet still suffer double-digit
-            drawdowns. Small, compliant crypto exposures amplify into portfolio-level losses because
-            the models fail to anticipate cross-asset contagion.
-            <b>Checking procedural boxes does not guarantee outcome-level safety.</b>
-            Stress-regime evaluation is not optional, as it is the only layer that reveals which
-            models are genuinely safe.
+            Covariance-aware baselines (CovRiskPar, MinVar) stay well inside the gate but at the cost of
+            near-zero or negative normal-period Sharpe. LLMs fall behind when they fail to cut risk exposures
+            during the initial selloff; later shocks deepen losses on an already weakened portfolio.
           </div>
         </div>
         <p class="has-text-justified">
-          The stress gate is defined as follows: a model passes for a given profile if its
-          maximum drawdown across all three historical stress regimes stays within the profile's tolerance.
-          The images below show aggregate stress performance across all models and profiles.
+          The stress gate: a model passes for a given profile if its maximum drawdown across all three
+          historical stress regimes stays within that profile’s tolerance. Under Balanced and Aggressive, all models pass;
+          under Conservative, seven of ten fail.
+        </p>
+        <div class="mb-2">
+          <img loading="lazy" src="./static/images/exp_stress_drawdown.png" alt="Worst-case MaxDD per model and baseline across three stress regimes, with Conservative 10% gate dashed line" class="img-figure img-figure-centered">
+          <p class="fig-caption">Worst-case MaxDD (%) across three stress regimes (min over profiles). Dashed line: Conservative 10% gate; orange bars fail.</p>
+        </div>
+        <div class="mb-2">
+          <img loading="lazy" src="./static/images/exp_nav_stress_crypto_cons.png" alt="Normalized NAV under the 2022 Crypto Collapse for Conservative profile, with vertical lines marking Terra, 3AC, Jackson Hole, and FTX shocks" class="img-figure img-figure-centered">
+          <p class="fig-caption">2022 Crypto Collapse NAV (Conservative)—the regime where LLMs perform worst: no LLM beats EqW. Vertical lines mark Terra/LUNA, 3AC/Celsius, Jackson Hole, and FTX.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cross-period evaluation -->
+    <div class="columns is-centered mt-4">
+      <div class="column is-full has-text-centered content">
+        <h2 class="title is-3">Cross-Period Evaluation</h2>
+        <div class="kf-callout kf-blue">
+          <div class="kf-label">🔑 Key Finding</div>
+          <div class="kf-text">
+            Reusing the three stress windows as additional regimes alongside 2024,
+            LLMs beat EqW in only <b>39 of 120</b> model–profile cases (<b>32.5%</b>).
+            Beat rates: <b>77%</b> (2020) → <b>43%</b> (2015–16) → <b>10%</b> (2024) → <b>0%</b> (2022).
+            LLMs look best in sharp crash-and-recovery windows rather than calm bulls or grinding bears.
+          </div>
+        </div>
+        <p class="has-text-justified">
+          In 2020, EqW Sharpe was near zero (<b>0.045</b>) and recovery-tilted models gained substantially
+          (mean ΔSharpe <b>+0.72</b>). In 2024, EqW was strong (<b>0.863</b>), making active bets hard to justify.
+          In the prolonged 2022 bear, no pair beat EqW (mean gap <b>−0.93</b>).
+        </p>
+        <div class="mb-2">
+          <img loading="lazy" src="./static/images/exp_cross_period_vs_ew.png" alt="Sharpe relative to Equal-Weight across four market periods for all model-profile pairs, with beat-rate percentages in panel titles" class="img-figure img-figure-centered">
+          <p class="fig-caption">Sharpe relative to EqW across four market periods. Light shading marks Δ&gt;0 (beat EqW). Percentages in titles are the fraction of model–profile pairs that beat EqW in that period.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Real-time evaluation -->
+    <div class="columns is-centered mt-4">
+      <div class="column is-full has-text-centered content">
+        <h2 class="title is-3">Real-Time Evaluation</h2>
+        <p class="has-text-justified">
+          Historical-only evaluation risks data leakage from pretraining. PortBench also supports
+          <em>real-time evaluation</em>: at each decision date the model receives only data available through the previous close.
+          We run daily rebalancing over <b>12 trading days</b> (2026-07-16–07-31) under the Balanced profile for six models.
+          Real-time rankings differ from the 2024 monthly block: Kimi-K2.6 leads lookback CEPS (<b>.461</b>),
+          while S4 remains weak (.05–.16), consistent with under-trading.
         </p>
         <div class="img-row">
           <div class="img-panel">
-            <img loading="lazy" src="./static/images/exp_stress_drawdown.png" class="img-analysis" alt="Grouped bar chart showing maximum drawdown for each LLM across three stress regimes (China Shock, COVID, Crypto Collapse), with Conservative tolerance threshold line">
-            <p class="fig-caption">Max drawdown across three stress regimes (worst case, all profiles). Six of ten LLMs fail Conservative.</p>
+            <img loading="lazy" src="./static/images/live_ceps_daily.png" class="img-analysis" alt="Per-decision lookback CEPS over the 12-day real-time window under the Balanced profile">
+            <p class="fig-caption">Per-decision lookback CEPS over the 12-day real-time window (Balanced).</p>
           </div>
           <div class="img-panel">
-            <img loading="lazy" src="./static/images/analysis_normal_vs_stress.png" class="img-analysis" alt="Scatter plot of normal-period CEPS vs. stress-period CEPS under Conservative profile, showing weak correlation and models that pass normal but fail stress">
-            <p class="fig-caption">Normal-period vs. stress-period CEPS (2022, Conservative). High normal scores do not predict stress survival.</p>
+            <img loading="lazy" src="./static/images/live_stage_scores.png" class="img-analysis" alt="Mean lookback stage scores S1 through S5 over the 12 real-time decision dates">
+            <p class="fig-caption">Mean lookback stage scores (S1–S5). Interpretation is strong; execution and risk control remain weak.</p>
           </div>
         </div>
-        <p class="text-xs has-text-left">
-          <b>Takeaway:</b> Stress-regime evaluation is the only layer that reveals which models are
-          genuinely safe for deployment; normal-period benchmarks alone systematically overestimate robustness.
-        </p>
       </div>
     </div>
 
@@ -1655,9 +1711,8 @@ Default propagation weight  λ = 0.1
       <div class="column is-full has-text-centered content">
         <h2 class="title is-3">Static QA Evaluation Results</h2>
         <p class="has-text-justified">
-          The rank dissociation above raises a natural question: where do different models excel or struggle
-          within the QA layer itself? The table below breaks down per-template accuracy, revealing
-          sharp divergence between formula-driven tasks (T4, T5) and judgment-driven ones (T1, T2, T6, T7).
+          Per-template accuracy reveals a sharp divide between formula-driven tasks (T4, T5) and
+          judgment-driven ones (T1, T2, T6, T7)—the QA-side counterpart to the pipeline results above.
         </p>
         <p class="has-text-justified">
           Per-template accuracy (full &amp; restricted covariance conditions), formula vs. judgment averages,
@@ -1698,7 +1753,7 @@ Default propagation weight  λ = 0.1
         <p class="text-caption">
           F = mean(T4,T5) formula-driven; J = mean(T1,T2,T6,T7) judgment-driven.
           Restricted (T4<sub>r</sub>, T5<sub>r</sub>) withholds the covariance matrix:
-          7 of 10 models perform <em>better</em> without it, confirming format matching rather than genuine numerical reasoning.
+          8 of 10 models perform <em>better</em> without it, confirming format matching rather than genuine numerical reasoning.
         </p>
         </div>
     </div>
@@ -1711,13 +1766,12 @@ Default propagation weight  λ = 0.1
           <div class="kf-label">🔑 Key Finding</div>
           <div class="kf-text">
             <b>QA performance does not imply pipeline competence.</b>
-            The Spearman rank correlation between QA accuracy and pipeline CEPS is <b>ρ = −0.32</b>.
-            GLM-5.1 ranks 7th in QA yet 1st in CEPS; Kimi-K2.6 ranks last in QA yet 3rd in CEPS.
-            Doubao-Seed-2.0-Lite ranks 4th in QA but last in CEPS, answering static questions correctly
-            yet failing to translate that knowledge into executable portfolio decisions.
-            QA measures isolated factual recall; CEPS measures sustained reasoning across five causally
-            dependent stages. The dissociation is driven by S4 execution fidelity: models that ace
-            formula-driven tasks (T4/T5) often collapse when translating signals into actual orders.
+            Balanced CEPS falls to <b>0.329–0.495</b> despite mean QA up to <b>0.819</b>,
+            and the Spearman rank correlation is <b>ρ = −0.47</b>.
+            GLM-5.1 ranks 7th in QA yet 1st in CEPS; Kimi-K2.6 last in QA yet 3rd in CEPS;
+            DeepSeek-V4-Flash ranks 1st in QA but 9th in CEPS.
+            QA measures isolated factual recall, whereas CEPS assesses sustained reasoning across five
+            causally dependent stages.
           </div>
         </div>
         <div class="table-wrapper no-scroll">
@@ -1733,27 +1787,46 @@ Default propagation weight  λ = 0.1
               </tr>
             </thead>
             <tbody>
-              <tr><td>DeepSeek-V4-Flash</td><td>.819</td><td>1</td><td>.463</td><td>2</td><td>−1</td></tr>
-              <tr><td>Qwen3.7-Max</td><td>.819</td><td>2</td><td>.384</td><td>8</td><td>−6</td></tr>
-              <tr><td>DeepSeek-V4-Pro</td><td>.818</td><td>3</td><td>.365</td><td>9</td><td>−6</td></tr>
-              <tr><td>Doubao-Seed-2.0-Lite</td><td>.804</td><td>4</td><td>.357</td><td>10</td><td>−6</td></tr>
-              <tr><td>Doubao-Seed-2.0-Pro</td><td>.787</td><td>5</td><td>.405</td><td>6</td><td>−1</td></tr>
-              <tr><td>Qwen3.6-Plus</td><td>.783</td><td>6</td><td>.426</td><td>4</td><td>+2</td></tr>
-              <tr class="row-highlight"><td class="td-left">GLM-5.1</td><td>.757</td><td>7</td><td>.470</td><td>1</td><td><b>+6</b></td></tr>
-              <tr><td>Qwen3.6-35B-A3B</td><td>.684</td><td>8</td><td>.424</td><td>5</td><td>+3</td></tr>
-              <tr><td>Hunyuan3-Preview</td><td>.624</td><td>9</td><td>.389</td><td>7</td><td>+2</td></tr>
-              <tr class="row-highlight"><td class="td-left">Kimi-K2.6</td><td>.511</td><td>10</td><td>.434</td><td>3</td><td><b>+7</b></td></tr>
+              <tr class="row-highlight"><td class="td-left">DeepSeek-V4-Flash</td><td>.819</td><td>1</td><td>.348</td><td>9</td><td><b>−8</b></td></tr>
+              <tr><td>Qwen3.7-Max</td><td>.819</td><td>2</td><td>.398</td><td>6</td><td>−4</td></tr>
+              <tr><td>DeepSeek-V4-Pro</td><td>.818</td><td>3</td><td>.399</td><td>5</td><td>−2</td></tr>
+              <tr class="row-highlight"><td class="td-left">Doubao-Seed-2.0-Lite</td><td>.804</td><td>4</td><td>.329</td><td>10</td><td><b>−6</b></td></tr>
+              <tr><td>Doubao-Seed-2.0-Pro</td><td>.787</td><td>5</td><td>.386</td><td>7</td><td>−2</td></tr>
+              <tr><td>Qwen3.6-Plus</td><td>.783</td><td>6</td><td>.434</td><td>2</td><td>+4</td></tr>
+              <tr class="row-highlight"><td class="td-left">GLM-5.1</td><td>.757</td><td>7</td><td>.495</td><td>1</td><td><b>+6</b></td></tr>
+              <tr><td>Qwen3.6-35B-A3B</td><td>.684</td><td>8</td><td>.399</td><td>4</td><td>+4</td></tr>
+              <tr><td>Hunyuan3-Preview</td><td>.624</td><td>9</td><td>.384</td><td>8</td><td>+1</td></tr>
+              <tr class="row-highlight"><td class="td-left">Kimi-K2.6</td><td>.511</td><td>10</td><td>.402</td><td>3</td><td><b>+7</b></td></tr>
             </tbody>
           </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Execution collapse + profile adaptation (mechanism; after headline results) -->
+    <div class="columns is-centered mt-4">
+      <div class="column is-full has-text-centered content">
+        <h2 class="title is-3">Execution Collapse &amp; Profile Adaptation</h2>
+        <div class="kf-callout kf-orange">
+          <div class="kf-label">🔑 Key Finding</div>
+          <div class="kf-text">
+            <b>S4 is the weakest stage and is largely independent of signal quality.</b>
+            Under the Balanced profile, <b>every model under-trades</b> relative to ground truth
+            (mean turnover ratio <b>10.9%</b>): unable to use covariance, models default to flat S3 weights,
+            so implied turnover stays tiny. Separately, nearly all models
+            <b>default to aggressive behavior</b>
+            (mean PAS<sub>agg</sub> <b>0.90</b> vs. PAS<sub>cons</sub> <b>0.72</b>);
+            LLMs handle loose risk constraints well but struggle with strict ones—conservative profiles remain hardest.
+          </div>
         </div>
         <div class="img-row">
           <div class="img-panel">
             <img loading="lazy" src="./static/images/analysis_s2_s4_quadrant.png" class="img-analysis" alt="Quadrant scatter plot of S2 signal accuracy vs. S4 execution fidelity per model, highlighting models with strong signals but poor execution">
-            <p class="fig-caption">S2 (signal) vs. S4 (execution). Hunyuan3-Preview leads S2 yet collapses in S4: strong signals, no execution.</p>
+            <p class="fig-caption">S2 (signal) vs. S4 (execution). Hunyuan3-Preview and Qwen3.6-Plus lead S2 yet sit near the bottom on S4; GLM-5.1 combines solid signals with the highest execution score.</p>
           </div>
           <div class="img-panel">
-            <img loading="lazy" src="./static/images/analysis_profile_adaptation.png" class="img-analysis" alt="Profile alignment scores per model measuring portfolio similarity across Conservative, Balanced, and Aggressive profiles, revealing models that apply near-identical allocations regardless of risk tolerance">
-            <p class="fig-caption">Profile Alignment Score (PAS) per model. GLM-5.1 applies a nearly identical allocation regardless of risk profile (σ = 0.014).</p>
+            <img loading="lazy" src="./static/images/analysis_profile_adaptation.png" class="img-analysis" alt="AdaptScore versus Profile Alignment Score by risk profile, showing models defaulting to aggressive behavior">
+            <p class="fig-caption">AdaptScore vs. PAS by profile. Qwen3.7-Max achieves true cross-profile compliance (AdaptScore 0.028); high-AdaptScore models such as Qwen3.6-Plus reach near-perfect aggressive PAS but collapse under conservative constraints.</p>
           </div>
         </div>
       </div>
