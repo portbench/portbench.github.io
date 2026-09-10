@@ -212,19 +212,20 @@
             </div>
           </div>
 
-          <img loading="lazy" src="./static/images/intro_overview.png" alt="PortBench framework overview: market data collection, dual-layer evaluation with static QA and dynamic pipeline, three risk profiles and stress regimes" class="img-figure">
+          <img loading="lazy" src="./static/images/intro_overview.png" alt="PortBench overview showing the market base dataset, static QA and dynamic evaluation routes, core evaluation dimensions, output metrics, and empirical findings" class="img-figure">
           <p class="fig-caption">
-            Overview of <b>PortBench</b>. We first collect the <b>Market Base Dataset</b>
-            (183 instruments × 6 asset classes, 2015–2025), then build a
-            <b>dual-layer evaluation framework</b> on top:
-            a static QA layer (6,269 correlation-based pairs) and a dynamic five-stage pipeline,
-            jointly assessed under three risk profiles and three historical stress regimes.
+            Overview of <b>PortBench</b>. The market base dataset supports two complementary
+            evaluation routes, static QA and dynamic evaluation, covering allocation that accounts
+            for correlations, process diagnosis, and robustness across evaluation periods and
+            investor profiles. The right column lists the output metrics, and the bottom row
+            summarizes the main empirical findings.
           </p>
-          <img loading="lazy" src="./static/images/method_framework.png" alt="Two-layer evaluation framework: static QA layer with 6,269 pairs above, dynamic five-stage pipeline below, both fed by market snapshots" class="img-figure">
+          <img loading="lazy" src="./static/images/method_framework.png" alt="Evaluation framework with market, portfolio, profile, and period inputs; seven static QA templates above; and the five-stage dynamic evaluation below" class="img-figure">
           <p class="fig-caption">
-            Evaluation framework. Static QA layer (Top): seven task templates generated automatically from
-            historical data. Dynamic five-stage pipeline (Bottom): executed sequentially at every rebalance
-            date under three investor profiles and three stress regimes.
+            Evaluation framework. <b>Top:</b> static QA covers seven templates, T1 through T7,
+            from single asset tasks at L1 to full portfolio judgment at L4. <b>Bottom:</b> at each
+            rebalance date, the LLM produces S1 through S3, the deterministic sandbox evaluates
+            execution and risk at S4 and S5, and CEPS summarizes the stage scores.
           </p>
         </div>
     </div>
