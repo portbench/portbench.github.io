@@ -212,20 +212,21 @@
             </div>
           </div>
 
-          <img loading="lazy" src="./static/images/intro_overview.png" alt="PortBench overview showing the market base dataset, static QA and dynamic evaluation routes, core evaluation dimensions, output metrics, and empirical findings" class="img-figure">
+          <img loading="lazy" src="./static/images/intro_overview.png" alt="PortBench overview showing a shared multi-asset market base, complementary static QA and dynamic evaluation layers, and the benchmark's core evaluation dimensions" class="img-figure">
           <p class="fig-caption">
-            Overview of <b>PortBench</b>. The market base dataset supports two complementary
-            evaluation routes, static QA and dynamic evaluation, covering allocation that accounts
-            for correlations, process diagnosis, and robustness across evaluation periods and
-            investor profiles. The right column lists the output metrics, and the bottom row
-            summarizes the main empirical findings.
+            Overview of <b>PortBench</b>. A shared multi-asset market base supports complementary
+            static QA and dynamic five-stage evaluation. The benchmark assesses correlation-aware
+            allocation, cross-stage error propagation through CEPS and paired interventions, and
+            robustness across evaluation periods and investor risk profiles.
           </p>
-          <img loading="lazy" src="./static/images/method_framework.png" alt="Evaluation framework with market, portfolio, profile, and period inputs; seven static QA templates above; and the five-stage dynamic evaluation below" class="img-figure">
+          <img loading="lazy" src="./static/images/method_framework.png" alt="PortBench evaluation framework showing seven static QA templates, the five-stage dynamic pipeline, CEPS and paired interventions, and portfolio state propagation" class="img-figure">
           <p class="fig-caption">
             Evaluation framework. <b>Top:</b> static QA covers seven templates, T1 through T7,
             from single asset tasks at L1 to full portfolio judgment at L4. <b>Bottom:</b> at each
-            rebalance date, the LLM produces S1 through S3, the deterministic sandbox evaluates
-            execution and risk at S4 and S5, and CEPS summarizes the stage scores.
+            rebalance date, the LLM produces S1 through S3, and the deterministic sandbox executes
+            the allocation and evaluates execution and risk at S4 and S5. CEPS and paired
+            interventions diagnose error propagation, while the resulting portfolio state is
+            carried into the next decision.
           </p>
         </div>
     </div>
