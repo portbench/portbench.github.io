@@ -396,6 +396,7 @@ table tbody th { background: inherit; }
 .img-row, .img-panel-row { width: 80%; margin-left: auto; margin-right: auto; }
 .img-figure + .fig-caption { width: 80%; margin-left: auto; margin-right: auto; }
 .img-figure-wide, .img-figure-wide + .fig-caption { width: 95%; }
+.img-figure-full, .img-figure-full + .fig-caption { width: 100%; }
 .kf-teal { background: var(--teal-wash); color: var(--teal); }
 #results + .section .kf-callout { border: 1px solid var(--accent-border); }
 #results + .section .kf-teal { border-color: #bbd9d0; }
