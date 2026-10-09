@@ -7,11 +7,8 @@
   <meta name="keywords" content="PortBench, LLM, benchmark, portfolio management, finance, CEPS, correlation, multi-asset">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;0,8..60,900;1,8..60,400&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/fonts.css">
   <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
 
   <script defer src="./static/js/fontawesome.all.min.js"></script>
@@ -20,50 +17,17 @@
 <a href="#background" class="skip-link">Skip to content</a>
 <div class="scroll-progress" aria-hidden="true"></div>
 
-<!-- ==================== STICKY SECTION NAV ==================== -->
-<nav class="section-nav" id="section-nav" aria-label="Page sections">
-  <a href="#background" class="section-nav-link">Background</a>
-  <a href="#findings" class="section-nav-link">Findings</a>
-  <a href="#explorer" class="section-nav-link">Explorer</a>
-  <a href="#details" class="section-nav-link">Details</a>
-  <a href="#results" class="section-nav-link">Results</a>
-  <a href="#citation" class="section-nav-link">Citation</a>
-</nav>
 
-<!-- ==================== NAVBAR ==================== -->
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-  <div class="navbar-menu">
-    <div class="navbar-start flex-grow-1 justify-center">
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">More Resources</a>
-        <div class="navbar-dropdown">
-          <a class="navbar-item" href="https://arxiv.org/abs/2605.27887" target="_blank">
-            <b>arXiv</b>
-          </a>
-          <a class="navbar-item" href="https://github.com/AgenticFinLab/portbench" target="_blank">
-            <b>Code</b>
-          </a>
-          <a class="navbar-item" href="https://huggingface.co/collections/AgenticFinLab/portbench" target="_blank">
-            <b>Dataset</b>
-          </a>
-          <hr class="navbar-divider">
-          <a class="navbar-item" href="#explorer">Interactive Browser</a>
-          <a class="navbar-item" href="#details">Evaluation Details</a>
-          <a class="navbar-item" href="#results">Results &amp; Insights</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</nav>
 
-<!-- ==================== HERO ==================== -->
+<header class="site-header">
+  <a class="site-name" href="#">PortBench</a>
+  <nav aria-label="Research resources">
+    <a href="https://arxiv.org/abs/2605.27887" target="_blank" rel="noopener noreferrer">Paper</a>
+    <a href="https://github.com/AgenticFinLab/portbench" target="_blank" rel="noopener noreferrer">Code</a>
+    <a href="https://huggingface.co/collections/AgenticFinLab/portbench" target="_blank" rel="noopener noreferrer">Dataset</a>
+  </nav>
+</header>
+
 <section class="hero pub-hero">
   <div class="hero-body">
     <div class="container">
@@ -78,13 +42,13 @@
 
           <div class="is-size-5 publication-authors">
             <span class="author-block">
-              <a href="#">Yuxuan Zhao</a><sup>1,2</sup>,&ensp;
+              Yuxuan Zhao<sup>1,2</sup>,&ensp;
             </span>
             <span class="author-block">
-              <a href="#">Sijia Chen</a><sup>2</sup>,&ensp;
+              Sijia Chen<sup>2</sup>,&ensp;
             </span>
             <span class="author-block">
-              <a href="#">Ningxin Su</a><sup>2</sup>
+              Ningxin Su<sup>2</sup>
             </span>
           </div>
 
@@ -100,57 +64,40 @@
           <div class="column has-text-centered">
             <div class="publication-links">
               <span class="link-block">
-                <a href="https://arxiv.org/abs/2605.27887" target="_blank"
-                   class="external-link button is-small is-rounded is-dark">
+                <a href="https://arxiv.org/abs/2605.27887" target="_blank" rel="noopener noreferrer"
+                   class="external-link button">
                   <span class="icon"><i class="fas fa-file-pdf"></i></span>
-                  <span>arXiv</span>
+                  <span>Paper</span>
                 </a>
               </span>
               <span class="link-block">
-                <a href="https://huggingface.co/collections/AgenticFinLab/portbench" target="_blank"
-                   class="external-link button is-small is-rounded is-dark">
-                  <span class="icon text-xs">🤗</span>
+                <a href="https://huggingface.co/collections/AgenticFinLab/portbench" target="_blank" rel="noopener noreferrer"
+                   class="external-link button">
+                  <span class="icon"><i class="fas fa-database"></i></span>
                   <span>Dataset</span>
                 </a>
               </span>
               <span class="link-block">
-                <a href="https://github.com/AgenticFinLab/portbench" target="_blank"
-                   class="external-link button is-small is-rounded is-dark">
+                <a href="https://github.com/AgenticFinLab/portbench" target="_blank" rel="noopener noreferrer"
+                   class="external-link button">
                   <span class="icon"><i class="fab fa-github"></i></span>
                   <span>Code</span>
                 </a>
               </span>
               <span class="link-block">
-                <a href="https://huggingface.co/datasets/AgenticFinLab/PortBench-RawData" target="_blank"
-                   class="external-link button is-small is-rounded is-dark">
+                <a href="https://huggingface.co/datasets/AgenticFinLab/PortBench-RawData" target="_blank" rel="noopener noreferrer"
+                   class="external-link button">
                   <span class="icon"><i class="fas fa-chart-line"></i></span>
-                  <span>Raw Experimental Results</span>
+                  <span>Experimental Results</span>
                 </a>
               </span>
-              <span class="link-block">
-                <a href="#explorer" class="external-link button is-small is-rounded is-dark">
-                  <span class="icon"><i class="fas fa-database"></i></span>
-                  <span>Interactive Browser</span>
-                </a>
-              </span>
-              <span class="link-block">
-                <a href="#details" class="external-link button is-small is-rounded is-dark">
-                  <span class="icon"><i class="fas fa-layer-group"></i></span>
-                  <span>Evaluation Details</span>
-                </a>
-              </span>
-              <span class="link-block">
-                <a href="#results" class="external-link button is-small is-rounded is-dark">
-                  <span class="icon"><i class="fas fa-chart-bar"></i></span>
-                  <span>Results &amp; Insights</span>
-                </a>
-              </span>
+
+
             </div>
           </div>
         </div>
       </div>
 
-      <!-- ==================== TEASER / CORE FINDING BANNER ==================== -->
       <div class="teaser-banner">
         <p class="teaser-banner-text">
           High financial QA scores do not ensure consistent portfolio outperformance.
@@ -163,14 +110,22 @@
   </div>
 </section>
 
-<!-- ==================== BACKGROUND & MOTIVATION ==================== -->
+<nav class="section-nav" id="section-nav" aria-label="Page sections">
+  <a href="#background" class="section-nav-link">Background</a>
+  <a href="#findings" class="section-nav-link">Findings</a>
+  <a href="#explorer" class="section-nav-link">Explorer</a>
+  <a href="#details" class="section-nav-link">Details</a>
+  <a href="#results" class="section-nav-link">Results</a>
+  <a href="#citation" class="section-nav-link">Citation</a>
+</nav>
+
 <section class="section section--flush-top" id="background">
   <div class="container">
     <div class="content-reading">
     <h2 class="section-heading">Background &amp; Motivation</h2>
     <div class="content has-text-justified">
           <p>
-            Portfolio management requires diversified allocations, which requires accounting for intra- and inter-class correlations.
+            Portfolio management requires diversified allocations to reduce volatility and risk, which in turn requires accounting for intra- and inter-class correlations.
             Existing benchmarks leave two gaps: they often cover a single asset class, or evaluate assets in isolation; and they provide limited diagnosis of where errors arise and how they affect later decisions.
           </p>
           <p>
@@ -179,36 +134,33 @@
           </p>
           <div class="contrib-list">
             <div class="contrib-row">
-              <span class="contrib-label">Dataset</span>
               <div class="contrib-content">
-                <span class="contrib-title">A Multi-Asset Market Dataset</span>
+                <span class="contrib-title"><i class="fas fa-database" aria-hidden="true"></i> A Multi-Asset Market Dataset</span>
                 <p class="contrib-desc">183 market series across equities, bonds, commodities, cryptocurrency, real estate, and cash, from 2015 to 2025, with prices, macro series, and time-aligned news. Inter-class correlations are generally low and intra-class correlations are strongly positive.</p>
               </div>
             </div>
             <div class="contrib-row">
-              <span class="contrib-label">Framework</span>
               <div class="contrib-content">
-                <span class="contrib-title">A Dual-Layer Evaluation Framework</span>
+                <span class="contrib-title"><i class="fas fa-project-diagram" aria-hidden="true"></i> A Dual-Layer Evaluation Framework</span>
                 <p class="contrib-desc">Static QA is paired with a five-stage pipeline. The model produces S1&ndash;S3; the sandbox executes the allocation under fixed transaction costs and scores S4 and S5. CEPS summarizes reference-based stage scores, and paired interventions trace how a local change affects later decisions. Portfolios are then evaluated across stress windows, investor profiles, and real-time market data.</p>
               </div>
             </div>
             <div class="contrib-row">
-              <span class="contrib-label">Finding</span>
               <div class="contrib-content">
-                <span class="contrib-title">A QA&ndash;Portfolio Performance Gap</span>
+                <span class="contrib-title"><i class="fas fa-chart-bar" aria-hidden="true"></i> A QA&ndash;Portfolio Performance Gap</span>
                 <p class="contrib-desc">Across ten LLMs, high financial QA scores do not ensure consistent portfolio outperformance. The models concentrate exposure in correlated assets, and their portfolios beat equal weighting on Sharpe in 54.2% of 120 evaluations across four historical periods.</p>
               </div>
             </div>
           </div>
 
-          <img loading="lazy" src="./static/images/portbench_overview.png" alt="PortBench overview: a shared multi-asset market base, static QA and dynamic evaluation, and three evaluation dimensions" class="img-figure">
+          <img loading="lazy" src="./static/images/portbench_overview.png" width="2200" height="857" alt="PortBench overview: a shared multi-asset market base, static QA and dynamic evaluation, and three evaluation dimensions" class="img-figure">
           <p class="fig-caption">
             Overview of <b>PortBench</b>. A shared multi-asset market base supports complementary
             static QA and dynamic five-stage evaluation. The benchmark assesses correlation-aware
             allocation, stagewise diagnostics through CEPS and paired interventions, and
             robustness across evaluation periods and investor risk profiles.
           </p>
-          <img loading="lazy" src="./static/images/evaluation_framework.png" alt="Evaluation framework with seven QA templates and a five-stage pipeline in which the LLM produces S1 through S3 and the sandbox scores S4 and S5" class="img-figure">
+          <img loading="lazy" src="./static/images/evaluation_framework.png" width="2200" height="1110" alt="Evaluation framework with seven QA templates and a five-stage pipeline in which the LLM produces S1 through S3 and the sandbox scores S4 and S5" class="img-figure">
           <p class="fig-caption">
             Evaluation framework. <b>Top:</b> static QA covers seven templates, T1 through T7,
             from single-asset tasks at L1 to full-portfolio judgment at L4. <b>Bottom:</b> at each
@@ -221,16 +173,14 @@
   </div>
 </section>
 
-<!-- ==================== KEY FINDINGS ==================== -->
 <section class="section" id="findings">
   <div class="container">
     <div class="content-reading">
     <h2 class="section-heading">Key Findings</h2>
     <div class="findings-editorial">
       <div class="finding-block">
-        <div class="finding-stat">54.2%</div>
         <div class="finding-content">
-          <div class="finding-headline">High financial QA scores do not ensure consistent portfolio outperformance</div>
+          <div class="finding-headline">A QA–Portfolio Performance Gap</div>
           <div class="finding-body">
             Ten LLMs beat equal weighting on Sharpe in
             <span class="finding-stat-inline">65 / 120</span> evaluations and fail to do so in the other 55.
@@ -241,9 +191,8 @@
         </div>
       </div>
       <div class="finding-block">
-        <div class="finding-stat">8.5%</div>
         <div class="finding-content">
-          <div class="finding-headline">Broad holdings still concentrate weight in correlated assets</div>
+          <div class="finding-headline">Broad Holdings Conceal Correlated Risk</div>
           <div class="finding-body">
             The 330 saved 2024 allocations hold 73 assets on average.
             Equalizing weights inside each held class, without changing the holdings or class totals,
@@ -254,12 +203,18 @@
         </div>
       </div>
       <div class="finding-block">
-        <div class="finding-stat">0%</div>
         <div class="finding-content">
-          <div class="finding-headline">Performance reverses across regimes</div>
+          <div class="finding-headline">Performance Reverses across Regimes</div>
           <div class="finding-body">
-            Beat rates are 90% in 2015&ndash;16, 77% in 2020, 50% in 2024, and
-            <span class="finding-stat-inline">0%</span> in 2022.
+            <figure class="regime-comparison" aria-label="Beat rates by historical period">
+              <figcaption>Beat rates</figcaption>
+              <div class="regime-bars">
+                <div class="regime-period"><strong>90%</strong><div class="regime-track" aria-hidden="true"><span style="height:90%"></span></div><span>2015&ndash;16</span></div>
+                <div class="regime-period"><strong>77%</strong><div class="regime-track" aria-hidden="true"><span style="height:77%"></span></div><span>2020</span></div>
+                <div class="regime-period"><strong>50%</strong><div class="regime-track" aria-hidden="true"><span style="height:50%"></span></div><span>2024</span></div>
+                <div class="regime-period"><strong>0%</strong><div class="regime-track" aria-hidden="true"><span style="height:0%"></span></div><span>2022</span></div>
+              </div>
+            </figure>
             All ten models fail at least one conservative stress window.
             Low normal-period drawdown does not establish stress resilience.
           </div>
@@ -270,26 +225,23 @@
   </div>
 </section>
 
-<!-- ==================== PORTBENCH EXPLORER BANNER ==================== -->
 <div class="section-divider">
   <div class="container content-wide">
     <h2 class="section-heading" id="explorer">Interactive Browser</h2>
   </div>
 </div>
 
-<!-- ==================== PORTBENCH EXPLORER ==================== -->
 <section class="section section--flush-top">
   <div class="container content-wide">
-    <div class="columns is-centered mt-4">
+    <div class="columns is-centered">
       <div class="column is-full content">
         <!-- General intro -->
         <p class="has-text-justified mb-4">
-          The browser below shows the market dataset, the QA samples, and saved pipeline traces.
+          Explore market snapshots, static QA samples, and saved model outputs.
         </p>
 
-        <!-- ================================================================ -->
         <!-- SUBSECTION 1: MARKET BASE DATASET -->
-        <!-- ================================================================ -->
+
         <h2 class="title is-3" id="dataset">Market Base Dataset</h2>
 
         <div class="content has-text-justified">
@@ -305,26 +257,22 @@
         <!-- Interactive Market Snapshot -->
         <h3 class="title is-4 mt-4">Interactive Market Snapshot</h3>
         <p class="has-text-justified mb-2 text-sm">
-          183 instruments across 6 asset classes, daily data 2015&ndash;2025.
-          Each monthly snapshot includes macro indicators, per-asset price summaries, and cross-class correlations.
-          Select a date to see the full snapshot.
-          To keep the layout compact, the six asset class tables are <b>collapsed by default</b>: click
-          any class header to expand and inspect its representative tickers.
+          Select a date to inspect macroeconomic indicators, asset prices, and correlations.
+          Expand an asset class to view its representative instruments.
         </p>
         <div class="explorer-controls">
-          <label for="market-date-picker"><b>Date:</b></label>
-          <select id="market-date-picker" class="explorer-select"></select>
+          <div class="explorer-field"><label for="market-date-picker"><b>Date:</b></label><select id="market-date-picker" class="explorer-select"></select></div>
         </div>
         <div id="market-snapshot-display"><div class="explorer-loading">Loading market snapshots&hellip;</div></div>
 
         <!-- Three-panel: ticker counts + correlation structure, side by side -->
         <div class="img-panel-row">
           <div class="img-panel">
-            <img loading="lazy" src="./static/images/data_asset_tickers.png" alt="Bar chart showing instrument count per asset class: 126 equities, 15 bonds, 16 commodities, 12 crypto, 10 real estate, 4 cash equivalents">
+            <img loading="lazy" src="./static/images/data_asset_tickers.png" width="1580" height="980" alt="Bar chart showing instrument count per asset class: 126 equities, 15 bonds, 16 commodities, 12 crypto, 10 real estate, 4 cash equivalents">
             <p class="fig-caption">Number of series per asset class.</p>
           </div>
           <div class="img-panel">
-            <img loading="lazy" src="./static/images/data_corr_interclass.png" alt="Mean within-class and cross-class correlations">
+            <img loading="lazy" src="./static/images/data_corr_interclass.png" width="3258" height="1305" alt="Mean within-class and cross-class correlations">
             <p class="fig-caption">Mean within- and cross-class correlations (daily returns, 2015&ndash;2022). The right panel is the mean correlation inside each class.</p>
           </div>
         </div>
@@ -335,27 +283,27 @@
         <div class="simple-carousel" id="asset-carousel" tabindex="0" aria-roledescription="carousel" aria-label="Asset class price trajectories">
           <div class="slides">
             <div class="slide active">
-              <img loading="lazy" src="./static/images/dataset_overview_equities.png" alt="Equities">
+              <img loading="lazy" src="./static/images/dataset_overview_equities.png" width="2360" height="1155" alt="Equities">
               <p class="fig-caption">Equities (126 tickers: broad-market, sector, factor ETFs)</p>
             </div>
             <div class="slide">
-              <img loading="lazy" src="./static/images/dataset_overview_bonds.png" alt="Bonds">
+              <img loading="lazy" src="./static/images/dataset_overview_bonds.png" width="2362" height="1155" alt="Bonds">
               <p class="fig-caption">Bonds (15 series: full yield curve, TIPS, credit)</p>
             </div>
             <div class="slide">
-              <img loading="lazy" src="./static/images/dataset_overview_commodities.png" alt="Commodities">
+              <img loading="lazy" src="./static/images/dataset_overview_commodities.png" width="2360" height="1155" alt="Commodities">
               <p class="fig-caption">Commodities (16 tickers: energy, metals, agriculture)</p>
             </div>
             <div class="slide">
-              <img loading="lazy" src="./static/images/dataset_overview_cryptocurrency.png" alt="Cryptocurrency">
+              <img loading="lazy" src="./static/images/dataset_overview_cryptocurrency.png" width="4900" height="3964" alt="Cryptocurrency">
               <p class="fig-caption">Cryptocurrency (12 tickers: major and mid-cap digital assets)</p>
             </div>
             <div class="slide">
-              <img loading="lazy" src="./static/images/dataset_overview_real_estate.png" alt="Real Estate">
+              <img loading="lazy" src="./static/images/dataset_overview_real_estate.png" width="2360" height="1155" alt="Real Estate">
               <p class="fig-caption">Real Estate (10 series: REITs and housing indices)</p>
             </div>
             <div class="slide">
-              <img loading="lazy" src="./static/images/dataset_overview_cash.png" alt="Cash">
+              <img loading="lazy" src="./static/images/dataset_overview_cash.png" width="2362" height="1155" alt="Cash">
               <p class="fig-caption">Cash Equivalents (4 series: money market, ultra-short duration)</p>
             </div>
           </div>
@@ -388,10 +336,9 @@
           })();
         </script>
 
-        <!-- ================================================================ -->
         <!-- SUBSECTION 2: EVALUATION FRAMEWORK -->
-        <!-- ================================================================ -->
-        <h2 class="title is-3 mt-5">Evaluation Framework</h2>
+
+        <h2 class="title is-3 framework-title">Evaluation Framework</h2>
         <p class="has-text-justified mb-2">
           The evaluation framework has two complementary layers: static QA and a dynamic five-stage portfolio evaluation.
           QA targets come from historical data and explicit task rules.
@@ -402,10 +349,10 @@
         <div class="tabs is-centered is-boxed" id="eval-tabs">
           <ul role="tablist" aria-label="Evaluation framework layers">
             <li class="is-active" data-tab="pipeline" role="presentation">
-              <a id="tab-btn-pipeline" role="tab" aria-selected="true" aria-controls="tab-pipeline" tabindex="0">&#x2699;&#xFE0F; Pipeline Evaluation</a>
+              <a id="tab-btn-pipeline" role="tab" aria-selected="true" aria-controls="tab-pipeline" tabindex="0">Pipeline Evaluation</a>
             </li>
             <li data-tab="qa" role="presentation">
-              <a id="tab-btn-qa" role="tab" aria-selected="false" aria-controls="tab-qa" tabindex="-1">&#x2753; QA Dataset (T1&ndash;T7)</a>
+              <a id="tab-btn-qa" role="tab" aria-selected="false" aria-controls="tab-qa" tabindex="-1">QA Dataset (T1&ndash;T7)</a>
             </li>
           </ul>
         </div>
@@ -438,17 +385,13 @@
         <!-- ── Tab 2: Pipeline Evaluation ──────────────────────── -->
         <div id="tab-pipeline" class="explorer-panel" role="tabpanel" aria-labelledby="tab-btn-pipeline" tabindex="0">
           <p class="has-text-justified mb-2 text-sm">
-            Saved S1&ndash;S3 traces under the balanced profile.
-            The model proposes the allocation; published S4, S5, and CEPS in the results section are scored from those decisions under the paper&rsquo;s replay contract.
-            Select a model, window, and date to read one archived trace.
+            Saved model outputs under the balanced profile: market interpretation, signals, and portfolio weights.
+            Select a model, window, and date. Stage scores and CEPS are reported in <a href="#results">Results</a>.
           </p>
           <div class="explorer-controls flex-wrap">
-            <label for="pipeline-model-picker"><b>Model:</b></label>
-            <select id="pipeline-model-picker" class="explorer-select"></select>
-            <label for="pipeline-scenario-picker"><b>Scenario:</b></label>
-            <select id="pipeline-scenario-picker" class="explorer-select"></select>
-            <label for="pipeline-date-picker"><b>Date:</b></label>
-            <select id="pipeline-date-picker" class="explorer-select"></select>
+            <div class="explorer-field"><label for="pipeline-model-picker"><b>Model:</b></label><select id="pipeline-model-picker" class="explorer-select"></select></div>
+            <div class="explorer-field"><label for="pipeline-scenario-picker"><b>Scenario:</b></label><select id="pipeline-scenario-picker" class="explorer-select"></select></div>
+            <div class="explorer-field"><label for="pipeline-date-picker"><b>Date:</b></label><select id="pipeline-date-picker" class="explorer-select"></select></div>
           </div>
           <div id="pipeline-display" role="region" aria-live="polite" aria-label="Pipeline evaluation display"><div class="explorer-loading">Loading pipeline traces&hellip;</div></div>
         </div>
@@ -660,7 +603,8 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!header) return;
       var parent = header.parentElement;
       if (parent && parent.classList.contains("ms-toggleable")) {
-        parent.classList.toggle("ms-expanded");
+        var expanded = parent.classList.toggle("ms-expanded");
+        header.setAttribute("aria-expanded", String(expanded));
       }
     });
   }
@@ -712,10 +656,10 @@ document.addEventListener('DOMContentLoaded', function() {
       var avgCls = avgRet !== null && avgRet >= 0 ? "ret-pos" : "ret-neg";
 
       html += '<div class="showcase-inner ms-toggleable ' + classColors[cls] + '">';
-      html += '<div class="showcase-inner-header">';
+      html += '<button type="button" class="showcase-inner-header" aria-expanded="false">';
       html += esc(cls) + ' <span class="ms-toggle">▸</span>';
       html += '<span class="ms-summary">' + assets.length + ' tickers · avg 20d <span class="' + avgCls + '">' + avgStr + '</span></span>';
-      html += '</div>';
+      html += '</button>';
       html += '<div class="showcase-inner-body">';
       html += '<div class="table-wrapper">';
       html += '<table class="table-compact"><thead><tr>';
@@ -745,21 +689,19 @@ document.addEventListener('DOMContentLoaded', function() {
       html += '<div class="showcase-inner si-cream">';
       html += '<div class="showcase-inner-header">Class-Level Correlation <span class="meta-sub">41-day trailing window</span></div>';
       html += '<div class="showcase-inner-body">';
-      html += '<table class="corr-table"><thead><tr><th>Class</th><th>Intra-&rho;</th>';
-      classes.forEach(function(c2) { if (c2 !== classes[0]) html += '<th>vs.' + esc(c2.substring(0,4)) + '</th>'; });
+      html += '<div class="table-wrapper"><table class="corr-table"><thead><tr><th scope="col">Class</th>';
+      classes.forEach(function(c2) { html += '<th scope="col">' + esc(c2) + '</th>'; });
       html += '</tr></thead><tbody>';
       classes.forEach(function(c1) {
         html += '<tr><td class="td-left">' + esc(c1) + '</td>';
-        html += '<td>' + (snap.correlation[c1][c1] !== null ? fmt(snap.correlation[c1][c1], 2) : "N/A") + '</td>';
         classes.forEach(function(c2) {
-          if (c2 === c1) return;
           var v = snap.correlation[c1][c2];
           var cls = (v !== null && Math.abs(parseFloat(v)) > 0.5) ? 'corr-strong' : '';
           html += '<td class="' + cls + '">' + (v !== null ? fmt(v, 2) : "N/A") + '</td>';
         });
         html += '</tr>';
       });
-      html += '</tbody></table></div></div>';
+      html += '</tbody></table></div></div></div>';
     }
 
     if (clsNews.length) {
@@ -932,7 +874,7 @@ document.addEventListener('DOMContentLoaded', function() {
     Object.keys(scenarios).forEach(function(s) {
       var opt = document.createElement("option");
       opt.value = s;
-      opt.textContent = scenarios[s].display || s;
+      opt.textContent = (scenarios[s].display || s).replace('Crypto Collapse', 'Market Decline');
       scenSel.appendChild(opt);
     });
     onPipelineScenarioChange();
@@ -1011,8 +953,8 @@ document.addEventListener('DOMContentLoaded', function() {
     /* ── Snapshot section ── */
     html += '<div class="showcase-frame">';
     html += '<div class="showcase-frame-header">';
-    html += '<span>MarketSnapshot <span class="meta">(model input)</span></span>';
-    html += '<span class="meta">' + esc(date) + ' &nbsp;|&nbsp; Balanced Profile &nbsp;|&nbsp; ' + esc(scenDisplay) + '</span>';
+    html += '<span>Market Snapshot <span class="meta">(model input)</span></span>';
+    html += '<span class="meta">' + esc(date) + ' &nbsp;|&nbsp; Balanced Profile &nbsp;|&nbsp; ' + esc(scenDisplay.replace('Crypto Collapse', 'Market Decline')) + '</span>';
     html += '</div><div class="showcase-frame-body">';
 
     /* Macro — all 12 indicators */
@@ -1022,9 +964,9 @@ document.addEventListener('DOMContentLoaded', function() {
     html += '<div class="showcase-inner-body"><div class="macro-grid">';
     var macroRows = [
       ["Fed Funds", macro.fed_funds_rate, "%", 2],
-      ["CPI YoY", macro.cpi_yoy, "", 1],
+      ["CPI", macro.cpi_yoy, "", 1],
       ["Unemployment", macro.unemployment, "%", 1],
-      ["GDP Growth QoQ", macro.gdp_growth_qoq, "", 1],
+      ["GDP", macro.gdp_growth_qoq, "", 1],
       ["VIX", macro.vix, "", 2],
       ["10Y-2Y Spread", macro.t10y2y_spread, "", 2],
       ["10Y-3M Spread", macro.t10y3m_spread, "", 2],
@@ -1091,50 +1033,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /* ── Pipeline traces ── */
     if (ep && ep.stages && ep.stages.length) {
-      var CEPS = ep.ceps_score !== null ? fmt(ep.ceps_score, 3) : "N/A";
       html += '<div class="showcase-frame mt-2">';
-      html += '<div class="showcase-frame-header">';
-      html += '<span>' + esc(displayName) + ' – Pipeline Trace</span>';
-      html += '<span class="meta">CEPS = <b>' + CEPS + '</b> &nbsp;|&nbsp; ' + esc(date) + ' &nbsp;|&nbsp; ' + esc(scenDisplay) + '</span>';
-      html += '</div><div class="showcase-frame-body">';
-
-      var STAGE_COLORS = ["si-blue","si-peri","si-cream","si-lav","si-coral"];
-      var STAGE_NAMES  = ["S1: Market Interpretation","S2: Signal Generation","S3: Weight Optimization","S4: Execution Simulation (deterministic)","S5: Risk Monitoring (deterministic)"];
-
-      ep.stages.forEach(function(stage, i) {
-        var color = STAGE_COLORS[i] || "si-blue";
-        var name = STAGE_NAMES[i] || stage.stage_id;
-        var score = stage.score;
-        var sc = scoreClass(score);
-        html += '<div class="showcase-inner ' + color + '">';
-        html += '<div class="showcase-inner-header">' + esc(name);
-        if (score !== null) html += ' <span class="score-badge ' + sc + '">Score = ' + fmt(score, 3) + '</span>';
-        html += '</div><div class="showcase-inner-body">';
-
-        var po = stage.parsed_output || {};
-        var gt = stage.ground_truth || {};
-
-        html += '<div class="showcase-two-col">';
-        html += '<div><div class="col-label">Model Output</div>' + renderStageOutput(stage.stage_id, po) + '</div>';
-        html += '<div><div class="col-label">Ground Truth</div>' + renderStageOutput(stage.stage_id, gt) + '</div>';
-        html += '</div>';
-
-        html += '</div></div>';
+      html += '<div class="showcase-frame-header"><span>' + esc(displayName) + ': Model Outputs</span>';
+      html += '<span class="meta">' + esc(date) + ' · ' + esc(scenDisplay.replace('Crypto Collapse', 'Market Decline')) + '</span></div>';
+      html += '<div class="showcase-frame-body">';
+      var stageNames = { S1: 'S1 · Market Interpretation', S2: 'S2 · Signal Generation', S3: 'S3 · Weight Optimization' };
+      ep.stages.filter(function(stage) { return stageNames[stage.stage_id]; }).forEach(function(stage) {
+        html += '<div class="showcase-inner"><div class="showcase-inner-header">' + stageNames[stage.stage_id] + '</div>';
+        html += '<div class="showcase-inner-body">' + renderStageOutput(stage.stage_id, stage.parsed_output || {}) + '</div></div>';
       });
-
-      /* CEPS summary */
-      if (ep.stages.length >= 2) {
-        var scores = ep.stages.map(function(s){ return s.score; }).filter(function(s){ return s !== null; });
-        var drops = [];
-        for (var i = 0; i < scores.length - 1; i++) {
-          var d = scores[i] - scores[i+1];
-          if (d > 0) drops.push(d);
-        }
-        var totalDrop = drops.reduce(function(a,b){ return a+b; }, 0);
-        html += '<div class="showcase-summary"><b>Scores:</b> ' +
-          ep.stages.map(function(s,i){ return "S"+(i+1)+"=" + (s.score !== null ? fmt(s.score,3) : "N/A"); }).join(", ") +
-          ' &nbsp;|&nbsp; <b>Cascade drops: ' + fmt(totalDrop,3) + '</b> &nbsp;|&nbsp; <b>CEPS: ' + CEPS + '</b></div>';
-      }
 
       html += '</div></div>'; /* close trace frame */
     } else {
@@ -1203,53 +1110,25 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 
-<!-- ==================== EVALUATION DETAILS BANNER ==================== -->
 <div class="section-divider">
   <div class="container content-wide">
     <h2 class="section-heading" id="details">Evaluation Details</h2>
   </div>
 </div>
 
-<!-- ==================== EVALUATION DETAILS ==================== -->
 <section class="section section--flush-top">
   <div class="container content-wide">
 
-    <!-- Key numbers -->
-    <div class="columns is-centered mt-4">
-      <div class="column is-full has-text-centered content">
-        <h2 class="title is-3">At a Glance</h2>
-        <div class="benchmark-specline">
-          <div class="spec-item">
-            <span class="spec-number">10</span>
-            <span class="spec-label">LLMs evaluated</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-number">6</span>
-            <span class="spec-label">classical baselines</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-number">6</span>
-            <span class="spec-label">asset classes</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-number">183</span>
-            <span class="spec-label">financial instruments</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-number">6,269</span>
-            <span class="spec-label">QA pairs</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-number">10</span>
-            <span class="spec-label">years of data (2015–2025)</span>
-          </div>
-        </div>
+    <div class="columns is-centered">
+      <div class="column is-full content">
+        <h2 class="title is-3">Experimental Setup</h2>
+        <p>Ten LLMs and six classical baselines are evaluated across four historical market periods and three investor profiles. Models make monthly decisions in the normal period and weekly decisions during stress windows. All strategies use the same eligible assets, next-close execution, and transaction costs.</p>
       </div>
     </div>
 
     <!-- Five-stage pipeline -->
-    <div class="columns is-centered mt-4">
-      <div class="column is-four-fifths has-text-centered content">
+    <div class="columns is-centered">
+      <div class="column is-full has-text-centered content">
         <h2 class="title is-3">Five-Stage Decision Pipeline</h2>
         <p class="has-text-justified">
           At each rebalance date the LLM produces S1–S3.
@@ -1257,51 +1136,19 @@ document.addEventListener('DOMContentLoaded', function() {
           The corpus has 183 market series. Portfolio replay uses the 98 series with matched price histories; weight assigned to VIX or to an ineligible asset stays in uninvested cash.
           LLMs and classical baselines share that replay.
         </p>
-        <div class="text-left mt-2">
-          <div class="stage-box">
-            <span class="stage-label">S1 · Market Interpretation</span>
-            <span class="stage-desc">
-              Continuous views in [&minus;1, +1]. The reference clips the trailing 60-observation return at 10%.
-              The score is one minus half the mean absolute deviation; a missing view is neutral.
-            </span>
-          </div>
-          <div class="stage-box">
-            <span class="stage-label">S2 · Signal Generation</span>
-            <span class="stage-desc">
-              The reference maps a view above 0.2 to buy, below &minus;0.2 to sell, and the rest to hold.
-              The score is the fraction of eligible assets with the same signal. A missing signal receives no credit.
-            </span>
-          </div>
-          <div class="stage-box">
-            <span class="stage-label">S3 · Weight Optimization</span>
-            <span class="stage-desc">
-              Portfolio weights scored by the <b>class-level correlation score</b>:
-              reference-weight similarity and class exposure, equally weighted (α = 0.5).
-              Class exposure combines internally correlated classes with cross-class hedging.
-              The reference is a profile-constrained lookback allocation from trailing returns, with no future returns.
-            </span>
-          </div>
-          <div class="stage-box is-deterministic">
-            <span class="stage-label">S4 · Execution Simulation</span>
-            <span class="stage-desc">
-              Deterministic. Fixed transaction costs (10 bps slippage + 5 bps commission).
-              Scores agreement between proposed turnover and reference turnover. Security transfers exclude cash.
-            </span>
-          </div>
-          <div class="stage-box is-deterministic">
-            <span class="stage-label">S5 · Risk Monitoring</span>
-            <span class="stage-desc">
-              Deterministic. 50% rebalance-trigger accuracy + 50% VaR/drawdown estimation accuracy.
-              Rebalance trigger fires on drawdown breach of the profile tolerance, or when max weight drift from 1/n exceeds 5%.
-            </span>
-          </div>
+        <div class="stage-list">
+          <div class="stage-box"><span class="stage-label">S1 · Market Interpretation</span><span class="stage-desc">Assigns sentiment scores and identifies the prevailing regime.</span></div>
+          <div class="stage-box"><span class="stage-label">S2 · Signal Generation</span><span class="stage-desc">Maps market views to directional signals.</span></div>
+          <div class="stage-box"><span class="stage-label">S3 · Weight Optimization</span><span class="stage-desc">Proposes portfolio weights. The score combines reference-weight similarity and class-level correlation structure with equal weight (α = 0.5).</span></div>
+          <div class="stage-box"><span class="stage-label">S4 · Execution Simulation</span><span class="stage-desc">The sandbox executes the S3 allocation under fixed transaction costs and scores turnover agreement with the reference.</span></div>
+          <div class="stage-box"><span class="stage-label">S5 · Risk Monitoring</span><span class="stage-desc">Compares lookback VaR, drawdown, and a rule-based rebalance flag computed from the proposed and reference allocations.</span></div>
         </div>
       </div>
     </div>
 
     <!-- CEPS -->
-    <div class="columns is-centered mt-4">
-      <div class="column is-four-fifths has-text-centered content">
+    <div class="columns is-centered">
+      <div class="column is-full has-text-centered content">
         <h2 class="title is-3">CEPS</h2>
         <div class="content has-text-justified">
           <p>
@@ -1318,22 +1165,21 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
           </p>
           <p>
             S1 and S2 use trailing-return rules. S3 combines reference-weight similarity and the class-level correlation score with equal weight (&alpha; = 0.5). S4 scores turnover agreement with the reference. S5 compares lookback VaR, drawdown, and a rule-based rebalance flag.
-            Appendix results vary &lambda; and &alpha; one at a time. For &lambda; &le; 0.2, within-profile rank correlations with the default ranking stay between .988 and 1. Across the tested &alpha; values they stay between .964 and 1. At &lambda; = 0.5, clipping sets 253 of 330 normal-period decision scores to zero.
+            The lookback reference supplies a reproducible decision-time target; returns and risk are evaluated from the resulting portfolios.
           </p>
-          <img loading="lazy" src="./static/images/ceps_parameter_sensitivity.png" alt="CEPS ranking sensitivity to lambda and alpha" class="img-figure">
+          <img loading="lazy" src="./static/images/ceps_parameter_sensitivity.png" width="2200" height="1192" alt="CEPS ranking sensitivity to lambda and alpha" class="img-figure">
           <p class="fig-caption">CEPS ranking sensitivity over 330 normal-period decisions. Each curve compares ten model means with the default ranking. Dotted lines mark &lambda; = 0.1 and &alpha; = 0.5.</p>
         </div>
       </div>
     </div>
 
     <!-- Investor profiles -->
-    <div class="columns is-centered mt-4">
+    <div class="columns is-centered">
       <div class="column is-full has-text-centered content">
-        <h2 class="title is-3">Investor Profiles &amp; Stress Regimes</h2>
+        <h2 class="title is-3">Stress Windows and Investor Profiles</h2>
         <p class="has-text-justified mb-3">
-          CEPS is evaluated under <b>three investor risk profiles</b> with escalating risk tolerance,
-          and back-tested across <b>three historical stress regimes</b> to assess robustness
-          when market conditions deteriorate sharply.
+          Profile constraints condition the S1/S2 prompts and the resulting signals.
+          Normal-period CEPS is reported with a stress drawdown gate under three historical windows.
         </p>
 
         <!-- Profile cards -->
@@ -1345,7 +1191,7 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
                 <div class="pc-item"><span class="pc-label">Equity + Crypto</span><span class="pc-value">≤ 40%</span></div>
                 <div class="pc-item"><span class="pc-label">Bond + Cash</span><span class="pc-value">≥ 40%</span></div>
                 <div class="pc-item"><span class="pc-label">Max Drawdown</span><span class="pc-value">≤ 10%</span></div>
-                <div class="pc-item"><span class="pc-label">Daily <abbr title="Value at Risk: maximum expected loss over a given period at a specified confidence level">VaR</abbr> (95%)</span><span class="pc-value">≤ −1.0%</span></div>
+                <div class="pc-item"><span class="pc-label">Daily <abbr title="Value at Risk">VaR</abbr> limit</span><span class="pc-value">−1.0%</span></div>
               </div>
             </div>
           </div>
@@ -1356,7 +1202,7 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
                 <div class="pc-item"><span class="pc-label">Equity + Crypto</span><span class="pc-value">≤ 65%</span></div>
                 <div class="pc-item"><span class="pc-label">Bond + Cash</span><span class="pc-value">≥ 20%</span></div>
                 <div class="pc-item"><span class="pc-label">Max Drawdown</span><span class="pc-value">≤ 20%</span></div>
-                <div class="pc-item"><span class="pc-label">Daily <abbr title="Value at Risk: maximum expected loss over a given period at a specified confidence level">VaR</abbr> (95%)</span><span class="pc-value">≤ −2.0%</span></div>
+                <div class="pc-item"><span class="pc-label">Daily <abbr title="Value at Risk">VaR</abbr> limit</span><span class="pc-value">−2.0%</span></div>
               </div>
             </div>
           </div>
@@ -1367,7 +1213,7 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
                 <div class="pc-item"><span class="pc-label">Equity + Crypto</span><span class="pc-value">≤ 90%</span></div>
                 <div class="pc-item"><span class="pc-label">Bond + Cash</span><span class="pc-value">≥ 5%</span></div>
                 <div class="pc-item"><span class="pc-label">Max Drawdown</span><span class="pc-value">≤ 35%</span></div>
-                <div class="pc-item"><span class="pc-label">Daily <abbr title="Value at Risk: maximum expected loss over a given period at a specified confidence level">VaR</abbr> (95%)</span><span class="pc-value">≤ −4.0%</span></div>
+                <div class="pc-item"><span class="pc-label">Daily <abbr title="Value at Risk">VaR</abbr> limit</span><span class="pc-value">−4.0%</span></div>
               </div>
             </div>
           </div>
@@ -1381,7 +1227,7 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
           <div class="column is-one-third">
             <div class="stress-card china">
               <span class="crisis-badge cb-china">2015</span>
-              <div class="stress-name">China Shock</div>
+              <div class="stress-name">2015 China Shock</div>
               <div class="stress-date">Aug 2015 – Feb 2016</div>
               <div class="stress-type">volatile window, weekly decisions</div>
             </div>
@@ -1389,7 +1235,7 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
           <div class="column is-one-third">
             <div class="stress-card covid">
               <span class="crisis-badge cb-covid">2020</span>
-              <div class="stress-name">COVID Crash</div>
+              <div class="stress-name">2020 COVID Crash</div>
               <div class="stress-date">Feb 2020 – May 2020</div>
               <div class="stress-type">crash and rebound, weekly decisions</div>
             </div>
@@ -1397,7 +1243,7 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
           <div class="column is-one-third">
             <div class="stress-card crypto">
               <span class="crisis-badge cb-crypto">2022</span>
-              <div class="stress-name">Market Decline</div>
+              <div class="stress-name">2022 Market Decline</div>
               <div class="stress-date">May 2022 – Dec 2022</div>
               <div class="stress-type">prolonged decline, weekly decisions</div>
             </div>
@@ -1419,42 +1265,36 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
   </div>
 </section>
 
-<!-- ==================== RESULTS BANNER ==================== -->
 <div class="section-divider" id="results">
   <div class="container content-wide">
-    <h2 class="section-heading">Results &amp; Insights</h2>
+    <h2 class="section-heading">Results</h2>
   </div>
 </div>
 
-<!-- ==================== RESULTS ==================== -->
 <section class="section section--flush-top">
   <div class="container content-wide">
 
     <!-- Pipeline Performance: All Three Profiles -->
-    <div class="columns is-centered mt-4">
+    <div class="columns is-centered">
       <div class="column is-full has-text-centered content">
-        <h2 class="title is-3">Pipeline Performance: All Three Profiles</h2>
+        <h2 class="title is-3">Pipeline Evaluation</h2>
         <div class="kf-callout kf-blue">
-          <div class="kf-label">🔑 Key Finding</div>
           <div class="kf-text">
-            GLM-5.1 ranks first by CEPS under all three profiles, and Qwen3.6-Plus ranks second.
-            Across the 30 model–profile cells, S3 spans only .264&ndash;.310, while S4 spans .121&ndash;.320 and S5 spans .000&ndash;.409.
-            Similar allocation scores can therefore mask differences in turnover and risk-state agreement.
-            In 2024, <b>15 of 30</b> cells beat equal weight on Sharpe (EqW Sharpe <b>0.710</b>), and all 30 stay inside their drawdown limits.
-            All ten models fail at least one Conservative stress window; nine pass every Balanced window, and all ten pass the Aggressive windows.
+            <b>Similar allocation scores conceal downstream differences.</b>
+            GLM-5.1 ranks first and Qwen3.6-Plus second by CEPS under all three profiles.
+            Across the 30 model–profile combinations, S3 spans only .264–.310, while turnover agreement (S4) spans .121–.320 and risk-state agreement (S5) .000–.409.
           </div>
         </div>
       </div>
     </div>
 
     <!-- Complete pipeline table all profiles -->
-    <div class="columns is-centered mt-4">
+    <div class="columns is-centered">
       <div class="column is-full has-text-centered content">
         <p class="has-text-justified">
           The table below reports per-stage scores, CEPS, and financial outcomes for all ten LLMs
           and six classical baselines (normal period, 2024), including Black–Litterman.
           <b>Bold</b> = column best within each profile. Select a profile to view results.
-          Under Conservative, every model fails at least one stress window. Under Balanced, only DeepSeek-V4-Flash fails. Under Aggressive, all ten pass.
         </p>
         <!-- Profile tabs -->
         <div class="profile-tabs" role="tablist" aria-label="Profile selector" id="profile-tabs">
@@ -1559,21 +1399,20 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
     </div>
 
     <!-- Financial outcomes figures -->
-    <div class="columns is-centered mt-4">
+    <div class="columns is-centered">
       <div class="column is-full has-text-centered content">
         <div class="mb-2">
-          <img id="profile-nav-figure" loading="lazy" src="./static/images/exp_nav_conservative.png" alt="Net asset value trajectories over 2024 for all LLMs under the Conservative profile, with shaded band showing range and dashed lines for classical baselines" class="img-figure img-figure-centered">
+          <img id="profile-nav-figure" loading="lazy" src="./static/images/exp_nav_conservative.png" width="2127" height="1212" alt="Net asset value trajectories over 2024 for all LLMs under the Conservative profile, with shaded band showing range and dashed lines for classical baselines" class="img-figure img-figure-centered">
           <p id="profile-nav-caption" class="fig-caption">Portfolio NAV trajectories (2024, Conservative). Shaded band = range across all LLMs; dashed lines = classical baselines.</p>
         </div>
       </div>
     </div>
 
     <!-- Stress regime results -->
-    <div class="columns is-centered mt-4">
+    <div class="columns is-centered">
       <div class="column is-full has-text-centered content">
         <h2 class="title is-3">Stress Regime Results</h2>
         <div class="kf-callout kf-red">
-          <div class="kf-label">🔑 Key Finding</div>
           <div class="kf-text">
             <b>Normal-period drawdown rankings can reverse under stress.</b>
             All ten models fail at least one Conservative window.
@@ -1583,25 +1422,23 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
         </div>
         <p class="has-text-justified">
           The stress gate passes when maximum drawdown stays within the profile tolerance in every stress window.
-          Every model fails at least one Conservative window. Under Balanced, only DeepSeek-V4-Flash fails. Under Aggressive, all ten pass.
         </p>
         <div class="mb-2">
-          <img loading="lazy" src="./static/images/exp_stress_drawdown.png" alt="Maximum drawdown by model under the Conservative profile across three stress regimes, with the 10 percent tolerance marked" class="img-figure img-figure-centered">
+          <img loading="lazy" src="./static/images/exp_stress_drawdown.png" width="2200" height="1103" alt="Maximum drawdown by model under the Conservative profile across three stress regimes, with the 10 percent tolerance marked" class="img-figure img-figure-centered">
           <p class="fig-caption">Maximum drawdown under the Conservative profile in each stress regime. The dashed line marks the 10% tolerance; red bars breach it.</p>
         </div>
         <div class="mb-2">
-          <img loading="lazy" src="./static/images/exp_nav_stress_crypto_cons.png" alt="Normalized NAV during the 2022 Market Decline under the Conservative profile" class="img-figure img-figure-centered">
+          <img loading="lazy" src="./static/images/exp_nav_stress_crypto_cons.png" width="2127" height="1091" alt="Normalized NAV during the 2022 Market Decline under the Conservative profile" class="img-figure img-figure-centered">
           <p class="fig-caption">Normalized NAV during the 2022 Market Decline (Conservative), when no LLM beats EqW. Vertical lines mark events during this period.</p>
         </div>
       </div>
     </div>
 
     <!-- Cross-period evaluation -->
-    <div class="columns is-centered mt-4">
+    <div class="columns is-centered">
       <div class="column is-full has-text-centered content">
         <h2 class="title is-3">Cross-Period Evaluation</h2>
         <div class="kf-callout kf-blue">
-          <div class="kf-label">🔑 Key Finding</div>
           <div class="kf-text">
             Reusing the three stress windows alongside 2024,
             LLMs beat EqW in <b>65 of 120</b> model–profile cases (<b>54.2%</b>).
@@ -1615,14 +1452,14 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
           In 2022, every model–profile pair trails EqW, with mean ΔSharpe <b>−0.74</b>.
         </p>
         <div class="mb-2">
-          <img loading="lazy" src="./static/images/exp_cross_period_vs_ew.png" alt="Sharpe relative to Equal-Weight across four market periods for all model-profile pairs, with beat-rate percentages in panel titles" class="img-figure img-figure-centered">
+          <img loading="lazy" src="./static/images/exp_cross_period_vs_ew.png" width="2200" height="1019" alt="Sharpe relative to Equal-Weight across four market periods for all model-profile pairs, with beat-rate percentages in panel titles" class="img-figure img-figure-centered">
           <p class="fig-caption">Sharpe relative to EqW across four market periods. Light shading marks Δ&gt;0 (beat EqW). Percentages in titles are the fraction of model–profile pairs that beat EqW in that period.</p>
         </div>
       </div>
     </div>
 
     <!-- Broad holdings conceal correlated risk -->
-    <div class="columns is-centered mt-4">
+    <div class="columns is-centered">
       <div class="column is-full has-text-centered content">
         <h2 class="title is-3">Broad Holdings Conceal Correlated Risk</h2>
         <p class="has-text-justified">
@@ -1636,17 +1473,16 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
           <b>Diversification depends on how capital is distributed among correlated holdings, even when asset selections and class exposures are unchanged.</b>
         </p>
         <div class="mb-2">
-          <img loading="lazy" src="./static/images/analysis_correlation_risk.png" class="img-figure img-figure-centered" alt="Correlation risk at fixed holdings and asset-class weights">
+          <img loading="lazy" src="./static/images/analysis_correlation_risk.png" width="2200" height="676" class="img-figure img-figure-centered" alt="Correlation risk at fixed holdings and asset-class weights">
           <p class="fig-caption">A: model weights have higher volatility-weighted pairwise correlation than within-class equal weighting. B: shares of the mean variance difference. C: mean relative volatility reduction from equalization; negative values indicate increased volatility.</p>
         </div>
         <p class="has-text-justified">
           Across the 30 normal-period cells, the mean total-variation distance is <b>0.306</b> from equal weighting and <b>0.890</b> from the profile-constrained reference.
           Larger deviations from equal weighting are associated with higher volatility (&rho; = .65), drawdown magnitude (&rho; = .61), and &Delta;Sharpe (&rho; = .51).
           Moving from conservative to aggressive increases distance from equal weighting by .070.
-          On matched model&ndash;date pairs, the same shift raises equity-plus-crypto exposure by .175 and lowers bond-plus-cash exposure by .162.
         </p>
         <div class="mb-2">
-          <img loading="lazy" src="./static/images/analysis_composed_decision_gap.png" class="img-figure img-figure-centered" alt="Total-variation distance from equal weighting versus delta Sharpe and drawdown magnitude">
+          <img loading="lazy" src="./static/images/analysis_composed_decision_gap.png" width="4381" height="2037" class="img-figure img-figure-centered" alt="Total-variation distance from equal weighting versus delta Sharpe and drawdown magnitude">
           <p class="fig-caption">Active-allocation diagnostics across 30 normal-period cells. A: distance from equal weighting versus &Delta;Sharpe. B: the same distance versus drawdown magnitude. Shaded regions mark &Delta;Sharpe &gt; 0 and drawdowns larger than equal weighting.</p>
         </div>
         <p class="has-text-justified">
@@ -1658,8 +1494,16 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
       </div>
     </div>
 
+    <div class="columns is-centered">
+      <div class="column is-full content">
+        <h2 class="title is-3">Risk Profiles Shift Exposure</h2>
+        <p>On matched model–date pairs, shifting from conservative to aggressive raises risk-asset exposure by .175 and lowers bond-plus-cash exposure by .162. Normal-period volatility rises for nine of ten models and drawdown magnitude for eight.</p>
+        <p>Under stress, the shift raises volatility for all ten models in 2020 and 2022. Yet total return rises for all ten in the 2020 rebound and falls for nine in the 2022 decline. <b>Profiles change exposure, risk, and normal-period returns, while the return advantage varies across periods.</b></p>
+      </div>
+    </div>
+
     <!-- Static QA results -->
-    <div class="columns is-centered mt-4">
+    <div class="columns is-centered">
       <div class="column is-full has-text-centered content">
         <h2 class="title is-3">Static QA Evaluation Results</h2>
         <p class="has-text-justified">
@@ -1705,17 +1549,16 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
         <p class="text-caption">
           F = mean(T4, T5), the allocation tasks with supplied statistics. B = mean(T1, T2, T6, T7).
           T4&ndash;T5 average 0.863, versus 0.652 for T1&ndash;T2 and T6&ndash;T7; this 0.211 gap favors T4&ndash;T5 for eight of ten models.
-          Restricted T4 and T5 withhold the covariance statistics. Pink rows mark mean scores below 0.65.
+          Restricted T4 and T5 withhold the covariance statistics.
         </p>
         </div>
     </div>
-    
+
     <!-- QA–Pipeline dissociation -->
-    <div class="columns is-centered mt-4">
+    <div class="columns is-centered">
       <div class="column is-full has-text-centered content">
         <h2 class="title is-3">QA&ndash;Pipeline Rank Inversion</h2>
         <div class="kf-callout kf-orange">
-          <div class="kf-label">🔑 Key Finding</div>
           <div class="kf-text">
             <b>QA and pipeline rankings differ sharply.</b>
             Spearman &rho; between QA and balanced-profile CEPS is <b>&minus;.32</b>.
@@ -1727,12 +1570,12 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
           <table>
             <thead>
               <tr>
-                <th class="main-header">Model</th>
-                <th class="main-header">QA Mean</th>
-                <th class="main-header">QA Rank</th>
-                <th class="main-header">CEPS<sub>bal</sub></th>
-                <th class="main-header">CEPS Rank</th>
-                <th class="main-header">ΔRank</th>
+                <th class="main-header" scope="col">Model</th>
+                <th class="main-header" scope="col">QA Mean</th>
+                <th class="main-header" scope="col">QA Rank</th>
+                <th class="main-header" scope="col">CEPS<sub>bal</sub></th>
+                <th class="main-header" scope="col">CEPS Rank</th>
+                <th class="main-header" scope="col">ΔRank</th>
               </tr>
             </thead>
             <tbody>
@@ -1753,22 +1596,22 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
     </div>
 
     <!-- Real-time evaluation -->
-    <div class="columns is-centered mt-4">
+    <div class="columns is-centered">
       <div class="column is-full has-text-centered content">
         <h2 class="title is-3">Real-Time Evaluation</h2>
         <p class="has-text-justified">
           Historical-only evaluation risks data leakage from pretraining. PortBench also supports
           <em>real-time evaluation</em>: at each decision date the model receives only data available through the previous close.
           We collect 72 decisions from six models with daily rebalancing over <b>12 trading days</b> (2026-07-16&ndash;07-31).
-          Mean S1 scores range from .78 to .82. Kimi-K2.6 leads lookback CEPS at <b>.420</b>, and S4 turnover agreement stays low at .047&ndash;.163.
+          Mean S1 scores range from .78 to .82, while S4 turnover agreement remains low at .047&ndash;.163. This initial run demonstrates stage-level evaluation on newly arriving data.
         </p>
         <div class="img-row">
           <div class="img-panel">
-            <img loading="lazy" src="./static/images/live_ceps_daily.png" class="img-analysis" alt="Per-decision lookback CEPS over the 12-day real-time window under the Balanced profile">
+            <img loading="lazy" src="./static/images/live_ceps_daily.png" width="2200" height="1230" class="img-analysis" alt="Per-decision lookback CEPS over the 12-day real-time window under the Balanced profile">
             <p class="fig-caption">Per-decision lookback CEPS over the 12-day real-time window (Balanced).</p>
           </div>
           <div class="img-panel">
-            <img loading="lazy" src="./static/images/live_stage_scores.png" class="img-analysis" alt="Mean lookback stage scores S1 through S5 over the 12 real-time decision dates">
+            <img loading="lazy" src="./static/images/live_stage_scores.png" width="2200" height="1072" class="img-analysis" alt="Mean lookback stage scores S1 through S5 over the 12 real-time decision dates">
             <p class="fig-caption">Mean lookback stage scores (S1–S5) over the 12 real-time decision dates.</p>
           </div>
         </div>
@@ -1776,18 +1619,18 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
     </div>
 
     <!-- Paired stage interventions -->
-    <div class="columns is-centered mt-4">
+    <div class="columns is-centered">
       <div class="column is-full has-text-centered content">
-        <h2 class="title is-3">Paired Stage Interventions</h2>
+        <h2 class="title is-3">Local Gains Can Fade or Reverse</h2>
         <p class="has-text-justified">
           Replacing one stage with its reference tests the effect on later scores.
           In this auxiliary diagnostic, S4 and S5 score generated execution and risk plans.
-          Replacing S1 raises S2 by <b>+.626</b> in normal episodes, but its mean effect on S3 is only <b>+.017</b> and is negative in 40 of 110 episodes.
+          Replacing S1 raises S2 by <b>+.626</b> in normal episodes; both references follow the same trailing-return rule. Its mean effect on S3 is only <b>+.017</b> and is negative in 40 of 110 episodes.
           Replacing S2 raises S3 by only +.023, with 39 negative cases.
-          Under stress, replacing S2 or S3 lowers S5 by .059 and .056.
+          Under stress, replacing S2 or S3 lowers S5 by .059 and .056, although most episode-level S5 changes are zero. <b>Large gains at the next stage become much smaller or turn negative at later stages.</b>
         </p>
         <div class="mb-2">
-          <img loading="lazy" src="./static/images/analysis_paired_influence_matrix.png" class="img-figure img-figure-centered" alt="Paired influence matrix for normal and stress episodes">
+          <img loading="lazy" src="./static/images/analysis_paired_influence_matrix.png" width="2200" height="1029" class="img-figure img-figure-centered" alt="Paired influence matrix for normal and stress episodes">
           <p class="fig-caption">Mean score change after replacing the indicated stage with its reference. Asterisks mark BH-FDR q &lt; 0.05. Outlined cells are the stage pairs discussed above.</p>
         </div>
       </div>
@@ -1796,7 +1639,6 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
   </div>
 </section>
 
-<!-- ==================== CITATION ==================== -->
 <section class="section pt-3" aria-label="Citation" id="citation">
   <div class="content-reading">
     <h2 class="title is-3 has-text-centered">Citation</h2>
@@ -1809,7 +1651,6 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
   </div>
 </section>
 
-<!-- ==================== FOOTER ==================== -->
 <footer class="footer">
   <div class="columns is-centered">
     <div class="column is-8">
@@ -1847,7 +1688,7 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
   function onScroll() {
     var heroY = heroBottom ? heroBottom.getBoundingClientRect().bottom : 400;
     var pastHero = heroY < 0;
-    nav.classList.toggle('is-visible', pastHero);
+
     btn.classList.toggle('is-visible', pastHero);
   }
 
@@ -1871,7 +1712,7 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
 
   /* Back to top */
   btn.addEventListener('click', function() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
   });
 })();
 </script>
