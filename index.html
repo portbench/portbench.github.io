@@ -184,9 +184,7 @@
           <div class="finding-body">
             Ten LLMs beat equal weighting on Sharpe in
             <span class="finding-stat-inline">65 / 120</span> evaluations and fail to do so in the other 55.
-            Direct QA&ndash;Sharpe correlations range from
-            <span class="finding-stat-inline">&minus;.67 to +.83</span>.
-            Positive associations appear in the conservative and balanced 2015&ndash;16 settings; the other ten intervals include zero.
+            Higher QA scores do not consistently indicate better portfolio performance across market periods and risk profiles.
           </div>
         </div>
       </div>
@@ -1272,24 +1270,70 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
 <section class="section section--flush-top">
   <div class="container content-wide">
 
-    <!-- Pipeline Performance: All Three Profiles -->
+    <div class="columns is-centered">
+      <div class="column is-full has-text-centered content">
+        <h2 class="title is-3">Static QA Evaluation Results</h2>
+        <div class="kf-callout kf-blue">
+          <div class="kf-text"><b>Models excel at formula-based allocation but remain weak on prediction and rebalancing.</b> Allocation tasks with supplied statistics average .863, versus .652 for prediction, risk estimation, rebalancing, and regime detection.</div>
+        </div>
+<p class="has-text-justified">
+          Per-template scores (full &amp; restricted covariance conditions), formula vs. judgment averages,
+          and scores by market regime. <b>Bold</b> = column best.
+        </p>
+        <div class="table-wrapper no-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th class="main-header text-left" rowspan="2">Model</th>
+                <th class="main-header" colspan="7">Per-Template (Full)</th>
+                <th class="main-header" rowspan="2">Mean</th>
+                <th class="main-header" colspan="2">Restricted</th>
+                <th class="main-header" colspan="2">Task Type</th>
+                <th class="main-header" colspan="3">Market Regime</th>
+              </tr>
+              <tr>
+                <th>T1</th><th>T2</th><th>T3</th><th>T4</th><th>T5</th><th>T6</th><th>T7</th>
+                <th>T4<sub>r</sub></th><th>T5<sub>r</sub></th>
+                <th>F</th><th>B</th>
+                <th>Bull</th><th>Bear</th><th>Side.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>DeepSeek-V4-Flash</td><td><b>.520</b></td><td>.843</td><td>.945</td><td><b>1.00</b></td><td>.932</td><td>.652</td><td><b>.843</b></td><td><b>.819</b></td><td>.975</td><td>.860</td><td>.966</td><td>.715</td><td>.827</td><td>.823</td><td><b>.812</b></td></tr>
+              <tr><td>Qwen3.7-Max</td><td>.500</td><td><b>.859</b></td><td>.951</td><td><b>1.00</b></td><td>.954</td><td>.724</td><td>.742</td><td><b>.819</b></td><td><b>1.00</b></td><td><b>.990</b></td><td>.977</td><td>.706</td><td>.814</td><td><b>.863</b></td><td>.810</td></tr>
+              <tr><td>DeepSeek-V4-Pro</td><td><b>.520</b></td><td>.837</td><td>.963</td><td><b>1.00</b></td><td><b>.992</b></td><td>.652</td><td>.760</td><td>.818</td><td><b>1.00</b></td><td>.660</td><td><b>.996</b></td><td>.692</td><td><b>.844</b></td><td>.846</td><td>.802</td></tr>
+              <tr><td>Doubao-Seed-2.0-Lite</td><td>.460</td><td>.798</td><td>.957</td><td>.956</td><td>.897</td><td>.810</td><td>.747</td><td>.804</td><td>.961</td><td>.940</td><td>.927</td><td>.704</td><td>.780</td><td>.846</td><td>.806</td></tr>
+              <tr><td>Doubao-Seed-2.0-Pro</td><td>.440</td><td>.847</td><td>.963</td><td>.991</td><td>.912</td><td>.824</td><td>.530</td><td>.787</td><td>.979</td><td>.923</td><td>.952</td><td>.660</td><td>.764</td><td>.806</td><td>.792</td></tr>
+              <tr><td>Qwen3.6-Plus</td><td>.440</td><td>.858</td><td><b>.968</b></td><td><b>1.00</b></td><td>.804</td><td>.640</td><td>.768</td><td>.783</td><td><b>1.00</b></td><td>.810</td><td>.902</td><td>.677</td><td>.799</td><td>.801</td><td>.771</td></tr>
+              <tr><td>GLM-5.1</td><td>.440</td><td>.855</td><td>.964</td><td><b>1.00</b></td><td>.421</td><td><b>.882</b></td><td>.738</td><td>.757</td><td><b>1.00</b></td><td>.531</td><td>.711</td><td><b>.729</b></td><td>.778</td><td>.765</td><td>.746</td></tr>
+              <tr><td>Qwen3.6-35B-A3B</td><td>.460</td><td>.808</td><td>.961</td><td><b>1.00</b></td><td>.230</td><td>.564</td><td>.763</td><td>.684</td><td><b>1.00</b></td><td>.320</td><td>.615</td><td>.649</td><td>.714</td><td>.729</td><td>.662</td></tr>
+              <tr class="row-alert"><td class="td-left">Hunyuan3-Preview</td><td>.460</td><td>.386</td><td>.336</td><td>.975</td><td>.958</td><td>.468</td><td>.783</td><td>.624</td><td>.982</td><td>.974</td><td>.967</td><td>.524</td><td>.664</td><td>.663</td><td>.597</td></tr>
+              <tr class="row-alert"><td class="td-left">Kimi-K2.6</td><td>.420</td><td>.422</td><td>.493</td><td>.956</td><td>.280</td><td>.684</td><td>.320</td><td>.511</td><td>.978</td><td>.710</td><td>.618</td><td>.462</td><td>.556</td><td>.531</td><td>.487</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-caption">
+          F = mean(T4, T5), the allocation tasks with supplied statistics. B = mean(T1, T2, T6, T7).
+          T4&ndash;T5 average 0.863, versus 0.652 for T1&ndash;T2 and T6&ndash;T7; this 0.211 gap favors T4&ndash;T5 for eight of ten models.
+          Restricted T4 and T5 withhold the covariance statistics.
+        </p>
+        </div>
+    </div>
+
     <div class="columns is-centered">
       <div class="column is-full has-text-centered content">
         <h2 class="title is-3">Pipeline Evaluation</h2>
         <div class="kf-callout kf-blue">
-          <div class="kf-text">
-            <b>Similar allocation scores conceal downstream differences.</b>
-            GLM-5.1 ranks first and Qwen3.6-Plus second by CEPS under all three profiles.
-            Across the 30 model–profile combinations, S3 spans only .264–.310, while turnover agreement (S4) spans .121–.320 and risk-state agreement (S5) .000–.409.
-          </div>
+          <div class="kf-text"><b>Similar allocation scores can mask differences in execution and risk monitoring.</b> These downstream differences affect overall pipeline rankings.</div>
         </div>
-      </div>
+</div>
     </div>
 
-    <!-- Complete pipeline table all profiles -->
     <div class="columns is-centered">
       <div class="column is-full has-text-centered content">
         <p class="has-text-justified">
+          GLM-5.1 ranks first and Qwen3.6-Plus second by CEPS under all three profiles.
+          S3 scores span .264–.310, while turnover agreement (S4) spans .121–.320 and risk-state agreement (S5) .000–.409.
           The table below reports per-stage scores, CEPS, and financial outcomes for all ten LLMs
           and six classical baselines (normal period, 2024), including Black–Litterman.
           <b>Bold</b> = column best within each profile. Select a profile to view results.
@@ -1396,7 +1440,6 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
       </div>
     </div>
 
-    <!-- Financial outcomes figures -->
     <div class="columns is-centered">
       <div class="column is-full has-text-centered content">
         <div class="mb-2">
@@ -1406,164 +1449,13 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
       </div>
     </div>
 
-    <!-- Stress regime results -->
-    <div class="columns is-centered">
-      <div class="column is-full has-text-centered content">
-        <h2 class="title is-3">Stress Regime Results</h2>
-        <div class="kf-callout kf-red">
-          <div class="kf-text">
-            <b>Normal-period drawdown rankings can reverse under stress.</b>
-            All ten models fail at least one Conservative window.
-            Nine pass all three Balanced windows, and all ten pass the Aggressive windows.
-            Under Balanced, DeepSeek-V4-Flash moves from the smallest normal-period drawdown (6.56%) to the largest COVID-window drawdown (22.19%), and is the only model to fail that profile’s stress gate.
-          </div>
-        </div>
-        <p class="has-text-justified">
-          The stress gate passes when maximum drawdown stays within the profile tolerance in every stress window.
-        </p>
-        <div class="mb-2">
-          <img loading="lazy" src="./static/images/exp_stress_drawdown.png" width="2200" height="1103" alt="Maximum drawdown by model under the Conservative profile across three stress regimes, with the 10 percent tolerance marked" class="img-figure img-figure-centered">
-          <p class="fig-caption">Maximum drawdown under the Conservative profile in each stress regime. The dashed line marks the 10% tolerance; red bars breach it.</p>
-        </div>
-        <div class="mb-2">
-          <img loading="lazy" src="./static/images/exp_nav_stress_crypto_cons.png" width="2127" height="1091" alt="Normalized NAV during the 2022 Market Decline under the Conservative profile" class="img-figure img-figure-centered">
-          <p class="fig-caption">Normalized NAV during the 2022 Market Decline (Conservative), when no LLM beats EqW. Vertical lines mark events during this period.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Cross-period evaluation -->
-    <div class="columns is-centered">
-      <div class="column is-full has-text-centered content">
-        <h2 class="title is-3">Cross-Period Evaluation</h2>
-        <div class="kf-callout kf-blue">
-          <div class="kf-text">
-            Reusing the three stress windows alongside 2024,
-            LLMs beat EqW in <b>65 of 120</b> model–profile cases (<b>54.2%</b>).
-            Beat rates: <b>90%</b> (2015–16), <b>77%</b> (2020), <b>50%</b> (2024), and <b>0%</b> (2022).
-            LLM portfolios show no consistent Sharpe advantage over EqW across these four windows.
-          </div>
-        </div>
-        <p class="has-text-justified">
-          In 2020, EqW Sharpe is <b>−0.602</b> and the mean model gap is <b>+0.68</b>.
-          In 2024, EqW Sharpe is <b>0.710</b>.
-          In 2022, every model–profile pair trails EqW, with mean ΔSharpe <b>−0.74</b>.
-        </p>
-        <div class="mb-2">
-          <img loading="lazy" src="./static/images/exp_cross_period_vs_ew.png" width="2200" height="1019" alt="Sharpe relative to Equal-Weight across four market periods for all model-profile pairs, with beat-rate percentages in panel titles" class="img-figure img-figure-centered">
-          <p class="fig-caption">Sharpe relative to EqW across four market periods. Light shading marks Δ&gt;0 (beat EqW). Percentages in titles are the fraction of model–profile pairs that beat EqW in that period.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Broad holdings conceal correlated risk -->
-    <div class="columns is-centered">
-      <div class="column is-full has-text-centered content">
-        <h2 class="title is-3">Broad Holdings Conceal Correlated Risk</h2>
-        <p class="has-text-justified">
-          The 330 saved 2024 allocations hold 73 assets on average, yet still concentrate weight in correlated assets.
-          For each decision, a matched allocation equalizes weights among the held assets within each class while preserving asset selection, class weights, and uninvested cash.
-        </p>
-        <p class="has-text-justified">
-          This equalization lowers volatility estimated from lookback data by <b>8.5%</b> on average, with reductions in <b>271 of 330</b> decisions.
-          Within-class covariance accounts for <b>76.4%</b> of the mean variance difference, versus 23.5% from individual-asset variance terms.
-          Mean volatility reductions are 1.6%, 9.6%, and 14.4% for conservative, balanced, and aggressive allocations.
-          <b>Diversification depends on how capital is distributed among correlated holdings, even when asset selections and class exposures are unchanged.</b>
-        </p>
-        <div class="mb-2">
-          <img loading="lazy" src="./static/images/analysis_correlation_risk.png" width="2200" height="676" class="img-figure img-figure-centered" alt="Correlation risk at fixed holdings and asset-class weights">
-          <p class="fig-caption">A: model weights have higher volatility-weighted pairwise correlation than within-class equal weighting. B: shares of the mean variance difference. C: mean relative volatility reduction from equalization; negative values indicate increased volatility.</p>
-        </div>
-        <p class="has-text-justified">
-          Across the 30 normal-period cells, the mean total-variation distance is <b>0.306</b> from equal weighting and <b>0.890</b> from the profile-constrained reference.
-          Larger deviations from equal weighting are associated with higher volatility (&rho; = .65), drawdown magnitude (&rho; = .61), and &Delta;Sharpe (&rho; = .51).
-          Moving from conservative to aggressive increases distance from equal weighting by .070.
-        </p>
-        <div class="mb-2">
-          <img loading="lazy" src="./static/images/analysis_composed_decision_gap.png" width="4381" height="2037" class="img-figure img-figure-centered" alt="Total-variation distance from equal weighting versus delta Sharpe and drawdown magnitude">
-          <p class="fig-caption">Active-allocation diagnostics across 30 normal-period cells. A: distance from equal weighting versus &Delta;Sharpe. B: the same distance versus drawdown magnitude. Shaded regions mark &Delta;Sharpe &gt; 0 and drawdowns larger than equal weighting.</p>
-        </div>
-        <p class="has-text-justified">
-          Under the balanced profile, every model produces less turnover than the reference. The mean model-to-reference turnover ratio is <b>.203</b>.
-          Reference allocations hold 8&ndash;14 securities, with maximum weights of .24&ndash;.72, whereas model allocations spread weight more broadly.
-          Mean S3 reference-weight similarity is .110. Mean model HHI is .0207, about 48 effective positions.
-          Partial credit for class exposure can therefore coexist with low S4 scores.
-        </p>
-      </div>
-    </div>
-
-    <div class="columns is-centered">
-      <div class="column is-full content">
-        <h2 class="title is-3">Risk Profiles Shift Exposure</h2>
-        <p>On matched model–date pairs, shifting from conservative to aggressive raises risk-asset exposure by .175 and lowers bond-plus-cash exposure by .162. Normal-period volatility rises for nine of ten models and drawdown magnitude for eight.</p>
-        <p>Under stress, the shift raises volatility for all ten models in 2020 and 2022. Yet total return rises for all ten in the 2020 rebound and falls for nine in the 2022 decline. <b>Profiles change exposure, risk, and normal-period returns, while the return advantage varies across periods.</b></p>
-      </div>
-    </div>
-
-    <!-- Static QA results -->
-    <div class="columns is-centered">
-      <div class="column is-full has-text-centered content">
-        <h2 class="title is-3">Static QA Evaluation Results</h2>
-        <p class="has-text-justified">
-          Per-template accuracy reveals a sharp divide between formula-driven tasks (T4, T5) and
-          judgment-driven ones (T1, T2, T6, T7)—the QA-side counterpart to the pipeline results above.
-        </p>
-        <p class="has-text-justified">
-          Per-template accuracy (full &amp; restricted covariance conditions), formula vs. judgment averages,
-          and accuracy by market regime. <b>Bold</b> = column best. Pink rows = Mean &lt; 0.65.
-        </p>
-        <div class="table-wrapper no-scroll">
-          <table>
-            <thead>
-              <tr>
-                <th class="main-header text-left" rowspan="2">Model</th>
-                <th class="main-header" colspan="7">Per-Template (Full)</th>
-                <th class="main-header" rowspan="2">Mean</th>
-                <th class="main-header" colspan="2">Restricted</th>
-                <th class="main-header" colspan="2">Task Type</th>
-                <th class="main-header" colspan="3">Market Regime</th>
-              </tr>
-              <tr>
-                <th>T1</th><th>T2</th><th>T3</th><th>T4</th><th>T5</th><th>T6</th><th>T7</th>
-                <th>T4<sub>r</sub></th><th>T5<sub>r</sub></th>
-                <th>F</th><th>B</th>
-                <th>Bull</th><th>Bear</th><th>Side.</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>DeepSeek-V4-Flash</td><td><b>.520</b></td><td>.843</td><td>.945</td><td><b>1.00</b></td><td>.932</td><td>.652</td><td><b>.843</b></td><td><b>.819</b></td><td>.975</td><td>.860</td><td>.966</td><td>.715</td><td>.827</td><td>.823</td><td><b>.812</b></td></tr>
-              <tr><td>Qwen3.7-Max</td><td>.500</td><td><b>.859</b></td><td>.951</td><td><b>1.00</b></td><td>.954</td><td>.724</td><td>.742</td><td><b>.819</b></td><td><b>1.00</b></td><td><b>.990</b></td><td>.977</td><td>.706</td><td>.814</td><td><b>.863</b></td><td>.810</td></tr>
-              <tr><td>DeepSeek-V4-Pro</td><td><b>.520</b></td><td>.837</td><td>.963</td><td><b>1.00</b></td><td><b>.992</b></td><td>.652</td><td>.760</td><td>.818</td><td><b>1.00</b></td><td>.660</td><td><b>.996</b></td><td>.692</td><td><b>.844</b></td><td>.846</td><td>.802</td></tr>
-              <tr><td>Doubao-Seed-2.0-Lite</td><td>.460</td><td>.798</td><td>.957</td><td>.956</td><td>.897</td><td>.810</td><td>.747</td><td>.804</td><td>.961</td><td>.940</td><td>.927</td><td>.704</td><td>.780</td><td>.846</td><td>.806</td></tr>
-              <tr><td>Doubao-Seed-2.0-Pro</td><td>.440</td><td>.847</td><td>.963</td><td>.991</td><td>.912</td><td>.824</td><td>.530</td><td>.787</td><td>.979</td><td>.923</td><td>.952</td><td>.660</td><td>.764</td><td>.806</td><td>.792</td></tr>
-              <tr><td>Qwen3.6-Plus</td><td>.440</td><td>.858</td><td><b>.968</b></td><td><b>1.00</b></td><td>.804</td><td>.640</td><td>.768</td><td>.783</td><td><b>1.00</b></td><td>.810</td><td>.902</td><td>.677</td><td>.799</td><td>.801</td><td>.771</td></tr>
-              <tr><td>GLM-5.1</td><td>.440</td><td>.855</td><td>.964</td><td><b>1.00</b></td><td>.421</td><td><b>.882</b></td><td>.738</td><td>.757</td><td><b>1.00</b></td><td>.531</td><td>.711</td><td><b>.729</b></td><td>.778</td><td>.765</td><td>.746</td></tr>
-              <tr><td>Qwen3.6-35B-A3B</td><td>.460</td><td>.808</td><td>.961</td><td><b>1.00</b></td><td>.230</td><td>.564</td><td>.763</td><td>.684</td><td><b>1.00</b></td><td>.320</td><td>.615</td><td>.649</td><td>.714</td><td>.729</td><td>.662</td></tr>
-              <tr class="row-alert"><td class="td-left">Hunyuan3-Preview</td><td>.460</td><td>.386</td><td>.336</td><td>.975</td><td>.958</td><td>.468</td><td>.783</td><td>.624</td><td>.982</td><td>.974</td><td>.967</td><td>.524</td><td>.664</td><td>.663</td><td>.597</td></tr>
-              <tr class="row-alert"><td class="td-left">Kimi-K2.6</td><td>.420</td><td>.422</td><td>.493</td><td>.956</td><td>.280</td><td>.684</td><td>.320</td><td>.511</td><td>.978</td><td>.710</td><td>.618</td><td>.462</td><td>.556</td><td>.531</td><td>.487</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="text-caption">
-          F = mean(T4, T5), the allocation tasks with supplied statistics. B = mean(T1, T2, T6, T7).
-          T4&ndash;T5 average 0.863, versus 0.652 for T1&ndash;T2 and T6&ndash;T7; this 0.211 gap favors T4&ndash;T5 for eight of ten models.
-          Restricted T4 and T5 withhold the covariance statistics.
-        </p>
-        </div>
-    </div>
-
-    <!-- QA–Pipeline dissociation -->
     <div class="columns is-centered">
       <div class="column is-full has-text-centered content">
         <h2 class="title is-3">QA&ndash;Pipeline Rank Inversion</h2>
         <div class="kf-callout kf-orange">
-          <div class="kf-text">
-            <b>QA and pipeline rankings differ sharply.</b>
-            Spearman &rho; between QA and balanced-profile CEPS is <b>&minus;.32</b>.
-            GLM-5.1 moves from seventh in QA to first in balanced-profile CEPS, Kimi-K2.6 from last to fourth, and DS-V4-Flash from tied first to tenth.
-            The observed QA rankings do not consistently carry over to portfolio outcomes.
-          </div>
+          <div class="kf-text"><b>High QA rankings do not guarantee high pipeline rankings.</b> DS-V4-Flash moves from tied first in QA to tenth in balanced-profile CEPS, while GLM-5.1 moves from seventh to first.</div>
         </div>
+<p>Spearman &rho; between QA and balanced-profile CEPS is &minus;.32. Kimi-K2.6 moves from last in QA to fourth in CEPS.</p>
         <div class="table-wrapper no-scroll">
           <table>
             <thead>
@@ -1593,15 +1485,125 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
       </div>
     </div>
 
-    <!-- Real-time evaluation -->
+    <div class="columns is-centered">
+      <div class="column is-full has-text-centered content">
+        <h2 class="title is-3">Cross-Period Evaluation</h2>
+        <div class="kf-callout kf-blue">
+          <div class="kf-text"><b>LLM portfolios show no consistent Sharpe advantage over equal weighting across the four market windows.</b> They beat equal weighting in 65 of 120 evaluations (54.2%), but in none of the 2022 cases.</div>
+        </div>
+<p class="has-text-justified">
+          In 2020, EqW Sharpe is <b>−0.602</b> and the mean model gap is <b>+0.68</b>.
+          In 2024, EqW Sharpe is <b>0.710</b>.
+          In 2022, every model–profile pair trails EqW, with mean ΔSharpe <b>−0.74</b>.
+        </p>
+        <div class="mb-2">
+          <img loading="lazy" src="./static/images/exp_cross_period_vs_ew.png" width="2200" height="1019" alt="Sharpe relative to Equal-Weight across four market periods for all model-profile pairs, with beat-rate percentages in panel titles" class="img-figure img-figure-centered">
+          <p class="fig-caption">Sharpe relative to EqW across four market periods. Light shading marks Δ&gt;0 (beat EqW). Percentages in titles are the fraction of model–profile pairs that beat EqW in that period.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-full has-text-centered content">
+        <h2 class="title is-3">Stress Regime Results</h2>
+        <div class="kf-callout kf-orange">
+          <div class="kf-text"><b>Low normal-market drawdown does not establish stress resilience.</b> All ten models fail at least one stress window under the conservative profile.</div>
+        </div>
+<p class="has-text-justified">
+          The stress gate passes when maximum drawdown stays within the profile tolerance in every stress window.
+          Nine models pass all three balanced-profile windows, and all ten pass under the aggressive profile.
+          Under the balanced profile, DeepSeek-V4-Flash moves from the smallest normal-period drawdown (6.56%) to the largest COVID-window drawdown (22.19%), becoming the only model to fail that profile’s gate.
+        </p>
+        <div class="mb-2">
+          <img loading="lazy" src="./static/images/exp_stress_drawdown.png" width="2200" height="1103" alt="Maximum drawdown by model under the Conservative profile across three stress regimes, with the 10 percent tolerance marked" class="img-figure img-figure-centered">
+          <p class="fig-caption">Maximum drawdown under the Conservative profile in each stress regime. The dashed line marks the 10% tolerance; red bars breach it.</p>
+        </div>
+        <div class="mb-2">
+          <img loading="lazy" src="./static/images/exp_nav_stress_crypto_cons.png" width="2127" height="1091" alt="Normalized NAV during the 2022 Market Decline under the Conservative profile" class="img-figure img-figure-centered">
+          <p class="fig-caption">Normalized NAV during the 2022 Market Decline (Conservative), when no LLM beats EqW. Vertical lines mark events during this period.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-full has-text-centered content">
+        <h2 class="title is-3">Broad Holdings Conceal Correlated Risk</h2>
+        <div class="kf-callout kf-teal">
+          <div class="kf-text"><b>Holding many assets does not ensure diversification when weights concentrate in correlated assets.</b> With holdings, class weights, and cash unchanged, within-class equal weighting lowers estimated volatility by 8.5% on average.</div>
+        </div>
+        <p class="has-text-justified">
+          The 330 saved 2024 allocations hold 73 assets on average, yet still concentrate weight in correlated assets.
+          For each decision, a matched allocation equalizes weights among the held assets within each class while preserving asset selection, class weights, and uninvested cash.
+        </p>
+        <p class="has-text-justified">
+          This equalization lowers volatility estimated from lookback data by <b>8.5%</b> on average, with reductions in <b>271 of 330</b> decisions.
+          Within-class covariance accounts for <b>76.4%</b> of the mean variance difference, versus 23.5% from individual-asset variance terms.
+          Mean volatility reductions are 1.6%, 9.6%, and 14.4% for conservative, balanced, and aggressive allocations.
+        </p>
+        <div class="mb-2">
+          <img loading="lazy" src="./static/images/analysis_correlation_risk.png" width="2200" height="676" class="img-figure img-figure-centered img-figure-wide" alt="Correlation risk at fixed holdings and asset-class weights">
+          <p class="fig-caption">A: model weights have higher volatility-weighted pairwise correlation than within-class equal weighting. B: shares of the mean variance difference. C: mean relative volatility reduction from equalization; negative values indicate increased volatility.</p>
+        </div>
+        <p class="has-text-justified">
+          Across the 30 normal-period cells, the mean total-variation distance is <b>0.306</b> from equal weighting and <b>0.890</b> from the profile-constrained reference.
+          Larger deviations from equal weighting are associated with higher volatility (&rho; = .65), drawdown magnitude (&rho; = .61), and &Delta;Sharpe (&rho; = .51).
+          Moving from conservative to aggressive increases distance from equal weighting by .070.
+        </p>
+        <div class="mb-2">
+          <img loading="lazy" src="./static/images/analysis_composed_decision_gap.png" width="4381" height="2037" class="img-figure img-figure-centered" alt="Total-variation distance from equal weighting versus delta Sharpe and drawdown magnitude">
+          <p class="fig-caption">Active-allocation diagnostics across 30 normal-period cells. A: distance from equal weighting versus &Delta;Sharpe. B: the same distance versus drawdown magnitude. Shaded regions mark &Delta;Sharpe &gt; 0 and drawdowns larger than equal weighting.</p>
+        </div>
+        <p class="has-text-justified">
+          Under the balanced profile, every model produces less turnover than the reference. The mean model-to-reference turnover ratio is <b>.203</b>.
+          Reference allocations hold 8&ndash;14 securities, with maximum weights of .24&ndash;.72, whereas model allocations spread weight more broadly.
+          Mean S3 reference-weight similarity is .110. Mean model HHI is .0207, about 48 effective positions.
+          Partial credit for class exposure can therefore coexist with low S4 scores.
+        </p>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-full content">
+        <h2 class="title is-3">Risk Profiles Shift Exposure</h2>
+        <div class="kf-callout kf-teal">
+          <div class="kf-text"><b>More aggressive profiles increase risk exposure, but their return advantage varies across periods.</b> Returns rise for all ten models in the 2020 rebound and fall for nine in the 2022 decline.</div>
+        </div>
+        <p>On matched model–date pairs, shifting from conservative to aggressive raises risk-asset exposure by .175 and lowers bond-plus-cash exposure by .162. Normal-period volatility rises for nine of ten models and drawdown magnitude for eight.</p>
+        <p>Under stress, the shift raises volatility for all ten models in 2020 and 2022.</p>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-full has-text-centered content">
+        <h2 class="title is-3">Local Gains Can Fade or Reverse</h2>
+        <div class="kf-callout kf-orange">
+          <div class="kf-text"><b>Large gains at the next stage become much smaller or turn negative at later stages.</b> Replacing S1 with its reference substantially improves S2 but has little average effect on S3.</div>
+        </div>
+        <p class="has-text-justified">
+          Replacing one stage with its reference tests the effect on later scores.
+          In this auxiliary diagnostic, S4 and S5 score generated execution and risk plans.
+          Replacing S1 raises S2 by <b>+.626</b> in normal episodes; both references follow the same trailing-return rule. Its mean effect on S3 is only <b>+.017</b> and is negative in 40 of 110 episodes.
+          Replacing S2 raises S3 by only +.023, with 39 negative cases.
+          Under stress, replacing S2 or S3 lowers S5 by .059 and .056, although most episode-level S5 changes are zero.
+        </p>
+        <div class="mb-2">
+          <img loading="lazy" src="./static/images/analysis_paired_influence_matrix.png" width="2200" height="1029" class="img-figure img-figure-centered" alt="Paired influence matrix for normal and stress episodes">
+          <p class="fig-caption">Mean score change after replacing the indicated stage with its reference. Asterisks mark BH-FDR q &lt; 0.05. Outlined cells are the stage pairs discussed above.</p>
+        </div>
+      </div>
+    </div>
+
     <div class="columns is-centered">
       <div class="column is-full has-text-centered content">
         <h2 class="title is-3">Real-Time Evaluation</h2>
+        <div class="kf-callout kf-blue">
+          <div class="kf-text"><b>Turnover agreement with the reference remains low on newly arriving market data.</b> Across six models, mean S4 scores range from .047 to .163 in the initial 12-day run.</div>
+        </div>
         <p class="has-text-justified">
           Historical-only evaluation risks data leakage from pretraining. PortBench also supports
           <em>real-time evaluation</em>: at each decision date the model receives only data available through the previous close.
           We collect 72 decisions from six models with daily rebalancing over <b>12 trading days</b> (2026-07-16&ndash;07-31).
-          Mean S1 scores range from .78 to .82, while S4 turnover agreement remains low at .047&ndash;.163. This initial run demonstrates stage-level evaluation on newly arriving data.
+          Mean S1 scores range from .78 to .82. This initial run demonstrates stage-level evaluation on newly arriving data.
         </p>
         <div class="img-row">
           <div class="img-panel">
@@ -1616,28 +1618,11 @@ CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0,
       </div>
     </div>
 
-    <!-- Paired stage interventions -->
-    <div class="columns is-centered">
-      <div class="column is-full has-text-centered content">
-        <h2 class="title is-3">Local Gains Can Fade or Reverse</h2>
-        <p class="has-text-justified">
-          Replacing one stage with its reference tests the effect on later scores.
-          In this auxiliary diagnostic, S4 and S5 score generated execution and risk plans.
-          Replacing S1 raises S2 by <b>+.626</b> in normal episodes; both references follow the same trailing-return rule. Its mean effect on S3 is only <b>+.017</b> and is negative in 40 of 110 episodes.
-          Replacing S2 raises S3 by only +.023, with 39 negative cases.
-          Under stress, replacing S2 or S3 lowers S5 by .059 and .056, although most episode-level S5 changes are zero. <b>Large gains at the next stage become much smaller or turn negative at later stages.</b>
-        </p>
-        <div class="mb-2">
-          <img loading="lazy" src="./static/images/analysis_paired_influence_matrix.png" width="2200" height="1029" class="img-figure img-figure-centered" alt="Paired influence matrix for normal and stress episodes">
-          <p class="fig-caption">Mean score change after replacing the indicated stage with its reference. Asterisks mark BH-FDR q &lt; 0.05. Outlined cells are the stage pairs discussed above.</p>
-        </div>
-      </div>
-    </div>
-
   </div>
 </section>
 
-<section class="section pt-3" aria-label="Citation" id="citation">
+
+<section class="section" aria-label="Citation" id="citation">
   <div class="content-reading">
     <h2 class="title is-3 has-text-centered">Citation</h2>
     <pre class="citation-box">@article{zhao2026portbench,
