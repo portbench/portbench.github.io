@@ -153,12 +153,9 @@
       <!-- ==================== TEASER / CORE FINDING BANNER ==================== -->
       <div class="teaser-banner">
         <p class="teaser-banner-text">
-          Despite strong performance on static financial QA, LLM portfolios beat equal weight in
-          <strong class="teaser-stat">54.2%</strong> of 120 model-profile cases across four market periods,
-          without a consistent advantage.
-          <br>
-          Static QA rank is also a poor guide to sequential portfolio performance
-          (<strong class="teaser-stat">&rho; = &minus;.32</strong>).
+          High financial QA scores do not ensure consistent portfolio outperformance.
+          LLM portfolios beat equal weight on Sharpe in
+          <strong class="teaser-stat">54.2%</strong> of 120 evaluations, and they still concentrate exposure in correlated assets.
         </p>
       </div>
 
@@ -173,61 +170,56 @@
     <h2 class="section-heading">Background &amp; Motivation</h2>
     <div class="content has-text-justified">
           <p>
-            Large language models (LLMs) have shown strong performance across diverse financial tasks,
-            yet portfolio management (PM) remains poorly benchmarked. Existing benchmarks
-            <b>ignore cross-asset correlation structures</b> and <b>fail to evaluate the complete PM
-            decision pipeline</b>, missing the compounding errors that arise as reasoning propagates
-            through sequential allocation stages.
+            Portfolio management requires diversified allocations, and diversification depends on
+            intra- and inter-class correlations. Existing financial benchmarks leave this unevaluated
+            in two ways. They are often limited to one asset class, or they score assets in isolation,
+            so a concentrated portfolio and a diversified one can look the same when their returns match.
+            They also rely on static questions or a single decision step, so it remains unclear where an
+            error arises and how it changes the next decision. Most further assume one risk profile in
+            normal markets.
           </p>
           <p>
-            We introduce <b>PortBench</b> with the following key contributions:
+            <b>PortBench</b> evaluates LLM-driven portfolio management on six asset classes from 2015 to 2025,
+            with three contributions:
           </p>
           <div class="contrib-list">
             <div class="contrib-row">
               <span class="contrib-label">Dataset</span>
               <div class="contrib-content">
-                <span class="contrib-title">Market Base Dataset</span>
-                <p class="contrib-desc">183 instruments across 6 asset classes (equities, bonds, commodities, crypto, real estate, cash) spanning 2015&ndash;2025, with daily prices, returns, macro indicators, and news. Inter-class correlations are low, intra-class correlations are high: true diversification means crossing asset-class boundaries, not just picking more tickers.</p>
+                <span class="contrib-title">A Multi-Asset Market Dataset</span>
+                <p class="contrib-desc">183 market series across equities, bonds, commodities, cryptocurrency, real estate, and cash, from 2015 to 2025, with prices, macro series, and time-aligned news. Inter-class correlations are generally low and intra-class correlations are strongly positive.</p>
               </div>
             </div>
             <div class="contrib-row">
-              <span class="contrib-label">Static Layer</span>
+              <span class="contrib-label">Framework</span>
               <div class="contrib-content">
-                <span class="contrib-title">6,269 QA Pairs</span>
-                <p class="contrib-desc">6,269 correlation-based QA pairs across 7 templates (T1&ndash;T7) and 4 difficulty levels, auto-generated from historical data via analytical formulas. Tests correlation reasoning from single-asset prediction to multi-asset constrained allocation to regime-driven rebalancing. Questions and ground truths are derived automatically (no human annotation needed), and new templates can be added on demand.</p>
+                <span class="contrib-title">A Dual-Layer Evaluation Framework</span>
+                <p class="contrib-desc">Static QA (6,269 questions, seven templates) is paired with a five-stage portfolio evaluation. The model produces S1&ndash;S3; the sandbox scores S4 and S5 under one execution policy. <abbr title="Cross-Stage Error Propagation Score">CEPS</abbr> summarizes reference-based stage scores, and paired interventions trace how a local change affects later decisions. The same portfolios are compared across stress windows, investor profiles, and newly arriving market data.</p>
               </div>
             </div>
             <div class="contrib-row">
-              <span class="contrib-label">Dynamic Layer</span>
+              <span class="contrib-label">Finding</span>
               <div class="contrib-content">
-                <span class="contrib-title">Five-Stage Allocation Pipeline</span>
-                <p class="contrib-desc">Models produce S1 (Market Interpretation), S2 (Signal Generation), and S3 (Weight Optimization) decisions at each rebalance date. The sandbox then scores deterministic S4 execution and S5 risk consequences of the proposed allocation. A stateful replay tracks stage scores, weights, and NAV under three investor profiles and three historical stress regimes.</p>
-              </div>
-            </div>
-            <div class="contrib-row">
-              <span class="contrib-label">Metrics</span>
-              <div class="contrib-content">
-                <span class="contrib-title">Class-Level Correlation Score + <abbr title="Cross-Stage Error Propagation Score: penalizes error cascades across pipeline stages">CEPS</abbr></span>
-                <p class="contrib-desc">The class-level correlation score measures exposure to internally correlated classes and credit for cross-class hedging. <abbr title="Cross-Stage Error Propagation Score">CEPS</abbr> penalizes downward score transitions across the five-stage sequence, while paired stage interventions identify direct and downstream effects.</p>
+                <span class="contrib-title">A QA&ndash;Portfolio Performance Gap</span>
+                <p class="contrib-desc">Across ten LLMs, high financial QA scores do not ensure consistent portfolio outperformance. The models concentrate exposure in correlated assets, and their portfolios beat equal weighting on Sharpe in 54.2% of 120 evaluations across four historical periods.</p>
               </div>
             </div>
           </div>
 
-          <img loading="lazy" src="./static/images/intro_overview.png" alt="PortBench overview showing a shared multi-asset market base, complementary static QA and dynamic evaluation layers, and the benchmark's core evaluation dimensions" class="img-figure">
+          <img loading="lazy" src="./static/images/portbench_overview.png" alt="PortBench overview: a shared multi-asset market base, static QA and dynamic evaluation, and three evaluation dimensions" class="img-figure">
           <p class="fig-caption">
             Overview of <b>PortBench</b>. A shared multi-asset market base supports complementary
             static QA and dynamic five-stage evaluation. The benchmark assesses correlation-aware
-            allocation, cross-stage error propagation through CEPS and paired interventions, and
+            allocation, stagewise diagnostics through CEPS and paired interventions, and
             robustness across evaluation periods and investor risk profiles.
           </p>
-          <img loading="lazy" src="./static/images/method_framework.png" alt="PortBench evaluation framework showing seven static QA templates, the five-stage dynamic pipeline, CEPS and paired interventions, and portfolio state propagation" class="img-figure">
+          <img loading="lazy" src="./static/images/evaluation_framework.png" alt="Evaluation framework with seven QA templates and a five-stage pipeline in which the LLM produces S1 through S3 and the sandbox scores S4 and S5" class="img-figure">
           <p class="fig-caption">
             Evaluation framework. <b>Top:</b> static QA covers seven templates, T1 through T7,
-            from single asset tasks at L1 to full portfolio judgment at L4. <b>Bottom:</b> at each
-            rebalance date, the LLM produces S1 through S3, and the deterministic sandbox executes
-            the allocation and evaluates execution and risk at S4 and S5. CEPS and paired
-            interventions diagnose error propagation, while the resulting portfolio state is
-            carried into the next decision.
+            from single-asset tasks at L1 to full-portfolio judgment at L4. <b>Bottom:</b> at each
+            rebalance, the LLM produces S1 through S3, and the sandbox executes the allocation and
+            evaluates execution and risk at S4 and S5. CEPS summarizes reference-based stage scores,
+            paired interventions test downstream effects, and the portfolio state carries into the next decision.
           </p>
         </div>
     </div>
@@ -243,37 +235,38 @@
       <div class="finding-block">
         <div class="finding-stat">54.2%</div>
         <div class="finding-content">
-          <div class="finding-headline">No Consistent Advantage over Equal-Weight</div>
+          <div class="finding-headline">High QA Does Not Ensure Outperformance</div>
           <div class="finding-body">
-            Across four market periods, <span class="finding-stat-inline">65 / 120</span>
-            model–profile cases beat a 1/N equal-weight baseline on
-            <abbr title="Sharpe ratio: risk-adjusted return, calculated as (portfolio return − risk-free rate) / portfolio volatility">Sharpe ratio</abbr>.
-            Beat rates are 90% in 2015–16, 77% in 2020, 50% in 2024, and 0% in the 2022 decline.
+            Ten LLMs beat equal weight on Sharpe in
+            <span class="finding-stat-inline">65 / 120</span> evaluations and fail to do so in the other 55.
+            Direct QA&ndash;Sharpe correlations across the twelve period&ndash;profile settings range from
+            <span class="finding-stat-inline">&minus;.67 to +.83</span>.
+            Only the conservative and balanced 2015&ndash;16 associations are positive; the other ten intervals include zero.
           </div>
         </div>
       </div>
       <div class="finding-block">
-        <div class="finding-stat">10/10</div>
+        <div class="finding-stat">8.5%</div>
         <div class="finding-content">
-          <div class="finding-headline">Stress Rankings Diverge from Normal-Period</div>
+          <div class="finding-headline">Broad Holdings Still Concentrate Correlated Risk</div>
           <div class="finding-body">
-            Normal-period CEPS rankings do <em>not</em> predict stress survival.
-            All <span class="finding-stat-inline">10 / 10</span> models fail at least one Conservative stress window.
-            Nine pass every Balanced window, and all ten pass the Aggressive windows.
-            Under Balanced, DeepSeek-V4-Flash moves from the smallest normal-period drawdown to the largest COVID-window drawdown.
+            The 330 saved 2024 allocations hold 73 assets on average.
+            Equalizing weights inside each held class, without changing the holdings or class totals,
+            lowers estimated volatility by <span class="finding-stat-inline">8.5%</span>
+            (271 of 330 decisions).
+            Within-class covariance accounts for <span class="finding-stat-inline">76.4%</span> of the mean variance difference.
           </div>
         </div>
       </div>
       <div class="finding-block">
-        <div class="finding-stat">ρ = −.32</div>
+        <div class="finding-stat">0%</div>
         <div class="finding-content">
-          <div class="finding-headline">QA Performance ≠ Pipeline Competence</div>
+          <div class="finding-headline">The Edge Reverses across Market Windows</div>
           <div class="finding-body">
-            Spearman rank correlation between QA accuracy and balanced-profile CEPS is
-            <span class="finding-stat-inline">ρ = −.32</span>.
-            GLM-5.1 ranks 7th in QA yet 1st in CEPS; Kimi-K2.6 ranks last in QA yet 4th in CEPS;
-            DeepSeek-V4-Flash ranks tied 1st in QA but 10th in CEPS.
-            QA measures isolated tasks; CEPS evaluates a linked five-stage decision sequence.
+            Beat rates versus equal weight are 90% in 2015&ndash;16, 77% in 2020, 50% in 2024, and
+            <span class="finding-stat-inline">0%</span> in the 2022 decline.
+            All ten models fail at least one conservative stress window.
+            A small normal-period drawdown does not establish stress resilience.
           </div>
         </div>
       </div>
@@ -316,10 +309,9 @@
             real estate (10) and cash equivalents (4) round out the defensive allocation universe.
           </p>
           <p>
-            Correlation analysis reveals that inter-class average correlations are generally low while
-            intra-class correlations are strongly positive.
-            <em>True diversification requires crossing asset class boundaries, not merely spreading across
-            tickers within the same class</em>, directly motivating the class-level correlation score.
+            Correlation analysis of 2015&ndash;2022 daily returns shows low average correlation for several cross-class pairs and stronger positive correlation within equities and real estate.
+            Spreading capital inside a highly correlated class hedges less than allocating across weakly correlated classes.
+            Holding the selected assets and class totals fixed, how weight is split inside each class still changes estimated risk.
           </p>
         </div>
 
@@ -350,7 +342,7 @@
           </div>
           <div class="img-panel">
             <img loading="lazy" src="./static/images/data_corr_interclass.png" alt="Bar chart of mean inter-class correlation for each asset class vs. all others, showing low average cross-asset correlation">
-            <p class="fig-caption">Mean pairwise correlation: each class vs. all others.</p>
+            <p class="fig-caption">Mean within- and cross-class correlations (daily returns, 2015&ndash;2022). The right panel is the mean correlation inside each class.</p>
           </div>
         </div>
 
@@ -418,12 +410,9 @@
         <!-- ================================================================ -->
         <h2 class="title is-3 mt-5">Evaluation Framework</h2>
         <p class="has-text-justified mb-2">
-          The evaluation framework has two complementary layers.
-          Switch between the tabs below to explore the <b>QA Dataset</b> and the <b>Pipeline Evaluation</b> in detail.
-          Every component is <b>objective, traceable, and scalable</b>: QA pairs are auto-generated without
-          human annotation, and pipeline scoring uses a <b>lookback oracle</b> (trailing data available at
-          the decision date; no future returns in the main rankings), eliminating oracle leakage and enabling
-          seamless extension to new periods and assets.
+          The evaluation framework has two complementary layers: static QA and a dynamic five-stage portfolio evaluation.
+          QA targets come from historical data and explicit task rules.
+          Pipeline scores use a profile-constrained lookback reference from trailing returns, not future returns.
         </p>
 
         <!-- Tab nav (Pipeline + QA only) -->
@@ -441,10 +430,8 @@
         <!-- ── Tab 1: QA Dataset ────────────────────────────────── -->
         <div id="tab-qa" class="explorer-panel is-hidden" role="tabpanel" aria-labelledby="tab-btn-qa" tabindex="0" aria-hidden="true">
           <p class="has-text-justified mb-2 text-sm">
-            6,269 correlation-aware QA pairs across 7 task templates (T1&ndash;T7),
-            spanning complexity levels 1&ndash;4 and three market regimes.
-            Each template tests a different aspect of portfolio reasoning.
-            Select a template below to browse sample question&ndash;answer pairs.
+            6,269 QA pairs across seven templates (T1&ndash;T7) and four complexity levels, from single-asset prediction and sizing to constrained allocation and regime-driven judgment.
+            Questions and targets are generated from historical data. Select a template to browse samples.
           </p>
           <div class="qa-template-buttons mb-2" role="tablist" aria-label="QA task templates">
             <button class="qa-tmpl-btn is-active" data-tmpl="T1" role="tab" aria-selected="true" tabindex="0"
@@ -468,10 +455,9 @@
         <!-- ── Tab 2: Pipeline Evaluation ──────────────────────── -->
         <div id="tab-pipeline" class="explorer-panel" role="tabpanel" aria-labelledby="tab-btn-pipeline" tabindex="0">
           <p class="has-text-justified mb-2 text-sm">
-            At each rebalance date a <code>MarketSnapshot</code> is constructed and passed to the LLM
-            for five-stage evaluation (S1&ndash;S5) under the <b>Balanced</b> profile.
-            Traces use the <b>lookback</b> S3 oracle (no future returns), matching the paper&rsquo;s main pipeline results.
-            Select a model, market scenario, and date to see the model&rsquo;s input and stage-by-stage output vs. ground truth.
+            Saved S1&ndash;S3 traces under the balanced profile.
+            The model proposes the allocation; published S4, S5, and CEPS in the results section are scored from those decisions under the paper&rsquo;s replay contract.
+            Select a model, window, and date to read one archived trace.
           </p>
           <div class="explorer-controls flex-wrap">
             <label for="pipeline-model-picker"><b>Model:</b></label>
@@ -1285,21 +1271,22 @@ document.addEventListener('DOMContentLoaded', function() {
         <p class="has-text-justified">
           At each rebalance date the LLM produces S1–S3.
           The sandbox then scores S4 and S5 from that allocation under the same execution and risk rules.
-          LLMs and classical baselines share the identical replay for controlled comparison.
+          The corpus has 183 market series. Portfolio replay uses the 98 series with matched price histories; weight assigned to VIX or to an ineligible asset stays in uninvested cash.
+          LLMs and classical baselines share that replay.
         </p>
         <div class="text-left mt-2">
           <div class="stage-box">
             <span class="stage-label">S1 · Market Interpretation</span>
             <span class="stage-desc">
-              Continuous sentiment views <em>v<sub>i</sub> ∈ [−1,+1]</em> per asset.
-              Scored as 1 − MAE(views, ground-truth) / 2.
+              Continuous views in [&minus;1, +1]. The reference clips the trailing 60-observation return at 10%.
+              The score is one minus half the mean absolute deviation; a missing view is neutral.
             </span>
           </div>
           <div class="stage-box">
             <span class="stage-label">S2 · Signal Generation</span>
             <span class="stage-desc">
-              Views discretized into buy / hold / sell signals (thresholds ±0.2).
-              Scored as fraction of assets with the correct direction.
+              The reference maps a view above 0.2 to buy, below &minus;0.2 to sell, and the rest to hold.
+              The score is the fraction of eligible assets with the same signal. A missing signal receives no credit.
             </span>
           </div>
           <div class="stage-box">
@@ -1335,51 +1322,20 @@ document.addEventListener('DOMContentLoaded', function() {
         <h2 class="title is-3">CEPS: Cross-Stage Error Propagation Score</h2>
         <div class="content has-text-justified">
           <p>
-            Prior benchmarks obscure early reasoning failures by averaging scores.
-            CEPS penalizes <em>error cascades</em>, a strong stage followed by a weak one, more heavily
-            than uniform mediocrity, capturing the operational reality that a perfectly interpreted market
-            view is worthless if signal generation immediately fails.
+            CEPS summarizes five reference-based stage scores and penalizes downstream score drops.
+            Let σ<sub>t</sub> be the score at stage t and σ&#772; their mean.
+            With λ = 0.1,
           </p>
           <div class="ceps-formula">
-CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0, 1 )
+CEPS = clip( mean(σ₁…σ₅) − 0.1 · Σ max(σₜ − σₜ₊₁, 0),  0, 1 )
 
-Default propagation weight  λ = 0.1
+The five stages have equal weight. At the same mean score, a larger downstream drop receives a lower CEPS.
           </div>
           <p class="mt-2">
-            Main-text rankings use a <em>lookback</em> oracle (trailing 60-day returns available at the decision date; no future returns).
-            An ex-post variant that optimizes on realized forward returns is reported only as an appendix diagnostic.
+            S1 and S2 compare the model with trailing-return rules. S3 mixes reference-weight similarity and the class-level correlation score with equal weight (α = 0.5). S4 and S5 score turnover agreement and lookback risk-state agreement. Rankings change little for λ ≤ 0.2 and across the tested α values: within-profile Spearman correlations stay at or above .964. At λ = 0.5, clipping zeros 253 of 330 normal-period decision scores.
           </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- CEPS Cascade Illustration -->
-    <div class="columns is-centered mt-4">
-      <div class="column is-four-fifths has-text-centered content">
-        <h2 class="title is-3">CEPS: Cascade vs. Uniform Mediocrity</h2>
-        <p class="has-text-justified">Two models with <em>identical</em> average stage scores (0.434) receive different CEPS scores because one exhibits downward transitions while the other is uniform across stages.</p>
-        <div class="table-wrapper mt-2">
-          <table>
-            <thead><tr><th class="main-header" scope="col"></th><th class="main-header" scope="col">S1</th><th class="main-header" scope="col">S2</th><th class="main-header" scope="col">S3</th><th class="main-header" scope="col">S4</th><th class="main-header" scope="col">S5</th><th class="main-header" scope="col">Avg</th></tr></thead>
-            <tbody>
-              <tr><td class="td-left font-bold">Model A (cascade)</td><td>0.792</td><td>0.506</td><td>0.307</td><td>0.086</td><td>0.480</td><td>0.434</td></tr>
-              <tr><td class="td-left font-bold">Model B (uniform)</td><td>0.434</td><td>0.434</td><td>0.434</td><td>0.434</td><td>0.434</td><td>0.434</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="table-wrapper mt-1">
-          <table>
-            <thead><tr><th class="main-header" scope="col"></th><th class="main-header" scope="col">Model A (cascade)</th><th class="main-header" scope="col">Model B (uniform)</th></tr></thead>
-            <tbody>
-              <tr><td>Isolated avg</td><td>0.434</td><td>0.434</td></tr>
-              <tr><td>Cascade drops</td><td class="text-left text-caption">(0.792−0.506) + (0.506−0.307) + (0.307−0.086) = 0.286 + 0.199 + 0.221 = <b>0.706</b></td><td>0</td></tr>
-              <tr><td>Penalty (lambda=0.1)</td><td>0.1 × 0.706 = <b>0.071</b></td><td>0</td></tr>
-              <tr class="row-highlight"><td class="td-left">CEPS</td><td class="text-neg-strong">0.434 − 0.071 = <b>0.363</b></td><td class="text-pos-strong">0.434 − 0 = <b>0.434</b></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="highlight-box mt-2 text-left">
-          The cascade penalty reduces Model A's CEPS by 0.071 because three adjacent transitions decline. Model B has the same mean score but no downward transition, so it incurs no penalty.
+          <img loading="lazy" src="./static/images/ceps_parameter_sensitivity.png" alt="CEPS ranking sensitivity to the penalty weight and the S3 mixing weight" class="img-figure">
+          <p class="fig-caption">CEPS ranking sensitivity over 330 normal-period decisions. Each curve compares ten model means with the default ranking. Dotted lines mark λ = 0.1 and α = 0.5.</p>
         </div>
       </div>
     </div>
@@ -1441,7 +1397,7 @@ Default propagation weight  λ = 0.1
               <span class="crisis-badge cb-china">2015</span>
               <div class="stress-name">China Shock</div>
               <div class="stress-date">Aug 2015 – Feb 2016</div>
-              <div class="stress-type">liquidity-driven</div>
+              <div class="stress-type">volatile window, weekly decisions</div>
             </div>
           </div>
           <div class="column is-one-third">
@@ -1449,7 +1405,7 @@ Default propagation weight  λ = 0.1
               <span class="crisis-badge cb-covid">2020</span>
               <div class="stress-name">COVID Crash</div>
               <div class="stress-date">Feb 2020 – May 2020</div>
-              <div class="stress-type">pandemic-driven</div>
+              <div class="stress-type">crash and rebound, weekly decisions</div>
             </div>
           </div>
           <div class="column is-one-third">
@@ -1457,7 +1413,7 @@ Default propagation weight  λ = 0.1
               <span class="crisis-badge cb-crypto">2022</span>
               <div class="stress-name">Market Decline</div>
               <div class="stress-date">May 2022 – Dec 2022</div>
-              <div class="stress-type">monetary-tightening-driven</div>
+              <div class="stress-type">prolonged decline, weekly decisions</div>
             </div>
           </div>
         </div>
@@ -1495,10 +1451,11 @@ Default propagation weight  λ = 0.1
         <div class="kf-callout kf-blue">
           <div class="kf-label">🔑 Key Finding</div>
           <div class="kf-text">
-            In the 2024 normal period, <b>15 of 30</b> model–profile cells beat equal weight on Sharpe
-            (EqW Sharpe <b>0.710</b>), and all 30 stay inside their drawdown limits.
-            All ten models fail at least one Conservative stress window; nine pass every Balanced window,
-            and all ten pass the Aggressive windows.
+            GLM-5.1 ranks first by CEPS under all three profiles, and Qwen3.6-Plus ranks second.
+            Across the 30 model–profile cells, S3 spans only .264&ndash;.310, while S4 spans .121&ndash;.320 and S5 spans .000&ndash;.409.
+            Similar allocation scores can therefore mask differences in turnover and risk-state agreement.
+            In 2024, <b>15 of 30</b> cells beat equal weight on Sharpe (EqW Sharpe <b>0.710</b>), and all 30 stay inside their drawdown limits.
+            All ten models fail at least one Conservative stress window; nine pass every Balanced window, and all ten pass the Aggressive windows.
           </div>
         </div>
       </div>
@@ -1685,9 +1642,8 @@ Default propagation weight  λ = 0.1
         <p class="has-text-justified">
           Historical-only evaluation risks data leakage from pretraining. PortBench also supports
           <em>real-time evaluation</em>: at each decision date the model receives only data available through the previous close.
-          We run daily rebalancing over <b>12 trading days</b> (2026-07-16–07-31) under the Balanced profile for six models.
-          Real-time rankings differ from the 2024 monthly block: Kimi-K2.6 leads lookback CEPS (<b>.420</b>),
-          while S4 remains weak (.05–.16), consistent with under-trading.
+          We collect 72 decisions from six models with daily rebalancing over <b>12 trading days</b> (2026-07-16&ndash;07-31).
+          Mean S1 scores range from .78 to .82. Kimi-K2.6 leads lookback CEPS at <b>.420</b>, and S4 turnover agreement stays low at .047&ndash;.163.
         </p>
         <div class="img-row">
           <div class="img-panel">
@@ -1728,7 +1684,7 @@ Default propagation weight  λ = 0.1
               <tr>
                 <th>T1</th><th>T2</th><th>T3</th><th>T4</th><th>T5</th><th>T6</th><th>T7</th>
                 <th>T4<sub>r</sub></th><th>T5<sub>r</sub></th>
-                <th>F</th><th>J</th>
+                <th>F</th><th>B</th>
                 <th>Bull</th><th>Bear</th><th>Side.</th>
               </tr>
             </thead>
@@ -1747,9 +1703,9 @@ Default propagation weight  λ = 0.1
           </table>
         </div>
         <p class="text-caption">
-          F = mean(T4,T5) formula-driven; J = mean(T1,T2,T6,T7) judgment-driven.
-          Restricted T4<sub>r</sub> and T5<sub>r</sub> withhold covariance statistics.
-          Eight of ten models improve, showing that the supplied matrix can hinder answer generation; this ablation does not separate table parsing from numerical reasoning.
+          F = mean(T4, T5), the allocation tasks with supplied statistics. B = mean(T1, T2, T6, T7).
+          T4&ndash;T5 average 0.863, versus 0.652 for T1&ndash;T2 and T6&ndash;T7; this 0.211 gap favors T4&ndash;T5 for eight of ten models.
+          Restricted T4 and T5 withhold the covariance statistics. Pink rows mark mean scores below 0.65.
         </p>
         </div>
     </div>
@@ -1814,7 +1770,7 @@ Default propagation weight  λ = 0.1
         <div class="img-row">
           <div class="img-panel">
             <img loading="lazy" src="./static/images/analysis_composed_decision_gap.png" class="img-analysis" alt="Total-variation distance from equal weight versus delta Sharpe and drawdown magnitude">
-            <p class="fig-caption">Distance from EqW versus ΔSharpe and drawdown. Larger deviations accompany higher relative Sharpe, volatility, and drawdowns.</p>
+            <p class="fig-caption">Distance from equal weight versus ΔSharpe and versus drawdown magnitude, across 30 normal-period model–profile cells. Shaded regions mark ΔSharpe &gt; 0 and drawdowns larger than equal weight.</p>
           </div>
           <div class="img-panel">
             <img loading="lazy" src="./static/images/analysis_correlation_risk.png" class="img-analysis" alt="Within-class correlation risk at fixed holdings and asset-class weights">
@@ -1829,19 +1785,15 @@ Default propagation weight  λ = 0.1
       <div class="column is-full has-text-centered content">
         <h2 class="title is-3">Paired Stage Interventions</h2>
         <p class="has-text-justified">
-          Replacing one stage output with its oracle counterpart isolates how repairs propagate through the remaining pipeline.
-          In normal periods, repairing S1 strongly improves S2 (<b>+0.626</b>, 95% CI [0.607, 0.644]) but has only a small mean effect on S3 (<b>+0.017</b>), with 40 of 110 branches worsening.
-          Under stress, downstream risk effects can reverse: S2 and S3 repairs reduce S5 by <b>0.059</b> and <b>0.056</b>, respectively.
+          Replacing one stage with its reference tests the effect on later scores.
+          In this auxiliary diagnostic, S4 and S5 score generated execution and risk plans.
+          Replacing S1 raises S2 by <b>+.626</b> in normal episodes, but its mean effect on S3 is only <b>+.017</b> and is negative in 40 of 110 episodes.
+          Replacing S2 raises S3 by only +.023, with 39 negative cases.
+          Under stress, replacing S2 or S3 lowers S5 by .059 and .056.
         </p>
-        <div class="img-row">
-          <div class="img-panel">
-            <img loading="lazy" src="./static/images/analysis_paired_influence_matrix.png" class="img-analysis" alt="Paired repair influence matrix showing direct and downstream score changes across pipeline stages">
-            <p class="fig-caption">Mean direct and downstream effects from paired stage repairs in normal and stress settings.</p>
-          </div>
-          <div class="img-panel">
-            <img loading="lazy" src="./static/images/analysis_intervention_by_distance.png" class="img-analysis" alt="Paired repair effects grouped by downstream distance from the repaired stage">
-            <p class="fig-caption">Repair influence attenuates with stage distance and is not uniformly beneficial.</p>
-          </div>
+        <div class="mb-2">
+          <img loading="lazy" src="./static/images/analysis_paired_influence_matrix.png" class="img-figure img-figure-centered" alt="Paired influence matrix for normal and stress episodes">
+          <p class="fig-caption">Mean score change after replacing the indicated stage with its reference. Asterisks mark BH-FDR q &lt; 0.05. Outlined cells are the stage pairs discussed above.</p>
         </div>
       </div>
     </div>
