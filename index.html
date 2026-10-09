@@ -170,13 +170,8 @@
     <h2 class="section-heading">Background &amp; Motivation</h2>
     <div class="content has-text-justified">
           <p>
-            Portfolio management requires diversified allocations, and diversification depends on
-            intra- and inter-class correlations. Existing financial benchmarks leave this unevaluated
-            in two ways. They are often limited to one asset class, or they score assets in isolation,
-            so a concentrated portfolio and a diversified one can look the same when their returns match.
-            They also rely on static questions or a single decision step, so it remains unclear where an
-            error arises and how it changes the next decision. Most further assume one risk profile in
-            normal markets.
+            Portfolio management requires diversified allocations, which requires accounting for intra- and inter-class correlations.
+            Existing benchmarks leave two gaps: they often cover a single asset class, or evaluate assets in isolation; and they provide limited diagnosis of where errors arise and how they affect later decisions.
           </p>
           <p>
             <b>PortBench</b> evaluates LLM-driven portfolio management on six asset classes from 2015 to 2025,
@@ -194,7 +189,7 @@
               <span class="contrib-label">Framework</span>
               <div class="contrib-content">
                 <span class="contrib-title">A Dual-Layer Evaluation Framework</span>
-                <p class="contrib-desc">Static QA (6,269 questions, seven templates) is paired with a five-stage portfolio evaluation. The model produces S1&ndash;S3; the sandbox scores S4 and S5 under one execution policy. <abbr title="Cross-Stage Error Propagation Score">CEPS</abbr> summarizes reference-based stage scores, and paired interventions trace how a local change affects later decisions. The same portfolios are compared across stress windows, investor profiles, and newly arriving market data.</p>
+                <p class="contrib-desc">Static QA is paired with a five-stage pipeline. The model produces S1&ndash;S3; the sandbox executes the allocation under fixed transaction costs and scores S4 and S5. CEPS summarizes reference-based stage scores, and paired interventions trace how a local change affects later decisions. Portfolios are then evaluated across stress windows, investor profiles, and real-time market data.</p>
               </div>
             </div>
             <div class="contrib-row">
@@ -235,20 +230,20 @@
       <div class="finding-block">
         <div class="finding-stat">54.2%</div>
         <div class="finding-content">
-          <div class="finding-headline">High QA Does Not Ensure Outperformance</div>
+          <div class="finding-headline">High financial QA scores do not ensure consistent portfolio outperformance</div>
           <div class="finding-body">
-            Ten LLMs beat equal weight on Sharpe in
+            Ten LLMs beat equal weighting on Sharpe in
             <span class="finding-stat-inline">65 / 120</span> evaluations and fail to do so in the other 55.
-            Direct QA&ndash;Sharpe correlations across the twelve period&ndash;profile settings range from
+            Direct QA&ndash;Sharpe correlations range from
             <span class="finding-stat-inline">&minus;.67 to +.83</span>.
-            Only the conservative and balanced 2015&ndash;16 associations are positive; the other ten intervals include zero.
+            Positive associations appear in the conservative and balanced 2015&ndash;16 settings; the other ten intervals include zero.
           </div>
         </div>
       </div>
       <div class="finding-block">
         <div class="finding-stat">8.5%</div>
         <div class="finding-content">
-          <div class="finding-headline">Broad Holdings Still Concentrate Correlated Risk</div>
+          <div class="finding-headline">Broad holdings still concentrate weight in correlated assets</div>
           <div class="finding-body">
             The 330 saved 2024 allocations hold 73 assets on average.
             Equalizing weights inside each held class, without changing the holdings or class totals,
@@ -261,12 +256,12 @@
       <div class="finding-block">
         <div class="finding-stat">0%</div>
         <div class="finding-content">
-          <div class="finding-headline">The Edge Reverses across Market Windows</div>
+          <div class="finding-headline">Performance reverses across regimes</div>
           <div class="finding-body">
-            Beat rates versus equal weight are 90% in 2015&ndash;16, 77% in 2020, 50% in 2024, and
-            <span class="finding-stat-inline">0%</span> in the 2022 decline.
+            Beat rates are 90% in 2015&ndash;16, 77% in 2020, 50% in 2024, and
+            <span class="finding-stat-inline">0%</span> in 2022.
             All ten models fail at least one conservative stress window.
-            A small normal-period drawdown does not establish stress resilience.
+            Low normal-period drawdown does not establish stress resilience.
           </div>
         </div>
       </div>
@@ -289,9 +284,7 @@
       <div class="column is-full content">
         <!-- General intro -->
         <p class="has-text-justified mb-4">
-          The sections below let you interactively explore each layer of the PortBench.
-          Start with the raw <b>Market Base Dataset</b>, then dive into the two evaluation layers
-          that run on top of it.
+          The browser below shows the market dataset, the QA samples, and saved pipeline traces.
         </p>
 
         <!-- ================================================================ -->
@@ -301,17 +294,11 @@
 
         <div class="content has-text-justified">
           <p>
-            The <b>Market Base Dataset</b> covers 183 unique financial instruments spanning 2015&ndash;2025
-            across six heterogeneous asset classes, collected from Yahoo Finance, FRED, and Kaggle.
-            Equities exhibit the broadest coverage (126 tickers), reflecting the diversity of broad-market,
-            sector, and factor ETFs. Commodities (16) and bonds (15) provide representative cross-class
-            hedging opportunities; cryptocurrency (12) captures major and mid-cap digital assets;
-            real estate (10) and cash equivalents (4) round out the defensive allocation universe.
+            The market base dataset has 183 series across six asset classes from 2015 to 2025: equities (126), commodities (16), bonds (15), cryptocurrency (12), real estate (10), and cash equivalents (4), with daily prices, macro indicators, and time-aligned news.
           </p>
           <p>
-            Correlation analysis of 2015&ndash;2022 daily returns shows low average correlation for several cross-class pairs and stronger positive correlation within equities and real estate.
-            Spreading capital inside a highly correlated class hedges less than allocating across weakly correlated classes.
-            Holding the selected assets and class totals fixed, how weight is split inside each class still changes estimated risk.
+            Inter-class correlations are generally low, and intra-class correlations are strongly positive.
+            Spreading capital inside a highly correlated class provides less hedging than allocating across weakly correlated classes.
           </p>
         </div>
 
@@ -334,14 +321,10 @@
         <div class="img-panel-row">
           <div class="img-panel">
             <img loading="lazy" src="./static/images/data_asset_tickers.png" alt="Bar chart showing instrument count per asset class: 126 equities, 15 bonds, 16 commodities, 12 crypto, 10 real estate, 4 cash equivalents">
-            <p class="fig-caption">Number of unique tickers/series per asset class.</p>
+            <p class="fig-caption">Number of series per asset class.</p>
           </div>
           <div class="img-panel">
-            <img loading="lazy" src="./static/images/data_corr_heatmap.png" alt="Pairwise Pearson correlation heatmap of daily returns across all 183 instruments, 2015–2022, showing strong intra-class and weak inter-class correlation">
-            <p class="fig-caption">Pairwise Pearson correlation matrix (daily returns, 2015&ndash;2022).</p>
-          </div>
-          <div class="img-panel">
-            <img loading="lazy" src="./static/images/data_corr_interclass.png" alt="Bar chart of mean inter-class correlation for each asset class vs. all others, showing low average cross-asset correlation">
+            <img loading="lazy" src="./static/images/data_corr_interclass.png" alt="Mean within-class and cross-class correlations">
             <p class="fig-caption">Mean within- and cross-class correlations (daily returns, 2015&ndash;2022). The right panel is the mean correlation inside each class.</p>
           </div>
         </div>
@@ -1319,23 +1302,26 @@ document.addEventListener('DOMContentLoaded', function() {
     <!-- CEPS -->
     <div class="columns is-centered mt-4">
       <div class="column is-four-fifths has-text-centered content">
-        <h2 class="title is-3">CEPS: Cross-Stage Error Propagation Score</h2>
+        <h2 class="title is-3">CEPS</h2>
         <div class="content has-text-justified">
           <p>
-            CEPS summarizes five reference-based stage scores and penalizes downstream score drops.
-            Let σ<sub>t</sub> be the score at stage t and σ&#772; their mean.
-            With λ = 0.1,
+            CEPS summarizes reference-based stage scores with a penalty for downstream score drops.
+            Each stage score is between 0 and 1. The mean stage score is the average of the five scores.
+            With penalty weight &lambda; = 0.1,
           </p>
           <div class="ceps-formula">
-CEPS = clip( mean(σ₁…σ₅) − 0.1 · Σ max(σₜ − σₜ₊₁, 0),  0, 1 )
-
-The five stages have equal weight. At the same mean score, a larger downstream drop receives a lower CEPS.
+CEPS = clip( mean(σ₁…σ₅) − λ · Σ max(σₜ − σₜ₊₁, 0),  0, 1 )
           </div>
           <p class="mt-2">
-            S1 and S2 compare the model with trailing-return rules. S3 mixes reference-weight similarity and the class-level correlation score with equal weight (α = 0.5). S4 and S5 score turnover agreement and lookback risk-state agreement. Rankings change little for λ ≤ 0.2 and across the tested α values: within-profile Spearman correlations stay at or above .964. At λ = 0.5, clipping zeros 253 of 330 normal-period decision scores.
+            At the same mean score, CEPS assigns a lower value to a pipeline with larger downstream drops, penalizing higher upstream scores followed by lower downstream scores.
+            The five stage scores receive equal weight.
           </p>
-          <img loading="lazy" src="./static/images/ceps_parameter_sensitivity.png" alt="CEPS ranking sensitivity to the penalty weight and the S3 mixing weight" class="img-figure">
-          <p class="fig-caption">CEPS ranking sensitivity over 330 normal-period decisions. Each curve compares ten model means with the default ranking. Dotted lines mark λ = 0.1 and α = 0.5.</p>
+          <p>
+            S1 and S2 use trailing-return rules. S3 combines reference-weight similarity and the class-level correlation score with equal weight (&alpha; = 0.5). S4 scores turnover agreement with the reference. S5 compares lookback VaR, drawdown, and a rule-based rebalance flag.
+            Appendix results vary &lambda; and &alpha; one at a time. For &lambda; &le; 0.2, within-profile rank correlations with the default ranking stay between .988 and 1. Across the tested &alpha; values they stay between .964 and 1. At &lambda; = 0.5, clipping sets 253 of 330 normal-period decision scores to zero.
+          </p>
+          <img loading="lazy" src="./static/images/ceps_parameter_sensitivity.png" alt="CEPS ranking sensitivity to lambda and alpha" class="img-figure">
+          <p class="fig-caption">CEPS ranking sensitivity over 330 normal-period decisions. Each curve compares ten model means with the default ranking. Dotted lines mark &lambda; = 0.1 and &alpha; = 0.5.</p>
         </div>
       </div>
     </div>
@@ -1635,26 +1621,40 @@ The five stages have equal weight. At the same mean score, a larger downstream d
       </div>
     </div>
 
-    <!-- Real-time evaluation -->
+    <!-- Broad holdings conceal correlated risk -->
     <div class="columns is-centered mt-4">
       <div class="column is-full has-text-centered content">
-        <h2 class="title is-3">Real-Time Evaluation</h2>
+        <h2 class="title is-3">Broad Holdings Conceal Correlated Risk</h2>
         <p class="has-text-justified">
-          Historical-only evaluation risks data leakage from pretraining. PortBench also supports
-          <em>real-time evaluation</em>: at each decision date the model receives only data available through the previous close.
-          We collect 72 decisions from six models with daily rebalancing over <b>12 trading days</b> (2026-07-16&ndash;07-31).
-          Mean S1 scores range from .78 to .82. Kimi-K2.6 leads lookback CEPS at <b>.420</b>, and S4 turnover agreement stays low at .047&ndash;.163.
+          The 330 saved 2024 allocations hold 73 assets on average, yet still concentrate weight in correlated assets.
+          For each decision, a matched allocation equalizes weights among the held assets within each class while preserving asset selection, class weights, and uninvested cash.
         </p>
-        <div class="img-row">
-          <div class="img-panel">
-            <img loading="lazy" src="./static/images/live_ceps_daily.png" class="img-analysis" alt="Per-decision lookback CEPS over the 12-day real-time window under the Balanced profile">
-            <p class="fig-caption">Per-decision lookback CEPS over the 12-day real-time window (Balanced).</p>
-          </div>
-          <div class="img-panel">
-            <img loading="lazy" src="./static/images/live_stage_scores.png" class="img-analysis" alt="Mean lookback stage scores S1 through S5 over the 12 real-time decision dates">
-            <p class="fig-caption">Mean lookback stage scores (S1–S5) over the 12 real-time decision dates.</p>
-          </div>
+        <p class="has-text-justified">
+          This equalization lowers volatility estimated from lookback data by <b>8.5%</b> on average, with reductions in <b>271 of 330</b> decisions.
+          Within-class covariance accounts for <b>76.4%</b> of the mean variance difference, versus 23.5% from individual-asset variance terms.
+          Mean volatility reductions are 1.6%, 9.6%, and 14.4% for conservative, balanced, and aggressive allocations.
+          <b>Diversification depends on how capital is distributed among correlated holdings, even when asset selections and class exposures are unchanged.</b>
+        </p>
+        <div class="mb-2">
+          <img loading="lazy" src="./static/images/analysis_correlation_risk.png" class="img-figure img-figure-centered" alt="Correlation risk at fixed holdings and asset-class weights">
+          <p class="fig-caption">A: model weights have higher volatility-weighted pairwise correlation than within-class equal weighting. B: shares of the mean variance difference. C: mean relative volatility reduction from equalization; negative values indicate increased volatility.</p>
         </div>
+        <p class="has-text-justified">
+          Across the 30 normal-period cells, the mean total-variation distance is <b>0.306</b> from equal weighting and <b>0.890</b> from the profile-constrained reference.
+          Larger deviations from equal weighting are associated with higher volatility (&rho; = .65), drawdown magnitude (&rho; = .61), and &Delta;Sharpe (&rho; = .51).
+          Moving from conservative to aggressive increases distance from equal weighting by .070.
+          On matched model&ndash;date pairs, the same shift raises equity-plus-crypto exposure by .175 and lowers bond-plus-cash exposure by .162.
+        </p>
+        <div class="mb-2">
+          <img loading="lazy" src="./static/images/analysis_composed_decision_gap.png" class="img-figure img-figure-centered" alt="Total-variation distance from equal weighting versus delta Sharpe and drawdown magnitude">
+          <p class="fig-caption">Active-allocation diagnostics across 30 normal-period cells. A: distance from equal weighting versus &Delta;Sharpe. B: the same distance versus drawdown magnitude. Shaded regions mark &Delta;Sharpe &gt; 0 and drawdowns larger than equal weighting.</p>
+        </div>
+        <p class="has-text-justified">
+          Under the balanced profile, every model produces less turnover than the reference. The mean model-to-reference turnover ratio is <b>.203</b>.
+          Reference allocations hold 8&ndash;14 securities, with maximum weights of .24&ndash;.72, whereas model allocations spread weight more broadly.
+          Mean S3 reference-weight similarity is .110. Mean model HHI is .0207, about 48 effective positions.
+          Partial credit for class exposure can therefore coexist with low S4 scores.
+        </p>
       </div>
     </div>
 
@@ -1713,16 +1713,14 @@ The five stages have equal weight. At the same mean score, a larger downstream d
     <!-- QA–Pipeline dissociation -->
     <div class="columns is-centered mt-4">
       <div class="column is-full has-text-centered content">
-        <h2 class="title is-3">QA–Pipeline Rank Dissociation</h2>
+        <h2 class="title is-3">QA&ndash;Pipeline Rank Inversion</h2>
         <div class="kf-callout kf-orange">
           <div class="kf-label">🔑 Key Finding</div>
           <div class="kf-text">
-            <b>QA performance does not imply pipeline competence.</b>
-            Balanced CEPS ranges from <b>.226 to .384</b> despite mean QA up to <b>0.819</b>,
-            and the Spearman rank correlation is <b>ρ = −.32</b>.
-            GLM-5.1 ranks 7th in QA yet 1st in CEPS; Kimi-K2.6 last in QA yet 4th in CEPS;
-            DeepSeek-V4-Flash ranks tied 1st in QA but 10th in CEPS.
-            QA measures isolated tasks, whereas CEPS assesses performance across five linked stages.
+            <b>QA and pipeline rankings differ sharply.</b>
+            Spearman &rho; between QA and balanced-profile CEPS is <b>&minus;.32</b>.
+            GLM-5.1 moves from seventh in QA to first in balanced-profile CEPS, Kimi-K2.6 from last to fourth, and DS-V4-Flash from tied first to tenth.
+            The observed QA rankings do not consistently carry over to portfolio outcomes.
           </div>
         </div>
         <div class="table-wrapper no-scroll">
@@ -1754,27 +1752,24 @@ The five stages have equal weight. At the same mean score, a larger downstream d
       </div>
     </div>
 
-    <!-- Allocation gap, paired interventions, and profile adaptation -->
+    <!-- Real-time evaluation -->
     <div class="columns is-centered mt-4">
       <div class="column is-full has-text-centered content">
-        <h2 class="title is-3">Allocation Gap and Within-Class Correlation</h2>
-        <div class="kf-callout kf-orange">
-          <div class="kf-label">🔑 Key Finding</div>
-          <div class="kf-text">
-            Across the 30 normal-period cells, mean total-variation distance is <b>0.306</b> from EqW and <b>0.890</b> from the profile-constrained reference.
-            The mean model-to-reference turnover ratio is <b>.203</b>.
-            Larger distance from EqW is associated with higher volatility (<b>ρ = .65</b>), drawdown magnitude (<b>ρ = .61</b>), and ΔSharpe (<b>ρ = .51</b>).
-            Moving from Conservative to Aggressive raises risk-asset exposure by <b>.175</b> and lowers bond-plus-cash exposure by <b>.162</b>.
-          </div>
-        </div>
+        <h2 class="title is-3">Real-Time Evaluation</h2>
+        <p class="has-text-justified">
+          Historical-only evaluation risks data leakage from pretraining. PortBench also supports
+          <em>real-time evaluation</em>: at each decision date the model receives only data available through the previous close.
+          We collect 72 decisions from six models with daily rebalancing over <b>12 trading days</b> (2026-07-16&ndash;07-31).
+          Mean S1 scores range from .78 to .82. Kimi-K2.6 leads lookback CEPS at <b>.420</b>, and S4 turnover agreement stays low at .047&ndash;.163.
+        </p>
         <div class="img-row">
           <div class="img-panel">
-            <img loading="lazy" src="./static/images/analysis_composed_decision_gap.png" class="img-analysis" alt="Total-variation distance from equal weight versus delta Sharpe and drawdown magnitude">
-            <p class="fig-caption">Distance from equal weight versus ΔSharpe and versus drawdown magnitude, across 30 normal-period model–profile cells. Shaded regions mark ΔSharpe &gt; 0 and drawdowns larger than equal weight.</p>
+            <img loading="lazy" src="./static/images/live_ceps_daily.png" class="img-analysis" alt="Per-decision lookback CEPS over the 12-day real-time window under the Balanced profile">
+            <p class="fig-caption">Per-decision lookback CEPS over the 12-day real-time window (Balanced).</p>
           </div>
           <div class="img-panel">
-            <img loading="lazy" src="./static/images/analysis_correlation_risk.png" class="img-analysis" alt="Within-class correlation risk at fixed holdings and asset-class weights">
-            <p class="fig-caption">Equalizing weights within each held class lowers estimated volatility by 8.5% on average (271 of 330 decisions). Within-class covariance accounts for 76.4% of the mean variance difference.</p>
+            <img loading="lazy" src="./static/images/live_stage_scores.png" class="img-analysis" alt="Mean lookback stage scores S1 through S5 over the 12 real-time decision dates">
+            <p class="fig-caption">Mean lookback stage scores (S1–S5) over the 12 real-time decision dates.</p>
           </div>
         </div>
       </div>
