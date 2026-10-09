@@ -338,3 +338,57 @@ table tbody th { background: inherit; }
 }
 
 .content .title.framework-title { margin-top: 56px; }
+
+/* Two evaluation layers retain distinct colors throughout their controls and samples. */
+#eval-tabs { overflow: visible; }
+#eval-tabs ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; border: 0; }
+#eval-tabs li { min-width: 0; }
+#eval-tabs a { display: flex; justify-content: flex-start; gap: 16px; height: 100%; padding: 20px 24px; border: 1px solid var(--accent-border); border-radius: 8px; background: var(--accent-wash); color: var(--accent-heading); white-space: normal; }
+#eval-tabs a .svg-inline--fa { flex-shrink: 0; width: 24px; height: 24px; }
+#eval-tabs a strong, #eval-tabs a small { display: block; color: inherit; }
+#eval-tabs a strong { font-size: 1.08rem; }
+#eval-tabs a small { margin-top: 3px; font-size: .85rem; }
+#eval-tabs li[data-tab="qa"] a { background: var(--teal-wash); border-color: #bbd9d0; color: var(--teal); }
+#eval-tabs li.is-active a { background: var(--accent); border-color: var(--accent); color: white; }
+#eval-tabs li[data-tab="qa"].is-active a { background: var(--teal); border-color: var(--teal) !important; color: white; }
+#eval-tabs a:hover { text-decoration: underline; text-underline-offset: 4px; }
+#eval-tabs a:focus-visible { outline-offset: 4px; }
+#tab-pipeline > .explorer-controls { padding: 20px; background: var(--accent-wash); border-radius: 8px; }
+#tab-qa .qa-tmpl-btn { border-color: #bbd9d0; color: var(--teal); }
+#tab-qa .qa-tmpl-btn.is-active { background: var(--teal); border-color: var(--teal); color: white; }
+#tab-qa .qa-tmpl-btn:hover { background: var(--teal-wash); color: var(--teal); }
+#tab-qa .qa-tmpl-btn.is-active:hover { background: #0b544b; color: white; }
+#qa-carousel-display .qa-sample { border: 1px solid #bbd9d0; border-radius: 12px; overflow: hidden; }
+.qa-sample > .showcase-inner-header { padding: 18px 24px; background: var(--teal); color: white; }
+.qa-sample-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.qa-sample-meta .meta-sub { color: white; }
+.qa-sample .qa-badge { margin: 0; background: var(--teal-wash); color: var(--teal); }
+.qa-sample > .showcase-inner-body { padding: 0; }
+.qa-sample-context { padding: 20px 24px; background: var(--surface-2); }
+.qa-sample-context > p:last-child { margin-bottom: 0; }
+.qa-response-grid { display: grid; grid-template-columns: 1.25fr 1fr; }
+.qa-question, .qa-answer { padding: 24px; min-width: 0; }
+.qa-answer { background: var(--teal-wash); }
+.qa-response-grid .qa-field > b, .qa-response-grid .qa-field-tight > b { display: block; margin-bottom: 12px; color: var(--teal); font-size: 1rem; }
+.qa-response-grid p:last-child { margin-bottom: 0; }
+.qa-answer code { padding: 0; background: transparent; color: var(--teal); }
+.qa-answer .showcase-note { color: var(--teal); margin-top: 16px !important; }
+#pipeline-display .showcase-frame-body { padding: 0; }
+#pipeline-display .showcase-inner-header { padding: 14px 20px; background: var(--accent-soft); color: var(--accent-heading); }
+#pipeline-display .showcase-inner-body { padding: 16px 20px 22px; }
+#pipeline-display .showcase-frame-header { background: var(--accent); color: white; }
+#pipeline-display .showcase-frame-header .meta { color: white; }
+#pipeline-display .pipeline-outputs > .showcase-frame-header { background: var(--accent-heading); }
+.pipeline-stage { display: grid; grid-template-columns: 270px minmax(0, 1fr); }
+#pipeline-display .pipeline-stage .showcase-inner-header { justify-content: flex-start; align-content: start; align-items: center; gap: 10px; font-weight: 600; }
+.pipeline-stage-id { display: inline-flex; align-items: center; justify-content: center; background: var(--accent); color: white; width: 34px; height: 30px; border-radius: 4px; flex-shrink: 0; }
+@media (max-width: 768px) {
+  #eval-tabs ul { gap: 10px; }
+  #eval-tabs a { flex-direction: column; align-items: flex-start; gap: 10px; padding: 16px; }
+  #eval-tabs a strong { font-size: .95rem; }
+  #eval-tabs a small { font-size: .75rem; }
+  #tab-pipeline > .explorer-controls { padding: 16px; }
+  .qa-response-grid, .pipeline-stage { grid-template-columns: 1fr; }
+  .qa-sample > .showcase-inner-header, .qa-sample-context, .qa-question, .qa-answer { padding: 16px; }
+  #pipeline-display .showcase-inner-header, #pipeline-display .showcase-inner-body { padding: 16px; }
+}

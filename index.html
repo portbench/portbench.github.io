@@ -194,11 +194,9 @@
         <div class="finding-content">
           <div class="finding-headline">Broad Holdings Conceal Correlated Risk</div>
           <div class="finding-body">
-            The 330 saved 2024 allocations hold 73 assets on average.
-            Equalizing weights inside each held class, without changing the holdings or class totals,
-            lowers estimated volatility by <span class="finding-stat-inline">8.5%</span>
-            (271 of 330 decisions).
-            Within-class covariance accounts for <span class="finding-stat-inline">76.4%</span> of the mean variance difference.
+            Allocations hold 73 assets on average, yet still concentrate weight in correlated assets.
+            Equalizing within-class weights lowers volatility estimated from lookback data by
+            <span class="finding-stat-inline">8.5%</span> on average, with holdings, class weights, and cash unchanged.
           </div>
         </div>
       </div>
@@ -349,10 +347,10 @@
         <div class="tabs is-centered is-boxed" id="eval-tabs">
           <ul role="tablist" aria-label="Evaluation framework layers">
             <li class="is-active" data-tab="pipeline" role="presentation">
-              <a id="tab-btn-pipeline" role="tab" aria-selected="true" aria-controls="tab-pipeline" tabindex="0">Pipeline Evaluation</a>
+              <a id="tab-btn-pipeline" role="tab" aria-selected="true" aria-controls="tab-pipeline" tabindex="0"><i class="fas fa-project-diagram" aria-hidden="true"></i><span><strong>Pipeline Evaluation</strong><small>S1&ndash;S3 model outputs</small></span></a>
             </li>
             <li data-tab="qa" role="presentation">
-              <a id="tab-btn-qa" role="tab" aria-selected="false" aria-controls="tab-qa" tabindex="-1">QA Dataset (T1&ndash;T7)</a>
+              <a id="tab-btn-qa" role="tab" aria-selected="false" aria-controls="tab-qa" tabindex="-1"><i class="fas fa-question-circle" aria-hidden="true"></i><span><strong>QA Dataset</strong><small>6,269 QA pairs &middot; T1&ndash;T7</small></span></a>
             </li>
           </ul>
         </div>
@@ -788,22 +786,22 @@ document.addEventListener('DOMContentLoaded', function() {
     var splitBadge  = '<span class="qa-badge">' + esc(s.split) + '</span>';
     var assetsBadge = (s.assets||[]).map(function(a){ return '<code class="asset-badge">' + esc(a) + '</code>'; }).join(" ");
 
-    var html = '<div class="showcase-inner ' + color + ' text-left">';
-    html += '<div class="showcase-inner-header">' + qaCurTmpl + ': ' + desc + regimeBadge + splitBadge;
-    html += '<span class="meta-sub">' + s.decision_date + '</span></div>';
-    html += '<div class="showcase-inner-body">';
+    var html = '<div class="showcase-inner qa-sample ' + color + ' text-left">';
+    html += '<div class="showcase-inner-header"><span>' + qaCurTmpl + ': ' + desc + '</span><span class="qa-sample-meta">' + regimeBadge + splitBadge;
+    html += '<span class="meta-sub">' + s.decision_date + '</span></span></div>';
+    html += '<div class="showcase-inner-body"><div class="qa-sample-context">';
     if (s.assets && s.assets.length) {
       html += '<p class="qa-field-tight"><b>Assets:</b> ' + assetsBadge + '</p>';
     }
     if (s.context_summary) {
       html += '<p class="qa-context">' + esc(s.context_summary) + '</p>';
     }
-    html += '<p class="qa-field"><b>Question:</b> ' + esc(s.question) + '</p>';
-    html += '<p class="qa-field-tight"><b>Answer:</b> <code>' + esc(s.answer) + '</code></p>';
+    html += '</div><div class="qa-response-grid"><div class="qa-question"><p class="qa-field"><b>Question</b>' + esc(s.question) + '</p></div>';
+    html += '<div class="qa-answer"><p class="qa-field-tight"><b>Answer</b><code>' + esc(s.answer) + '</code></p>';
     if (s.explanation) {
       html += '<p class="showcase-note mt-1">' + esc(s.explanation) + '</p>';
     }
-    html += '</div></div>';
+    html += '</div></div></div></div>';
 
     /* carousel controls */
     html += '<div class="carousel-controls mt-1" role="group" aria-label="Sample navigation">';
@@ -1033,13 +1031,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /* ── Pipeline traces ── */
     if (ep && ep.stages && ep.stages.length) {
-      html += '<div class="showcase-frame mt-2">';
+      html += '<div class="showcase-frame pipeline-outputs mt-2">';
       html += '<div class="showcase-frame-header"><span>' + esc(displayName) + ': Model Outputs</span>';
       html += '<span class="meta">' + esc(date) + ' · ' + esc(scenDisplay.replace('Crypto Collapse', 'Market Decline')) + '</span></div>';
       html += '<div class="showcase-frame-body">';
-      var stageNames = { S1: 'S1 · Market Interpretation', S2: 'S2 · Signal Generation', S3: 'S3 · Weight Optimization' };
+      var stageNames = { S1: 'Market Interpretation', S2: 'Signal Generation', S3: 'Weight Optimization' };
       ep.stages.filter(function(stage) { return stageNames[stage.stage_id]; }).forEach(function(stage) {
-        html += '<div class="showcase-inner"><div class="showcase-inner-header">' + stageNames[stage.stage_id] + '</div>';
+        html += '<div class="showcase-inner pipeline-stage"><div class="showcase-inner-header"><span class="pipeline-stage-id">' + esc(stage.stage_id) + '</span>' + stageNames[stage.stage_id] + '</div>';
         html += '<div class="showcase-inner-body">' + renderStageOutput(stage.stage_id, stage.parsed_output || {}) + '</div></div>';
       });
 
